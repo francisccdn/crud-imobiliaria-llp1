@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef enum {ALUGUEL, VENDA} disponibilidade_t;
+enum {ALUGUEL, VENDA};
+enum {CASA, APTO, TERRENO};
 
 typedef struct{
     char logradouro[100];
@@ -15,7 +16,7 @@ typedef struct{
     endereco_t endereco;
     char titulo[100];
     double preco;
-    disponibilidade_t disp;
+    int disponibilidade;
     int numPavimentos;
     int numQuartos;
     double areaTerreno;
@@ -26,7 +27,7 @@ typedef struct{
     endereco_t endereco;
     char titulo[100];
     double preco;
-    disponibilidade_t disp;
+    int disponibilidade;
     double area;
     int numQuartos;
     char posicao[50];
@@ -39,15 +40,19 @@ typedef struct{
     endereco_t endereco;
     char titulo[100];
     double preco;
-    disponibilidade_t disp;
+    int disponibilidade;
     double area;
 } terreno_t;
 
-//Problema: Como verificar tipo do imovel?
 typedef union{
     terreno_t terreno;
     casa_t casa;
     apto_t apto;
+} tipoImovel_t;
+
+typedef struct{
+    tipoImovel_t imovel;
+    int tipo;
 } imovel_t;
 
 void ExibeMenu(){
@@ -57,7 +62,8 @@ void ExibeMenu(){
 int main(void){
     imovel_t listaImoveis[100];
 
-    strcpy(listaImoveis[0].terreno.titulo, "Terreno pra vender\0");
+    listaImoveis[0].tipo = TERRENO;
+    strcpy(listaImoveis[0].imovel.terreno.titulo, "Terreno pra vender\0");
 
     return 0;
 }
