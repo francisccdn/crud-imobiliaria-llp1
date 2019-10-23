@@ -59,11 +59,25 @@ void ExibeMenu(){
     puts("Menuzinho");
 }
 
+void ExibeTerreno(imovel_t *exibido){
+    printf("Titulo: %s \n", exibido->imovel.terreno.titulo);
+    printf("Valor: %lf \n", exibido->imovel.terreno.preco);
+    printf("Area: %lf \n", exibido->imovel.terreno.area);
+    //printf("Disponibilidade: ", (exibido->imovel.terreno.disponibilidade == ALUGUEL) ? "Aluguel.\n" : "Venda.\n");
+
+    //ExibeEndereco();
+}
+
 int main(void){
     imovel_t listaImoveis[100];
 
     listaImoveis[0].tipo = TERRENO;
     strcpy(listaImoveis[0].imovel.terreno.titulo, "Terreno pra vender\0");
+    listaImoveis[0].imovel.terreno.preco = 10.31;
+    listaImoveis[0].imovel.terreno.area = 312;
+    listaImoveis[0].imovel.terreno.disponibilidade = ALUGUEL;
+    
+    ExibeTerreno(&listaImoveis[0]);
 
     return 0;
 }
