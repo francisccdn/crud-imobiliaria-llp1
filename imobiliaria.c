@@ -67,10 +67,33 @@ void ExibeTerreno(imovel_t *exibido){
 
     //ExibeEndereco();
 }
+void buscaPorTitulo(char *titulo,  imovel_t lista[])
+{
+    int i;
+    for ( i = 0; i < TAMANHO; i++)
+    {
+        if(!(strcmp(titulo, lista[i].imovel.terreno.titulo))){
+            printf("%s\n",lista[i].imovel.terreno.titulo);
+            return ;
+        }
+        if(!(strcmp(titulo, lista[i].imovel.apto.titulo))){
+            printf("%s\n",lista[i].imovel.terreno.titulo);
+            return ;
+        }
+        if(!(strcmp(titulo, lista[i].imovel.casa.titulo))){
+            printf("%s\n",lista[i].imovel.terreno.titulo);
+            return ;
+        }
+    }
+    puts("Título não encontrado.");
+}
 
 int main(void){
-    imovel_t listaImoveis[100];
+    int i;
+    imovel_t listaImoveis[TAMANHO];
 
+    char title[]="Terreno pra vender";
+    
     listaImoveis[0].tipo = TERRENO;
     strcpy(listaImoveis[0].imovel.terreno.titulo, "Terreno pra vender\0");
     listaImoveis[0].imovel.terreno.preco = 10.31;
@@ -78,6 +101,8 @@ int main(void){
     listaImoveis[0].imovel.terreno.disponibilidade = ALUGUEL;
     
     ExibeTerreno(&listaImoveis[0]);
+    
+     buscaPorTitulo(title,listaImoveis);
 
     return 0;
 }
