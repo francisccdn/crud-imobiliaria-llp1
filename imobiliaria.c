@@ -50,6 +50,10 @@ typedef union{
     apto_t apto;
 } imovel_t;
 
+void ExibeMenu(){
+    puts("Menuzinho");
+}
+
 int main(void){
     imovel_t listaImoveis[100];
 
