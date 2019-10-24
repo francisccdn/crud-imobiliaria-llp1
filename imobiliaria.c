@@ -75,7 +75,123 @@ void leImoveis(imovel_t *imoveis){
 }
 
 void ExibeMenu(){
-    puts("Menuzinho");
+    printf("\e[H\e[2J");
+    puts("Sistema de gerenciamento de imoveis");
+    printf( "\t 1- Cadastrar imovel\n"
+            "\t 2- Consultar imovel\n"
+            "\t 3- Remover imovel\n"
+            "\t 4- Editar imovel\n"
+            "\t 5- Sair\n");
+}
+void ExibeSubmenu(){
+    printf("\e[H\e[2J");
+    puts("Sistema de gerenciamento de imoveis");
+    printf( "\t 1- Exibir todos imoveis\n"
+            "\t 2- Exibir imoveis disponiveis para venda\n"
+            "\t 3- Exibir imoveis disponiveis para aluguel\n"
+            "\t 4- Buscar imovel por titulo\n"
+            "\t 5- Buscar imovel por bairro\n"
+            "\t 6- Buscar imovel por valor minimo\n"
+            "\t 7- Voltar\n");
+}
+void ExibeSubsubmenu(){
+    printf("\e[H\e[2J");
+    puts("Sistema de gerenciamento de imoveis");
+    printf( "\t 1- Casas\n"
+            "\t 2- Apartamentos\n"
+            "\t 3- Terrenos\n"
+            "\t 4- Voltar\n");
+}
+
+void Menu(){
+    int opcao, subopcao, subsubopcao;
+    while (1){
+    ExibeMenu();
+    printf("Digite a opcao desejada: ");
+    scanf("%d%*c", &opcao);
+    if (opcao == 5){
+        break;
+    }
+    switch (opcao)
+    {
+    case 1:
+        /* Inserir funcao de cadastro */
+        break;
+    case 2:
+        ExibeSubmenu();
+        printf("Digite a opcao desejada: ");
+        scanf("%d%*c", &subopcao);
+        if (subopcao == 7){
+            break;
+        }
+
+        switch (subopcao)
+        {
+        case 1:
+            /* Inserir funcao de exibir todos imoveis */
+            break;
+        case 2:
+            ExibeSubsubmenu();
+            printf("Digite a opcao desejada: ");
+            scanf("%d%*c", &subsubopcao);
+            if (subsubopcao == 4){
+                break;
+            }
+            switch (subsubopcao)
+            {
+            case 1:
+                /*Inserir funcao de exibir casas para venda*/
+                break;
+            case 2:
+                /*Inserir funcao de exibir apartamentos para venda*/
+                break;
+            case 3:
+                /*Inserir funcao de exibir terrenos para venda*/
+            default:
+                puts("Opcao invalida");
+                break;
+            }
+            break;
+        case 3:
+            ExibeSubsubmenu();
+            printf("Digite a opcao desejada: ");
+            scanf("%d%*c", &subsubopcao);
+            if (subsubopcao == 4){
+                break;
+            }
+            switch (subsubopcao)
+            {
+            case 1:
+                /*Inserir funcao de exibir casas para venda*/
+                break;
+            case 2:
+                /*Inserir funcao de exibir apartamentos para venda*/
+                break;
+            case 3:
+                /*Inserir funcao de exibir terrenos para venda*/
+            default:
+                puts("Opcao invalida");
+                break;
+            }
+            break; 
+        case 4:
+            /*Inserir funcao de buscar imoveis por titulo*/
+            break;
+        case 5:
+            /*Inserir funcao de buscar imoveis por bairro*/
+            break;
+        case 6:
+            /*Inserir funcao de buscar imoveis por valor minimo*/
+            break;
+        default:
+            puts("Opcao invalida");
+            break;
+        }
+    default:
+        puts("Opcao invalida");
+        break;
+    }
+}
 }
 
 void exibeTerreno(imovel_t *exibido){
@@ -140,6 +256,8 @@ int main(void){
     int i;
     imovel_t listaImoveis[TAMANHO];
     imovel_t *ptLista = listaImoveis;
+
+    Menu();
 
     char title[]="Terreno pra vender";
 
