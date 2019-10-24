@@ -57,6 +57,24 @@ typedef struct{
     int tipo;
 } imovel_t;
 
+void salvaImoveis(imovel_t *imoveis){
+    FILE *fp;
+    fp = fopen("imoveis.bin", "wb");
+
+    fwrite(imoveis, sizeof(imovel_t), TAMANHO, fp);
+
+    fclose(fp);
+}
+
+void leImoveis(imovel_t *imoveis){
+    FILE *fp;
+    fp = fopen("imoveis.bin", "rb");
+
+    fread(imoveis, sizeof(imovel_t), TAMANHO, fp);
+
+    fclose(fp);
+}
+
 void ExibeMenu(){
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Cadastrar imovel\n"
@@ -216,13 +234,17 @@ int main(void){
     Menu();
 
     char title[]="Terreno pra vender";
-    
+
+    leImoveis(listaImoveis);
+    /*
     listaImoveis[0].tipo = TERRENO;
     strcpy(listaImoveis[0].imovel.terreno.titulo, "Terreno pra vender");
     listaImoveis[0].imovel.terreno.preco = 10.31;
     listaImoveis[0].imovel.terreno.area = 312;
     listaImoveis[0].imovel.terreno.disponibilidade = VENDA;
-    
+
+    salvaImoveis(listaImoveis);
+    */
     exibeTerreno(&listaImoveis[0]);
     
     buscaPorTitulo(title,listaImoveis);
