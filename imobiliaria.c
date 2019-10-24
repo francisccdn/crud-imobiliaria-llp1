@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define TAMANHO 100
+
 enum {ALUGUEL, VENDA};
 enum {CASA, APTO, TERRENO};
 
@@ -59,13 +61,21 @@ void ExibeMenu(){
     puts("Menuzinho");
 }
 
-void ExibeTerreno(imovel_t *exibido){
+void exibeTerreno(imovel_t *exibido){
     printf("Titulo: %s \n", exibido->imovel.terreno.titulo);
     printf("Valor: %lf \n", exibido->imovel.terreno.preco);
     printf("Area: %lf \n", exibido->imovel.terreno.area);
-    //printf("Disponibilidade: ", (exibido->imovel.terreno.disponibilidade == ALUGUEL) ? "Aluguel.\n" : "Venda.\n");
-
-    //ExibeEndereco();
+    printf("Disponibilidade: ");
+    switch(exibido->imovel.terreno.disponibilidade){
+        case ALUGUEL:
+            printf("Aluguel.\n");
+            break;
+        case VENDA:
+            printf("Venda.\n");
+            break;
+    }
+    //exibeEndereco();
+    printf("\n\n");
 }
 void buscaPorTitulo(char *titulo,  imovel_t lista[])
 {
@@ -95,14 +105,14 @@ int main(void){
     char title[]="Terreno pra vender";
     
     listaImoveis[0].tipo = TERRENO;
-    strcpy(listaImoveis[0].imovel.terreno.titulo, "Terreno pra vender\0");
+    strcpy(listaImoveis[0].imovel.terreno.titulo, "Terreno pra vender");
     listaImoveis[0].imovel.terreno.preco = 10.31;
     listaImoveis[0].imovel.terreno.area = 312;
-    listaImoveis[0].imovel.terreno.disponibilidade = ALUGUEL;
+    listaImoveis[0].imovel.terreno.disponibilidade = VENDA;
     
-    ExibeTerreno(&listaImoveis[0]);
+    exibeTerreno(&listaImoveis[0]);
     
-     buscaPorTitulo(title,listaImoveis);
+    buscaPorTitulo(title,listaImoveis);
 
     return 0;
 }
