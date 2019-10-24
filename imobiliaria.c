@@ -76,6 +76,7 @@ void leImoveis(imovel_t *imoveis){
 }
 
 void ExibeMenu(){
+    printf("\e[H\e[2J");
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
@@ -84,6 +85,8 @@ void ExibeMenu(){
             "\t 5- Sair\n");
 }
 void ExibeSubmenu(){
+    printf("\e[H\e[2J");
+    puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Exibir todos imoveis\n"
             "\t 2- Exibir imoveis disponiveis para venda\n"
             "\t 3- Exibir imoveis disponiveis para aluguel\n"
@@ -93,6 +96,8 @@ void ExibeSubmenu(){
             "\t 7- Voltar\n");
 }
 void ExibeSubsubmenu(){
+    printf("\e[H\e[2J");
+    puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Casas\n"
             "\t 2- Apartamentos\n"
             "\t 3- Terrenos\n"
