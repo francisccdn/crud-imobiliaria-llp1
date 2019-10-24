@@ -55,6 +55,14 @@ typedef struct{
     int tipo;
     int ultimo;
 } imovel_t;
+void TiraBarraN(char*str){
+    int i;
+    for(i=0;str[i]!='\0';i++)
+    {
+        if(str[i]=='\n')
+            str[i]='\0';
+    }
+}
 
 void salvaImoveis(imovel_t *imoveis){
     FILE *fp;
@@ -75,7 +83,7 @@ void leImoveis(imovel_t *imoveis){
 }
 
 void ExibeMenu(){
-    printf("\e[H\e[2J");
+    //printf("\e[H\e[2J"); (Comando ta dando aguia na função buscar por titulo)
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
@@ -84,7 +92,7 @@ void ExibeMenu(){
             "\t 5- Sair\n");
 }
 void ExibeSubmenu(){
-    printf("\e[H\e[2J");
+    //printf("\e[H\e[2J");
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Exibir todos imoveis\n"
             "\t 2- Exibir imoveis disponiveis para venda\n"
@@ -95,15 +103,76 @@ void ExibeSubmenu(){
             "\t 7- Voltar\n");
 }
 void ExibeSubsubmenu(){
-    printf("\e[H\e[2J");
+    //printf("\e[H\e[2J");
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Casas\n"
             "\t 2- Apartamentos\n"
             "\t 3- Terrenos\n"
             "\t 4- Voltar\n");
 }
+void exibeTerreno(imovel_t *exibido){
+    printf("Titulo: %s \n", exibido->imovel.terreno.titulo);
+    printf("Valor: %lf \n", exibido->imovel.terreno.preco);
+    printf("Area: %lf \n", exibido->imovel.terreno.area);
+    printf("Disponibilidade: ");
+    switch(exibido->imovel.terreno.disponibilidade){
+        case ALUGUEL:
+            printf("Aluguel.\n");
+            break;
+        case VENDA:
+            printf("Venda.\n");
+            break;
+    }
+    //exibeEndereco();
+    printf("\n\n");
+}
+void buscaPorTitulo(imovel_t lista[])
+{
+    int i;
+    char titulo[TAMANHO];
+    printf("Digite o Título:");
+    fgets(titulo,TAMANHO,stdin);
+    TiraBarraN(titulo);
+    
+    printf("%s\n",lista[0].imovel.terreno.titulo);
+    for ( i = 0; i < TAMANHO; i++)
+    {
+        if(!(strcmp(titulo, lista[i].imovel.terreno.titulo))){
+            exibeTerreno(&lista[i]);
+            return ;
+        }
+        if(!(strcmp(titulo, lista[i].imovel.apto.titulo))){
+            exibeTerreno(&lista[i]);
+            return ;
+        }
+        if(!(strcmp(titulo, lista[i].imovel.casa.titulo))){
+            exibeTerreno(&lista[i]);
+            return ;
+        }
+    }
+    puts("Título não encontrado.");
+}
+void exibeTudo(imovel_t lista[]){
+    for(int i = 0; !(lista[i].ultimo); i++)
+    {
+        switch (lista[i].tipo){
+            case CASA:
+                //exibeCasa(lista[i]);
+                break;
+            case APTO:
+                //exibeApto(lista[i]);
+                break;
+            case TERRENO:
+                exibeTerreno(&lista[i]);
+                break;
+            default:
+                break;
+        }
+    }
 
-void Menu(){
+}
+
+void Menu(imovel_t lista[]){
     int opcao, subopcao, subsubopcao;
     while (1){
     ExibeMenu();
@@ -175,7 +244,7 @@ void Menu(){
             }
             break; 
         case 4:
-            /*Inserir funcao de buscar imoveis por titulo*/
+            buscaPorTitulo(lista);
             break;
         case 5:
             /*Inserir funcao de buscar imoveis por bairro*/
@@ -194,70 +263,13 @@ void Menu(){
 }
 }
 
-void exibeTerreno(imovel_t *exibido){
-    printf("Titulo: %s \n", exibido->imovel.terreno.titulo);
-    printf("Valor: %lf \n", exibido->imovel.terreno.preco);
-    printf("Area: %lf \n", exibido->imovel.terreno.area);
-    printf("Disponibilidade: ");
-    switch(exibido->imovel.terreno.disponibilidade){
-        case ALUGUEL:
-            printf("Aluguel.\n");
-            break;
-        case VENDA:
-            printf("Venda.\n");
-            break;
-    }
-    //exibeEndereco();
-    printf("\n\n");
-}
-
-void exibeTudo(imovel_t lista[]){
-    for(int i = 0; !(lista[i].ultimo); i++)
-    {
-        switch (lista[i].tipo){
-            case CASA:
-                //exibeCasa(lista[i]);
-                break;
-            case APTO:
-                //exibeApto(lista[i]);
-                break;
-            case TERRENO:
-                exibeTerreno(&lista[i]);
-                break;
-            default:
-                break;
-        }
-    }
-
-}
-
-void buscaPorTitulo(char *titulo,  imovel_t lista[])
-{
-    int i;
-    for ( i = 0; i < TAMANHO; i++)
-    {
-        if(!(strcmp(titulo, lista[i].imovel.terreno.titulo))){
-            printf("%s\n",lista[i].imovel.terreno.titulo);
-            return ;
-        }
-        if(!(strcmp(titulo, lista[i].imovel.apto.titulo))){
-            printf("%s\n",lista[i].imovel.terreno.titulo);
-            return ;
-        }
-        if(!(strcmp(titulo, lista[i].imovel.casa.titulo))){
-            printf("%s\n",lista[i].imovel.terreno.titulo);
-            return ;
-        }
-    }
-    puts("Título não encontrado.");
-}
 
 int main(void){
     int i;
     imovel_t listaImoveis[TAMANHO];
     imovel_t *ptLista = listaImoveis;
 
-    Menu();
+    
 
     char title[]="Terreno pra vender";
 
@@ -278,7 +290,7 @@ int main(void){
     listaImoveis[1].ultimo = 0;
 
     listaImoveis[2].ultimo = 1;
-
+    Menu(listaImoveis);
     salvaImoveis(listaImoveis);
 
     exibeTudo(listaImoveis);
