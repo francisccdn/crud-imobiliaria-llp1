@@ -15,7 +15,6 @@ typedef struct{
 } endereco_t;
 
 typedef struct{
-    endereco_t endereco;
     char titulo[100];
     double preco;
     int disponibilidade;
@@ -26,7 +25,6 @@ typedef struct{
 } casa_t;
 
 typedef struct{
-    endereco_t endereco;
     char titulo[100];
     double preco;
     int disponibilidade;
@@ -39,7 +37,6 @@ typedef struct{
 } apto_t;
 
 typedef struct{
-    endereco_t endereco;
     char titulo[100];
     double preco;
     int disponibilidade;
@@ -54,7 +51,9 @@ typedef union{
 
 typedef struct{
     tipoImovel_t imovel;
+    endereco_t endereco;
     int tipo;
+    int ultimo;
 } imovel_t;
 
 void salvaImoveis(imovel_t *imoveis){
@@ -95,6 +94,27 @@ void exibeTerreno(imovel_t *exibido){
     //exibeEndereco();
     printf("\n\n");
 }
+
+void exibeTudo(imovel_t lista[]){
+    for(int i = 0; !(lista[i].ultimo); i++)
+    {
+        switch (lista[i].tipo){
+            case CASA:
+                //exibeCasa(lista[i]);
+                break;
+            case APTO:
+                //exibeApto(lista[i]);
+                break;
+            case TERRENO:
+                exibeTerreno(&lista[i]);
+                break;
+            default:
+                break;
+        }
+    }
+
+}
+
 void buscaPorTitulo(char *titulo,  imovel_t lista[])
 {
     int i;
@@ -119,22 +139,33 @@ void buscaPorTitulo(char *titulo,  imovel_t lista[])
 int main(void){
     int i;
     imovel_t listaImoveis[TAMANHO];
+    imovel_t *ptLista = listaImoveis;
 
     char title[]="Terreno pra vender";
 
-    leImoveis(listaImoveis);
-    /*
+    //leImoveis(listaImoveis);
+
     listaImoveis[0].tipo = TERRENO;
     strcpy(listaImoveis[0].imovel.terreno.titulo, "Terreno pra vender");
     listaImoveis[0].imovel.terreno.preco = 10.31;
     listaImoveis[0].imovel.terreno.area = 312;
     listaImoveis[0].imovel.terreno.disponibilidade = VENDA;
+    listaImoveis[0].ultimo = 0;
+
+    listaImoveis[1].tipo = TERRENO;
+    strcpy(listaImoveis[1].imovel.terreno.titulo, "Terreno pra vender 2");
+    listaImoveis[1].imovel.terreno.preco = 14.1;
+    listaImoveis[1].imovel.terreno.area = 512;
+    listaImoveis[1].imovel.terreno.disponibilidade = ALUGUEL;
+    listaImoveis[1].ultimo = 0;
+
+    listaImoveis[2].ultimo = 1;
 
     salvaImoveis(listaImoveis);
-    */
-    exibeTerreno(&listaImoveis[0]);
-    
-    buscaPorTitulo(title,listaImoveis);
+
+    exibeTudo(listaImoveis);
+
+    //buscaPorTitulo(title,listaImoveis);
 
     return 0;
 }
