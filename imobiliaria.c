@@ -332,7 +332,7 @@ void editaCadastro(imovel_t *lista[], int i){
 
     printf("Digite a cidade: ");
     fgets(lista[i]->endereco.cidade, MAX_TAMANHO, stdin);
-    printf("Digite a bairro: ");
+    printf("Digite o bairro: ");
     fgets(lista[i]->endereco.bairro, MAX_TAMANHO, stdin);
     printf("Digite a rua: ");
     fgets(lista[i]->endereco.logradouro, MAX_TAMANHO, stdin);
