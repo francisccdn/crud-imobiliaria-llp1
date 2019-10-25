@@ -14,6 +14,7 @@ void ExibeSubsubmenu();
 void exibeImovel();
 void buscaPorTitulo();
 void buscaPorBairro();
+void buscaPorValor();
 void exibeTudo();
 void Menu();
 
@@ -231,7 +232,21 @@ void buscaPorBairro(imovel_t lista[])
 
     puts("Bairro não encontrado.");
 }
+void buscaPorValor(imovel_t lista[])
+{
+    int i;
+    float valor;
 
+    printf("Digite o Valor: ");
+    scanf("%f",&valor);
+
+    for ( i = 0; !lista[i].ultimo; i++){
+        if(lista[i].preco >= valor)
+            exibeImovel(&lista[i]);
+    }   
+
+    puts("Não tem imovel acima desse valor.");
+}
 
 void exibeTudo(imovel_t lista[]){
     for(int i = 0; !(lista[i].ultimo); i++){
@@ -318,7 +333,7 @@ void Menu(imovel_t lista[]){
                 buscaPorBairro(lista);
                 break;
             case 6:
-                /*Inserir funcao de buscar imoveis por valor minimo*/
+                buscaPorValor(lista);
                 break;
             default:
                 puts("Opcao invalida");
