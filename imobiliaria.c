@@ -13,6 +13,7 @@ void ExibeSubmenu();
 void ExibeSubsubmenu();
 void exibeImovel();
 void buscaPorTitulo();
+void buscaPorBairro();
 void exibeTudo();
 void Menu();
 
@@ -78,6 +79,7 @@ int main(void){
     strcpy(listaImoveis[0].titulo, "Terreno pra vender");
     listaImoveis[0].preco = 10.31;
     listaImoveis[0].imovel.terreno.area = 312;
+    strcpy(listaImoveis[0].endereco.bairro,"Mangabeira");
     listaImoveis[0].disponibilidade = VENDA;
     listaImoveis[0].ultimo = 0;
 
@@ -85,6 +87,7 @@ int main(void){
     strcpy(listaImoveis[1].titulo, "Terreno pra vender 2");
     listaImoveis[1].preco = 14.1;
     listaImoveis[1].imovel.terreno.area = 512;
+    strcpy(listaImoveis[1].endereco.bairro,"Alto do Mateus");
     listaImoveis[1].disponibilidade = ALUGUEL;
     listaImoveis[1].ultimo = 0;
 
@@ -211,6 +214,25 @@ void buscaPorTitulo(imovel_t lista[])
     puts("Título não encontrado.");
 }
 
+void buscaPorBairro(imovel_t lista[])
+{
+    int i;
+    char bairro[MAX_TAMANHO];
+    printf("Digite o Bairro: ");
+    fgets(bairro,MAX_TAMANHO,stdin);
+    TiraBarraN(bairro);
+    
+    for ( i = 0; !lista[i].ultimo; i++){
+        if(!(strcmp(bairro, lista[i].endereco.bairro))){
+            exibeImovel(&lista[i]);
+            return ;
+        }
+    }
+
+    puts("Bairro não encontrado.");
+}
+
+
 void exibeTudo(imovel_t lista[]){
     for(int i = 0; !(lista[i].ultimo); i++){
         exibeImovel(&lista[i]);
@@ -293,7 +315,7 @@ void Menu(imovel_t lista[]){
                 buscaPorTitulo(lista);
                 break;
             case 5:
-                /*Inserir funcao de buscar imoveis por bairro*/
+                buscaPorBairro(lista);
                 break;
             case 6:
                 /*Inserir funcao de buscar imoveis por valor minimo*/
