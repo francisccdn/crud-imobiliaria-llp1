@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 
-#define TAMANHO 100
+#define MAX_TAMANHO 100
 
-enum {ALUGUEL, VENDA};
-enum {CASA, APTO, TERRENO};
+enum {ALUGUEL = 1, VENDA = 2};
+enum {CASA = 1, APTO = 2, TERRENO = 3};
 
 typedef struct{
-    char logradouro[100];
+    char logradouro[MAX_TAMANHO];
     int numero;
-    char bairro[50];
-    char cidade[100];
+    char bairro[MAX_TAMANHO];
+    char cidade[MAX_TAMANHO];
     int cep;
 } endereco_t;
 
@@ -24,7 +24,7 @@ typedef struct{
 typedef struct{
     double area;
     int numQuartos;
-    char posicao[50];
+    char posicao[MAX_TAMANHO];
     int andar;
     double precoCondominio;
     int vagasGaragem;
@@ -63,7 +63,7 @@ void salvaImoveis(imovel_t *imoveis){
     FILE *fp;
     fp = fopen("imoveis.bin", "wb");
 
-    fwrite(imoveis, sizeof(imovel_t), TAMANHO, fp);
+    fwrite(imoveis, sizeof(imovel_t), MAX_TAMANHO, fp);
 
     fclose(fp);
 }
@@ -72,7 +72,7 @@ void leImoveis(imovel_t *imoveis){
     FILE *fp;
     fp = fopen("imoveis.bin", "rb");
 
-    fread(imoveis, sizeof(imovel_t), TAMANHO, fp);
+    fread(imoveis, sizeof(imovel_t), MAX_TAMANHO, fp);
 
     fclose(fp);
 }
@@ -106,11 +106,9 @@ void ExibeSubsubmenu(){
             "\t 4- Voltar\n");
 }
 
-//Trocar por exibe imovel
-void exibeTerreno(imovel_t *exibido){
+void exibeImovel(imovel_t *exibido){
     printf("Titulo: %s \n", exibido->titulo);
     printf("Valor: %lf \n", exibido->preco);
-    printf("Area: %lf \n", exibido->imovel.terreno.area);
     printf("Disponibilidade: ");
     switch(exibido->disponibilidade){
         case ALUGUEL:
@@ -120,53 +118,57 @@ void exibeTerreno(imovel_t *exibido){
             printf("Venda.\n");
             break;
     }
-    //exibeEndereco();
-    printf("\n\n");
+
+    switch(exibido->tipo){
+        case CASA:
+            printf("Area construida: %lf \n", exibido->imovel.casa.areaConstruida);
+            printf("Area do terreno: %lf \n", exibido->imovel.casa.areaTerreno);
+            printf("Numero de pavimentos: %d \n", exibido->imovel.casa.numPavimentos);
+            printf("Numero de quartos: %d \n", exibido->imovel.casa.numQuartos);
+            break;
+        case APTO:
+            printf("Numero de quartos: %d \n", exibido->imovel.apto.numQuartos);
+            printf("Andar: %d \n", exibido->imovel.apto.andar);
+            printf("Area: %lf \n", exibido->imovel.apto.area);
+            printf("Posicao: %s \n", exibido->imovel.apto.posicao);
+            printf("Preco do condominio: %lf \n", exibido->imovel.apto.precoCondominio);
+            printf("Vagas na garagem: %d \n", exibido->imovel.apto.vagasGaragem);
+            break;
+        case TERRENO:
+            printf("Area: %lf \n", exibido->imovel.terreno.area);
+            break;
+    }
+
+    printf("Cidade: %s \n", exibido->endereco.cidade);
+    printf("Bairro: %s \n", exibido->endereco.bairro);
+    printf("Endereco: %s, %d\n", exibido->endereco.logradouro, exibido->endereco.numero);
+    printf("CEP: %d \n", exibido->endereco.cep);
+
+    printf("\n");
 }
+
 void buscaPorTitulo(imovel_t lista[])
 {
     int i;
-    char titulo[TAMANHO];
-    printf("Digite o Título:");
-    fgets(titulo,TAMANHO,stdin);
+    char titulo[MAX_TAMANHO];
+    printf("Digite o Título: ");
+    fgets(titulo,MAX_TAMANHO,stdin);
     TiraBarraN(titulo);
     
-    printf("%s\n",lista[0].imovel.terreno.titulo);
-    for ( i = 0; i < TAMANHO; i++)
-    {
-        if(!(strcmp(titulo, lista[i].imovel.terreno.titulo))){
-            exibeTerreno(&lista[i]);
+    for ( i = 0; !lista[i].ultimo; i++){
+        if(!(strcmp(titulo, lista[i].titulo))){
+            exibeImovel(&lista[i]);
             return ;
-        }
-        if(!(strcmp(titulo, lista[i].imovel.apto.titulo))){
-            exibeTerreno(&lista[i]);
-            return ;
-        }
-        if(!(strcmp(titulo, lista[i].imovel.casa.titulo))){
-            exibeTerreno(&lista[i]);
-            return ;
-        }
-    }
-    puts("Título não encontrado.");
-}
-void exibeTudo(imovel_t lista[]){
-    for(int i = 0; !(lista[i].ultimo); i++)
-    {
-        switch (lista[i].tipo){
-            case CASA:
-                //exibeCasa(lista[i]);
-                break;
-            case APTO:
-                //exibeApto(lista[i]);
-                break;
-            case TERRENO:
-                exibeTerreno(&lista[i]);
-                break;
-            default:
-                break;
         }
     }
 
+    puts("Título não encontrado.");
+}
+
+void exibeTudo(imovel_t lista[]){
+    for(int i = 0; !(lista[i].ultimo); i++){
+        exibeImovel(&lista[i]);
+    }
 }
 
 void Menu(imovel_t lista[]){
@@ -260,42 +262,105 @@ void Menu(imovel_t lista[]){
     }
 }
 
+void editaCadastro(imovel_t *lista[], int i){
+    int  opcaoTipo = 0, opcaoDisp = 0;
+
+    //aluguel ou venda?
+    while (opcaoDisp == 0) {
+        puts("O imovel esta disponivel para aluguel ou venda?");
+        puts("\t1 - Aluguel.");
+        puts("\t2 - Venda.");
+        printf("Digite a opcao desejada: ");
+        scanf("%d%*c", &opcaoDisp);
+        lista[i]->disponibilidade = opcaoDisp;
+
+        if(opcaoDisp != 1 && opcaoDisp != 2){
+            puts("Opcao invalida");
+            opcaoDisp = 0;
+        }
+    }
+
+    printf("Digite o titulo: ");
+    fgets(lista[i]->titulo, MAX_TAMANHO, stdin);
+    printf("Digite o preco: ");
+    scanf("%lf", &lista[i]->preco);
+
+    while (opcaoTipo == 0) {
+        ExibeSubsubmenu();
+        printf("Digite o tipo de imovel: ");
+        scanf("%d%*c", &opcaoTipo);
+        lista[i]->tipo = opcaoTipo;
+
+        switch (opcaoTipo) {
+            case CASA:
+                printf("Digite o numero de quartos: ");
+                scanf("%d", &lista[i]->imovel.casa.numQuartos);
+                printf("Digite o numero de pavimentos: ");
+                scanf("%d", &lista[i]->imovel.casa.numPavimentos);
+                printf("Digite a area do terreno: ");
+                scanf("%lf", &lista[i]->imovel.casa.areaTerreno);
+                printf("Digite a area construida: ");
+                scanf("%lf", &lista[i]->imovel.casa.areaConstruida);
+                break;
+            case APTO:
+                printf("Digite o numero de quartos: ");
+                scanf("%d", &lista[i]->imovel.apto.numQuartos);
+                printf("Digite a qauntidade de vagas na garagem: ");
+                scanf("%d", &lista[i]->imovel.apto.vagasGaragem);
+                printf("Digite o preco do condominio: ");
+                scanf("%lf", &lista[i]->imovel.apto.precoCondominio);
+                printf("Digite o numero de quartos: ");
+                fgets(lista[i]->imovel.apto.posicao, MAX_TAMANHO, stdin);
+                printf("Digite a area do apartamento: ");
+                scanf("%lf", &lista[i]->imovel.apto.area);
+                printf("Digite o andar: ");
+                scanf("%d", &lista[i]->imovel.apto.andar);
+                break;
+            case TERRENO:
+                printf("Digite a area do terreno: ");
+                scanf("%lf", &lista[i]->imovel.terreno.area);
+                break;
+            case 4://Voltar
+                puts("Operacao cancelada.");
+                return;
+            default:
+                puts("Opção invalida.");
+                opcaoTipo = 0;
+                break;
+        }
+    }
+
+    printf("Digite a cidade: ");
+    fgets(lista[i]->endereco.cidade, MAX_TAMANHO, stdin);
+    printf("Digite a bairro: ");
+    fgets(lista[i]->endereco.bairro, MAX_TAMANHO, stdin);
+    printf("Digite a rua: ");
+    fgets(lista[i]->endereco.logradouro, MAX_TAMANHO, stdin);
+    printf("Digite o numero: ");
+    scanf("%d", &lista[i]->endereco.numero);
+    printf("Digite o CEP: ");
+    scanf("%d", &lista[i]->endereco.cep);
+
+}
+
+//Como chamar essa função?
 void cadastraImoveis(imovel_t *lista[]){
-    int i = 0, opcao = 0;
+    int i = 0;
     while(!lista[i]->ultimo){
         i++;
     }
 
-    ExibeSubsubmenu();
-    /*Tem que ter um menuzinho melhor*/
-    printf("Digite a opcao desejada: ");
-    scanf("%d%*c", &opcao);
+    editaCadastro(lista[], i);//Como chamar essa função de dentro dessa outra?
 
-    /*Opções comuns a todos*/
+    puts("Cadastro concluido!");
 
-    switch (opcao){
-        case 1://Casa
-
-        case 2://Apto
-
-        case 3://Terreno
-
-        case 4://Voltar
-
-        default:
-            puts("Opção invalida.");
-    }
-
-    /*Cadastro de endereço*/
-
+    lista[i]->ultimo = 0;
     lista[i+1]->ultimo = 1;
-
-
 }
 
 int main(void){
     int i;
-    imovel_t listaImoveis[TAMANHO];
+    imovel_t listaImoveis[MAX_TAMANHO];
     imovel_t *ptLista = listaImoveis;
 
     
