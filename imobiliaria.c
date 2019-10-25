@@ -5,6 +5,16 @@
 
 void cadastraImoveis();
 void editaCadastro();
+void TiraBarraN();
+void salvaImoveis();
+void leImoveis();
+void ExibeMenu();
+void ExibeSubmenu();
+void ExibeSubsubmenu();
+void exibeImovel();
+void buscaPorTitulo();
+void exibeTudo();
+void Menu();
 
 enum {ALUGUEL = 1, VENDA = 2};
 enum {CASA = 1, APTO = 2, TERRENO = 3};
@@ -53,6 +63,39 @@ typedef struct{
     int ultimo;
 } imovel_t;
 
+int main(void){
+    int i;
+    imovel_t listaImoveis[MAX_TAMANHO];
+    imovel_t *ptLista = listaImoveis;
+
+    
+
+    char title[]="Terreno pra vender";
+
+    //leImoveis(listaImoveis);
+
+    listaImoveis[0].tipo = TERRENO;
+    strcpy(listaImoveis[0].titulo, "Terreno pra vender");
+    listaImoveis[0].preco = 10.31;
+    listaImoveis[0].imovel.terreno.area = 312;
+    listaImoveis[0].disponibilidade = VENDA;
+    listaImoveis[0].ultimo = 0;
+
+    listaImoveis[1].tipo = TERRENO;
+    strcpy(listaImoveis[1].titulo, "Terreno pra vender 2");
+    listaImoveis[1].preco = 14.1;
+    listaImoveis[1].imovel.terreno.area = 512;
+    listaImoveis[1].disponibilidade = ALUGUEL;
+    listaImoveis[1].ultimo = 0;
+
+    listaImoveis[2].ultimo = 1;
+    Menu(listaImoveis);
+    salvaImoveis(listaImoveis);
+
+    //buscaPorTitulo(title,listaImoveis);
+
+    return 0;
+}
 void TiraBarraN(char*str){
     int i;
     for(i=0;str[i]!='\0';i++)
@@ -265,41 +308,6 @@ void Menu(imovel_t lista[]){
         }
     }
 }
-
-
-int main(void){
-    int i;
-    imovel_t listaImoveis[MAX_TAMANHO];
-    imovel_t *ptLista = listaImoveis;
-
-    
-
-    char title[]="Terreno pra vender";
-
-    //leImoveis(listaImoveis);
-
-    listaImoveis[0].tipo = TERRENO;
-    strcpy(listaImoveis[0].titulo, "Terreno pra vender");
-    listaImoveis[0].preco = 10.31;
-    listaImoveis[0].imovel.terreno.area = 312;
-    listaImoveis[0].disponibilidade = VENDA;
-    listaImoveis[0].ultimo = 0;
-
-    listaImoveis[1].tipo = TERRENO;
-    strcpy(listaImoveis[1].titulo, "Terreno pra vender 2");
-    listaImoveis[1].preco = 14.1;
-    listaImoveis[1].imovel.terreno.area = 512;
-    listaImoveis[1].disponibilidade = ALUGUEL;
-    listaImoveis[1].ultimo = 0;
-
-    listaImoveis[2].ultimo = 1;
-    Menu(listaImoveis);
-    salvaImoveis(listaImoveis);
-
-    //buscaPorTitulo(title,listaImoveis);
-
-    return 0;
-}
 //Como chamar essa função?
 void cadastraImoveis(imovel_t *lista[]){
     int i = 0;
@@ -357,7 +365,7 @@ void editaCadastro(imovel_t *lista[], int i){
             case APTO:
                 printf("Digite o numero de quartos: ");
                 scanf("%d", &lista[i]->imovel.apto.numQuartos);
-                printf("Digite a quantidade de vagas na garagem: ");
+                printf("Digite a qauntidade de vagas na garagem: ");
                 scanf("%d", &lista[i]->imovel.apto.vagasGaragem);
                 printf("Digite o preco do condominio: ");
                 scanf("%lf", &lista[i]->imovel.apto.precoCondominio);
