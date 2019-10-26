@@ -59,20 +59,16 @@ void ExibeMenu();
 void ExibeSubmenu();
 void ExibeSubsubmenu();
 void exibeImovel(imovel_t*);
-void buscaPorTitulo();
+int buscaPorTitulo();
 void buscaPorBairro();
 void buscaPorValor();
 void exibeTudo();
+void removeImovel();
 void Menu();
 
 imovel_t listaImoveis[MAX_TAMANHO];
 
 int main(void){
-    int i;
-    imovel_t listaImoveis[MAX_TAMANHO];
-    imovel_t *ptLista = listaImoveis;
-    iniciaEstrutura(listaImoveis);
-    strcpy(listaImoveis[MAX_TAMANHO-1].titulo,"FLAG");
     //leImoveis(listaImoveis);
 
     listaImoveis[0].tipo = TERRENO;
@@ -81,7 +77,7 @@ int main(void){
     listaImoveis[0].imovel.terreno.area = 312;
     strcpy(listaImoveis[0].endereco.bairro,"Mangabeira");
     listaImoveis[0].disponibilidade = VENDA;
-    listaImoveis[0].ultimo = 1;/*
+    listaImoveis[0].ultimo = 0;
 
     listaImoveis[1].tipo = TERRENO;
     strcpy(listaImoveis[1].titulo, "Terreno pra alugar");
@@ -91,24 +87,14 @@ int main(void){
     listaImoveis[1].disponibilidade = ALUGUEL;
     listaImoveis[1].ultimo = 0;
 
-    listaImoveis[2].ultimo = 1;*/
-    Menu(listaImoveis, i);
-
-    //cadastraImoveis();
-
-    //exibeTudo();
+    listaImoveis[2].ultimo = 1;
+    Menu();
 
     salvaImoveis();
 
-
     return 0;
 }
-void iniciaEstrutura(imovel_t lista[]){
-    int i;
-    for ( i = 0; i < MAX_TAMANHO; i++)
-        strcpy(lista[i].titulo,"\0");
-    return;
-}
+
 void TiraBarraN(char*str){
     int i;
     for(i=0;str[i]!='\0';i++)
@@ -206,7 +192,7 @@ void exibeImovel(imovel_t *exibido){
     printf("\n");
 }
 
-void buscaPorTitulo()
+int buscaPorTitulo()
 {
     int i;
     char titulo[MAX_TAMANHO];
@@ -214,10 +200,10 @@ void buscaPorTitulo()
     fgets(titulo,MAX_TAMANHO,stdin);
     TiraBarraN(titulo);
     
-    for ( i = 0; !listaImoveis[i].ultimo; i++){
+    for (i = 0; !listaImoveis[i].ultimo; i++){
         if(!(strcmp(titulo, listaImoveis[i].titulo))){
             exibeImovel(&listaImoveis[i]);
-            return ;
+            return i;
         }
     }
 
@@ -265,9 +251,9 @@ void exibeTudo(){
 }
 
 
-void Menu(int i){
+void Menu(){
     int opcao, subopcao, subsubopcao;
-    int flag;
+    int imovelEscolhido;
     while (1){
         ExibeMenu();
         printf("Digite a opcao desejada: ");
@@ -338,7 +324,7 @@ void Menu(int i){
                 }
                 break;
             case 4:
-                flag = buscaPorTitulo();
+                buscaPorTitulo();
                 break;
             case 5:
                 buscaPorBairro();
@@ -352,10 +338,11 @@ void Menu(int i){
             }
         break;
         case 3:
-            removeImovel(lista);
+            removeImovel();
             break;
         case 4:
-            editaCadastro(lista, i);
+            imovelEscolhido = buscaPorTitulo();
+            editaCadastro(imovelEscolhido);
             break;
         default:
             puts("Opcao invalida");
@@ -467,24 +454,22 @@ void escolha()
     puts("0-NAO");
     puts("1-SIM");
 }
-void removeImovel(imovel_t lista[])
+void removeImovel()
 {
-    char titulo[MAX_TAMANHO];
-    int c,i,j;
-    i=buscaPorTitulo(lista);
-    if(i!=-1){
+    int c, i, j;
+    i = buscaPorTitulo();
+    if(i != -1){
         printf("Deseja realmente excluir o imovel?\n");
         escolha();
         scanf("%d",&c);
         if(c)
         {
-            for(j=i;j<(MAX_TAMANHO-1);j++){
-                lista[i] = lista[i+1];
+            for(j = i; j < MAX_TAMANHO; j++){
+                listaImoveis[j] = listaImoveis[j+1];
             }
             puts("Imovel excluido com sucesso!");
         }
         else
             ExibeMenu();
     }
-
 }
