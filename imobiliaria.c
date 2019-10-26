@@ -3,21 +3,6 @@
 
 #define MAX_TAMANHO 100
 
-void cadastraImoveis();
-void editaCadastro();
-void TiraBarraN();
-void salvaImoveis();
-void leImoveis();
-void ExibeMenu();
-void ExibeSubmenu();
-void ExibeSubsubmenu();
-void exibeImovel();
-void buscaPorTitulo();
-void buscaPorBairro();
-void buscaPorValor();
-void exibeTudo();
-void Menu();
-
 enum {ALUGUEL = 1, VENDA = 2};
 enum {CASA = 1, APTO = 2, TERRENO = 3};
 
@@ -56,7 +41,7 @@ typedef union{
 } tipoImovel_t;
 
 typedef struct{
-    char titulo[MAX_TAMANHO];
+    char titulo[100];
     double preco;
     int disponibilidade;
     tipoImovel_t imovel;
@@ -65,15 +50,29 @@ typedef struct{
     int ultimo;
 } imovel_t;
 
+void cadastraImoveis();
+void editaCadastro();
+void TiraBarraN();
+void salvaImoveis();
+void leImoveis();
+void ExibeMenu();
+void ExibeSubmenu();
+void ExibeSubsubmenu();
+void exibeImovel();
+void buscaPorBairro();
+void buscaPorValor();
+void removeImovel();
+void exibeTudo();
+void Menu();
+int  buscaPorTitulo();
+void iniciaEstrutura();
+
 int main(void){
     int i;
     imovel_t listaImoveis[MAX_TAMANHO];
     imovel_t *ptLista = listaImoveis;
-
-    
-
-    char title[]="Terreno pra vender";
-
+    iniciaEstrutura(listaImoveis);
+    strcpy(listaImoveis[MAX_TAMANHO-1].titulo,"FLAG");
     //leImoveis(listaImoveis);
 
     listaImoveis[0].tipo = TERRENO;
@@ -93,13 +92,17 @@ int main(void){
     listaImoveis[1].ultimo = 0;
 
     listaImoveis[2].ultimo = 1;
-    i=1;
-    Menu(listaImoveis, i);
+    Menu(listaImoveis);
     salvaImoveis(listaImoveis);
 
-    //buscaPorTitulo(title,listaImoveis);
 
     return 0;
+}
+void iniciaEstrutura(imovel_t lista[]){
+    int i;
+    for ( i = 0; i < MAX_TAMANHO; i++)
+        strcpy(lista[i].titulo,"\0");
+    return;
 }
 void TiraBarraN(char*str){
     int i;
@@ -129,6 +132,7 @@ void leImoveis(imovel_t *imoveis){
 }
 
 void ExibeMenu(){
+    //printf("\e[H\e[2J"); (Comando ta dando aguia na função buscar por titulo)
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
@@ -137,6 +141,7 @@ void ExibeMenu(){
             "\t 5- Sair\n");
 }
 void ExibeSubmenu(){
+    //printf("\e[H\e[2J");
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Exibir todos imoveis\n"
             "\t 2- Exibir imoveis disponiveis para venda\n"
@@ -147,6 +152,7 @@ void ExibeSubmenu(){
             "\t 7- Voltar\n");
 }
 void ExibeSubsubmenu(){
+    //printf("\e[H\e[2J");
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Casas\n"
             "\t 2- Apartamentos\n"
@@ -195,7 +201,7 @@ void exibeImovel(imovel_t *exibido){
     printf("\n");
 }
 
-void buscaPorTitulo(imovel_t lista[])
+int buscaPorTitulo(imovel_t lista[])
 {
     int i;
     char titulo[MAX_TAMANHO];
@@ -206,11 +212,12 @@ void buscaPorTitulo(imovel_t lista[])
     for ( i = 0; !lista[i].ultimo; i++){
         if(!(strcmp(titulo, lista[i].titulo))){
             exibeImovel(&lista[i]);
-            return ;
+            return i;
         }
     }
 
     puts("Título não encontrado.");
+    return -1;
 }
 
 void buscaPorBairro(imovel_t lista[])
@@ -253,8 +260,9 @@ void exibeTudo(imovel_t lista[]){
 }
 
 
-void Menu(imovel_t lista[], int i){
+void Menu(imovel_t lista[]){
     int opcao, subopcao, subsubopcao;
+    int flag;
     while (1){
         ExibeMenu();
         printf("Digite a opcao desejada: ");
@@ -278,7 +286,7 @@ void Menu(imovel_t lista[], int i){
             switch (subopcao)
             {
             case 1:
-                /* Inserir funcao de exibir todos imoveis */
+                exibeTudo(lista);
                 break;
             case 2:
                 ExibeSubsubmenu();
@@ -325,7 +333,7 @@ void Menu(imovel_t lista[], int i){
                 }
                 break;
             case 4:
-                buscaPorTitulo(lista);
+                flag=buscaPorTitulo(lista);
                 break;
             case 5:
                 buscaPorBairro(lista);
@@ -337,11 +345,9 @@ void Menu(imovel_t lista[], int i){
                 puts("Opcao invalida");
                 break;
             }
+        break;
         case 3:
-        /*Remover imovel*/
-            break;
-        case 4:
-            editaCadastro(lista, i);
+            removeImovel(lista);
             break;
         default:
             puts("Opcao invalida");
@@ -373,9 +379,8 @@ void editaCadastro(imovel_t *lista[], int i){
         puts("\t2 - Venda.");
         printf("Digite a opcao desejada: ");
         scanf("%d%*c", &opcaoDisp);
-        printf("cheguei aqui");
-        lista[i]->disponibilidade = opcaoDisp; //a falha ta aqui
-        printf("cheguei aqui");
+        lista[i]->disponibilidade = opcaoDisp;
+
         if(opcaoDisp != 1 && opcaoDisp != 2){
             puts("Opcao invalida");
             opcaoDisp = 0;
@@ -442,5 +447,31 @@ void editaCadastro(imovel_t *lista[], int i){
     scanf("%d", &lista[i]->endereco.numero);
     printf("Digite o CEP: ");
     scanf("%d", &lista[i]->endereco.cep);
+
+}
+void escolha()
+{
+    puts("0-NAO");
+    puts("1-SIM");
+}
+void removeImovel(imovel_t lista[])
+{
+    char titulo[MAX_TAMANHO];
+    int c,i,j;
+    i=buscaPorTitulo(lista);
+    if(i!=-1){
+        printf("Deseja realmente excluir o imovel?\n");
+        escolha();
+        scanf("%d",&c);
+        if(c)
+        {
+            for(j=i;j<(MAX_TAMANHO-1);j++){
+                lista[i] = lista[i+1];
+            }
+            puts("Imovel excluido com sucesso!");
+        }
+        else
+            ExibeMenu();
+    }
 
 }
