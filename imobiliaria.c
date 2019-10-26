@@ -87,7 +87,23 @@ int main(void){
     listaImoveis[1].disponibilidade = ALUGUEL;
     listaImoveis[1].ultimo = 0;
 
-    listaImoveis[2].ultimo = 1;
+    listaImoveis[2].tipo = TERRENO;
+    strcpy(listaImoveis[2].titulo, "Terreno pra alugar 2");
+    listaImoveis[2].preco = 14.1;
+    listaImoveis[2].imovel.terreno.area = 512;
+    strcpy(listaImoveis[2].endereco.bairro,"Alto do Mateus");
+    listaImoveis[2].disponibilidade = ALUGUEL;
+    listaImoveis[2].ultimo = 0;
+
+    listaImoveis[3].tipo = CASA;
+    strcpy(listaImoveis[3].titulo, "Casa pra alugar");
+    listaImoveis[3].preco = 14.1;
+    listaImoveis[3].imovel.casa.areaConstruida = 512;
+    strcpy(listaImoveis[3].endereco.bairro,"Alto do Mateus");
+    listaImoveis[3].disponibilidade = ALUGUEL;
+    listaImoveis[3].ultimo = 0;
+
+    listaImoveis[4].ultimo = 1;
     Menu();
 
     salvaImoveis();
@@ -241,7 +257,7 @@ void buscaPorValor()
             exibeImovel(&listaImoveis[i]);
     }   
 
-    puts("Não tem imovel acima desse valor.");
+    puts("Não existem imoveis acima desse valor.");
 }
 
 void exibeTudo(){
@@ -250,6 +266,18 @@ void exibeTudo(){
     }
 }
 
+void buscaDisponibTipo(int disp, int tipo){
+    if(disp == 2){
+        disp = VENDA;
+    }else if(disp == 3){
+        disp = ALUGUEL;
+    }
+
+    for(int i = 0; !listaImoveis[i].ultimo; i++){
+        if(listaImoveis[i].disponibilidade == disp && listaImoveis[i].tipo == tipo)
+            exibeImovel(&listaImoveis[i]);
+    }
+}
 
 void Menu(){
     int opcao, subopcao, subsubopcao;
@@ -261,92 +289,62 @@ void Menu(){
         if (opcao == 5){
             break;
         }
-        switch (opcao)
-        {
-        case 1:
-            cadastraImoveis();
-            break;
-        case 2:
-            ExibeSubmenu();
-            printf("Digite a opcao desejada: ");
-            scanf("%d%*c", &subopcao);
-            if (subopcao == 7){
-                break;
-            }
-
-            switch (subopcao)
-            {
+        switch (opcao){
             case 1:
-                exibeTudo();
+                cadastraImoveis();
                 break;
             case 2:
-                ExibeSubsubmenu();
+                ExibeSubmenu();
                 printf("Digite a opcao desejada: ");
-                scanf("%d%*c", &subsubopcao);
-                if (subsubopcao == 4){
+                scanf("%d%*c", &subopcao);
+                if (subopcao == 7){
                     break;
                 }
-                switch (subsubopcao)
-                {
-                case 1:
-                    /*Inserir funcao de exibir casas para venda*/
-                    break;
-                case 2:
-                    /*Inserir funcao de exibir apartamentos para venda*/
-                    break;
-                case 3:
-                    /*Inserir funcao de exibir terrenos para venda*/
-                default:
-                    puts("Opcao invalida");
-                    break;
+
+                switch (subopcao){
+                    case 1:
+                        exibeTudo();
+                        break;
+                    case 2: //Venda
+                    case 3: //Aluguel
+                        ExibeSubsubmenu();
+                        printf("Digite a opcao desejada: ");
+                        scanf("%d%*c", &subsubopcao);
+
+                        if (subsubopcao == 4){
+                            break;
+                        }
+                        else if(subsubopcao > 4 || subsubopcao < 1){
+                            puts("Opcao invalida");
+                            break;
+                        }
+
+                        buscaDisponibTipo(subopcao, subsubopcao);
+                        break;
+                    case 4:
+                        buscaPorTitulo();
+                        break;
+                    case 5:
+                        buscaPorBairro();
+                        break;
+                    case 6:
+                        buscaPorValor();
+                        break;
+                    default:
+                        puts("Opcao invalida");
+                        break;
                 }
-                break;
+            break;
             case 3:
-                ExibeSubsubmenu();
-                printf("Digite a opcao desejada: ");
-                scanf("%d%*c", &subsubopcao);
-                if (subsubopcao == 4){
-                    break;
-                }
-                switch (subsubopcao)
-                {
-                case 1:
-                    /*Inserir funcao de exibir casas para venda*/
-                    break;
-                case 2:
-                    /*Inserir funcao de exibir apartamentos para venda*/
-                    break;
-                case 3:
-                    /*Inserir funcao de exibir terrenos para venda*/
-                default:
-                    puts("Opcao invalida");
-                    break;
-                }
+                removeImovel();
                 break;
             case 4:
-                buscaPorTitulo();
-                break;
-            case 5:
-                buscaPorBairro();
-                break;
-            case 6:
-                buscaPorValor();
+                imovelEscolhido = buscaPorTitulo();
+                editaCadastro(imovelEscolhido);
                 break;
             default:
                 puts("Opcao invalida");
                 break;
-            }
-        break;
-        case 3:
-            removeImovel();
-            break;
-        case 4:
-            imovelEscolhido = buscaPorTitulo();
-            editaCadastro(imovelEscolhido);
-            break;
-        default:
-            puts("Opcao invalida");
-            break;
         }
     }
 }
