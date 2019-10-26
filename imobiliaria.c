@@ -92,7 +92,7 @@ int main(void){
     listaImoveis[1].ultimo = 0;
 
     listaImoveis[2].ultimo = 1;
-    Menu(listaImoveis);
+    Menu(listaImoveis, i);
     salvaImoveis(listaImoveis);
 
 
@@ -260,7 +260,7 @@ void exibeTudo(imovel_t lista[]){
 }
 
 
-void Menu(imovel_t lista[]){
+void Menu(imovel_t lista[], int i){
     int opcao, subopcao, subsubopcao;
     int flag;
     while (1){
@@ -348,6 +348,9 @@ void Menu(imovel_t lista[]){
         break;
         case 3:
             removeImovel(lista);
+            break;
+        case 4:
+            editaCadastro(lista, i);
             break;
         default:
             puts("Opcao invalida");
