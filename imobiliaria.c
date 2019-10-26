@@ -56,7 +56,7 @@ typedef union{
 } tipoImovel_t;
 
 typedef struct{
-    char titulo[100];
+    char titulo[MAX_TAMANHO];
     double preco;
     int disponibilidade;
     tipoImovel_t imovel;
@@ -93,7 +93,8 @@ int main(void){
     listaImoveis[1].ultimo = 0;
 
     listaImoveis[2].ultimo = 1;
-    Menu(listaImoveis);
+    i=1;
+    Menu(listaImoveis, i);
     salvaImoveis(listaImoveis);
 
     //buscaPorTitulo(title,listaImoveis);
@@ -128,7 +129,6 @@ void leImoveis(imovel_t *imoveis){
 }
 
 void ExibeMenu(){
-    //printf("\e[H\e[2J"); (Comando ta dando aguia na função buscar por titulo)
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
@@ -137,7 +137,6 @@ void ExibeMenu(){
             "\t 5- Sair\n");
 }
 void ExibeSubmenu(){
-    //printf("\e[H\e[2J");
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Exibir todos imoveis\n"
             "\t 2- Exibir imoveis disponiveis para venda\n"
@@ -148,7 +147,6 @@ void ExibeSubmenu(){
             "\t 7- Voltar\n");
 }
 void ExibeSubsubmenu(){
-    //printf("\e[H\e[2J");
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Casas\n"
             "\t 2- Apartamentos\n"
@@ -255,7 +253,7 @@ void exibeTudo(imovel_t lista[]){
 }
 
 
-void Menu(imovel_t lista[]){
+void Menu(imovel_t lista[], int i){
     int opcao, subopcao, subsubopcao;
     while (1){
         ExibeMenu();
@@ -339,6 +337,12 @@ void Menu(imovel_t lista[]){
                 puts("Opcao invalida");
                 break;
             }
+        case 3:
+        /*Remover imovel*/
+            break;
+        case 4:
+            editaCadastro(lista, i);
+            break;
         default:
             puts("Opcao invalida");
             break;
@@ -369,8 +373,9 @@ void editaCadastro(imovel_t *lista[], int i){
         puts("\t2 - Venda.");
         printf("Digite a opcao desejada: ");
         scanf("%d%*c", &opcaoDisp);
-        lista[i]->disponibilidade = opcaoDisp;
-
+        printf("cheguei aqui");
+        lista[i]->disponibilidade = opcaoDisp; //a falha ta aqui
+        printf("cheguei aqui");
         if(opcaoDisp != 1 && opcaoDisp != 2){
             puts("Opcao invalida");
             opcaoDisp = 0;
