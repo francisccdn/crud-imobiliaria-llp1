@@ -69,9 +69,11 @@ imovel_t listaImoveis[MAX_TAMANHO];
 
 int main(void){
     int i;
-    char title[]="Terreno pra vender";
-
-    leImoveis();
+    imovel_t listaImoveis[MAX_TAMANHO];
+    imovel_t *ptLista = listaImoveis;
+    iniciaEstrutura(listaImoveis);
+    strcpy(listaImoveis[MAX_TAMANHO-1].titulo,"FLAG");
+    //leImoveis(listaImoveis);
 
     listaImoveis[0].tipo = TERRENO;
     strcpy(listaImoveis[0].titulo, "Terreno pra vender");
@@ -90,18 +92,22 @@ int main(void){
     listaImoveis[1].ultimo = 0;
 
     listaImoveis[2].ultimo = 1;*/
-    //Menu(listaImoveis);
+    Menu(listaImoveis, i);
 
-    cadastraImoveis();
+    //cadastraImoveis();
 
-    exibeTudo();
+    //exibeTudo();
 
-    //salvaImoveis();
+    salvaImoveis();
 
-
-    //buscaPorTitulo(title);
 
     return 0;
+}
+void iniciaEstrutura(imovel_t lista[]){
+    int i;
+    for ( i = 0; i < MAX_TAMANHO; i++)
+        strcpy(lista[i].titulo,"\0");
+    return;
 }
 void TiraBarraN(char*str){
     int i;
@@ -216,6 +222,7 @@ void buscaPorTitulo()
     }
 
     puts("Título não encontrado.");
+    return -1;
 }
 
 void buscaPorBairro()
@@ -258,8 +265,9 @@ void exibeTudo(){
 }
 
 
-void Menu(){
+void Menu(int i){
     int opcao, subopcao, subsubopcao;
+    int flag;
     while (1){
         ExibeMenu();
         printf("Digite a opcao desejada: ");
@@ -330,7 +338,7 @@ void Menu(){
                 }
                 break;
             case 4:
-                buscaPorTitulo();
+                flag = buscaPorTitulo();
                 break;
             case 5:
                 buscaPorBairro();
@@ -342,6 +350,13 @@ void Menu(){
                 puts("Opcao invalida");
                 break;
             }
+        break;
+        case 3:
+            removeImovel(lista);
+            break;
+        case 4:
+            editaCadastro(lista, i);
+            break;
         default:
             puts("Opcao invalida");
             break;
@@ -445,5 +460,31 @@ void editaCadastro(int i){
     scanf("%d", &listaImoveis[i].endereco.numero);
     printf("Digite o CEP: ");
     scanf("%d", &listaImoveis[i].endereco.cep);
+
+}
+void escolha()
+{
+    puts("0-NAO");
+    puts("1-SIM");
+}
+void removeImovel(imovel_t lista[])
+{
+    char titulo[MAX_TAMANHO];
+    int c,i,j;
+    i=buscaPorTitulo(lista);
+    if(i!=-1){
+        printf("Deseja realmente excluir o imovel?\n");
+        escolha();
+        scanf("%d",&c);
+        if(c)
+        {
+            for(j=i;j<(MAX_TAMANHO-1);j++){
+                lista[i] = lista[i+1];
+            }
+            puts("Imovel excluido com sucesso!");
+        }
+        else
+            ExibeMenu();
+    }
 
 }
