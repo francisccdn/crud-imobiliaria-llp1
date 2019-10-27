@@ -65,8 +65,11 @@ void buscaPorValor();
 void exibeTudo();
 void removeImovel();
 void Menu();
+void escolha();
 
 imovel_t listaImoveis[MAX_TAMANHO];
+
+int countC=0,countD=0,countE=0;
 
 int main(void){
     //leImoveis(listaImoveis);
@@ -106,7 +109,7 @@ int main(void){
     listaImoveis[4].ultimo = 1;
     Menu();
 
-    salvaImoveis();
+    //salvaImoveis();
 
     return 0;
 }
@@ -139,7 +142,7 @@ void leImoveis(){
 }
 
 void ExibeMenu(){
-    //printf("\e[H\e[2J"); (Comando ta dando aguia na função buscar por titulo)
+    //printf("\e[H\e[2J"); //(Comando ta dando aguia na função buscar por titulo)
     puts("Sistema de gerenciamento de imoveis");
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
@@ -279,7 +282,8 @@ void buscaDisponibTipo(int disp, int tipo){
     }
 }
 
-void Menu(){
+void Menu()
+{
     int opcao, subopcao, subsubopcao;
     int imovelEscolhido;
     while (1){
@@ -287,10 +291,20 @@ void Menu(){
         printf("Digite a opcao desejada: ");
         scanf("%d%*c", &opcao);
         if (opcao == 5){
-            break;
+            if((countC+countD+countE)>0){
+                puts("Deseja salvar suas alterações?");
+                escolha();
+                scanf("%d",&opcao);
+                if(opcao){
+                    salvaImoveis();
+                    puts("Alterações salvas com sucesso!");
+                }
+            }
+        break;
         }
         switch (opcao){
             case 1:
+                countC++;
                 cadastraImoveis();
                 break;
             case 2:
@@ -336,9 +350,11 @@ void Menu(){
                 }
             break;
             case 3:
+                countD++;
                 removeImovel();
                 break;
             case 4:
+                countE++;
                 imovelEscolhido = buscaPorTitulo();
                 editaCadastro(imovelEscolhido);
                 break;
@@ -347,7 +363,9 @@ void Menu(){
                 break;
         }
     }
-}
+}   
+
+
 
 void cadastraImoveis(){
     int i = 0;
