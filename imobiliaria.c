@@ -72,9 +72,9 @@ imovel_t listaImoveis[MAX_TAMANHO];
 int countC=0,countD=0,countE=0;
 
 int main(void){
-    //leImoveis(listaImoveis);
+    leImoveis(listaImoveis);
 
-    listaImoveis[0].tipo = TERRENO;
+    /*listaImoveis[0].tipo = TERRENO;
     strcpy(listaImoveis[0].titulo, "Terreno pra vender");
     listaImoveis[0].preco = 10.31;
     listaImoveis[0].imovel.terreno.area = 312;
@@ -106,7 +106,7 @@ int main(void){
     listaImoveis[3].disponibilidade = ALUGUEL;
     listaImoveis[3].ultimo = 0;
 
-    listaImoveis[4].ultimo = 1;
+    listaImoveis[4].ultimo = 1;*/
     Menu();
 
     //salvaImoveis();
@@ -116,8 +116,7 @@ int main(void){
 
 void TiraBarraN(char*str){
     int i;
-    for(i=0;str[i]!='\0';i++)
-    {
+    for(i=0;str[i]!='\0';i++){
         if(str[i]=='\n')
             str[i]='\0';
     }
@@ -211,8 +210,7 @@ void exibeImovel(imovel_t *exibido){
     printf("\n");
 }
 
-int buscaPorTitulo()
-{
+int buscaPorTitulo(){
     int i;
     char titulo[MAX_TAMANHO];
     printf("Digite o Título: ");
@@ -230,8 +228,7 @@ int buscaPorTitulo()
     return -1;
 }
 
-void buscaPorBairro()
-{
+void buscaPorBairro(){
     int i;
     char bairro[MAX_TAMANHO];
     printf("Digite o Bairro: ");
@@ -247,8 +244,7 @@ void buscaPorBairro()
 
     puts("Bairro não encontrado.");
 }
-void buscaPorValor()
-{
+void buscaPorValor(){
     int i;
     float valor;
 
@@ -282,8 +278,7 @@ void buscaDisponibTipo(int disp, int tipo){
     }
 }
 
-void Menu()
-{
+void Menu(){
     int opcao, subopcao, subsubopcao;
     int imovelEscolhido;
     while (1){
@@ -364,8 +359,6 @@ void Menu()
         }
     }
 }   
-
-
 
 void cadastraImoveis(){
     int i = 0;
@@ -465,13 +458,11 @@ void editaCadastro(int i){
     scanf("%d", &listaImoveis[i].endereco.cep);
 
 }
-void escolha()
-{
+void escolha(){
     puts("0-NAO");
     puts("1-SIM");
 }
-void removeImovel()
-{
+void removeImovel(){
     int c, i, j;
     i = buscaPorTitulo();
     if(i != -1){
