@@ -66,6 +66,8 @@ void exibeTudo();
 void removeImovel();
 void Menu();
 void escolha();
+void limpaTela();
+void cabecalho();
 
 imovel_t listaImoveis[MAX_TAMANHO];
 
@@ -142,7 +144,7 @@ void leImoveis(){
 
 void ExibeMenu(){
     //printf("\e[H\e[2J"); //(Comando ta dando aguia na função buscar por titulo)
-    puts("Sistema de gerenciamento de imoveis");
+    puts("\t\tSistema de gerenciamento de imoveis");
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
             "\t 3- Remover imovel\n"
@@ -151,7 +153,7 @@ void ExibeMenu(){
 }
 void ExibeSubmenu(){
     //printf("\e[H\e[2J");
-    puts("Sistema de gerenciamento de imoveis");
+    puts("\t\tSistema de gerenciamento de imoveis");
     printf( "\t 1- Exibir todos imoveis\n"
             "\t 2- Exibir imoveis disponiveis para venda\n"
             "\t 3- Exibir imoveis disponiveis para aluguel\n"
@@ -162,7 +164,7 @@ void ExibeSubmenu(){
 }
 void ExibeSubsubmenu(){
     //printf("\e[H\e[2J");
-    puts("Sistema de gerenciamento de imoveis");
+    puts("\t\tSistema de gerenciamento de imoveis");
     printf( "\t 1- Casas\n"
             "\t 2- Apartamentos\n"
             "\t 3- Terrenos\n"
@@ -282,6 +284,7 @@ void Menu(){
     int opcao, subopcao, subsubopcao;
     int imovelEscolhido;
     while (1){
+        limpaTela();
         ExibeMenu();
         printf("Digite a opcao desejada: ");
         scanf("%d%*c", &opcao);
@@ -299,6 +302,7 @@ void Menu(){
         }
         switch (opcao){
             case 1:
+                limpaTela();
                 countC++;
                 cadastraImoveis();
                 break;
@@ -365,7 +369,6 @@ void cadastraImoveis(){
     while(!listaImoveis[i].ultimo){
         i++;
     }
-
     editaCadastro(i);
 
     puts("Cadastro concluido!");
@@ -376,12 +379,13 @@ void cadastraImoveis(){
 
 void editaCadastro(int i){
     int  opcaoTipo = 0, opcaoDisp = 0;
-
+    
     //aluguel ou venda?
     while (opcaoDisp == 0) {
+        cabecalho();
         puts("O imovel esta disponivel para aluguel ou venda?");
-        puts("\t1 - Aluguel.");
-        puts("\t2 - Venda.");
+        puts("\t1 - Aluguel");
+        puts("\t2 - Venda");
         printf("Digite a opcao desejada: ");
         scanf("%d%*c", &opcaoDisp);
         listaImoveis[i].disponibilidade = opcaoDisp;
@@ -389,6 +393,7 @@ void editaCadastro(int i){
         if(opcaoDisp != 1 && opcaoDisp != 2){
             puts("Opcao invalida");
             opcaoDisp = 0;
+            limpaTela();
         }
     }
 
@@ -397,7 +402,7 @@ void editaCadastro(int i){
     TiraBarraN(listaImoveis[i].titulo);
     printf("Digite o preco: ");
     scanf("%lf", &listaImoveis[i].preco);
-
+    
     while (opcaoTipo == 0) {
         ExibeSubsubmenu();
         printf("Digite o tipo de imovel: ");
@@ -479,4 +484,10 @@ void removeImovel(){
         else
             ExibeMenu();
     }
+}
+void limpaTela(){
+    printf("\e[H\e[2J");
+}
+void cabecalho(){
+    puts("\t\tSistema de gerenciamento de imoveis");
 }
