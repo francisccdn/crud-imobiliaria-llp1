@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #define MAX_TAMANHO 100
 
@@ -68,6 +69,7 @@ void Menu();
 void escolha();
 void limpaTela();
 void cabecalho();
+void esperar();
 
 imovel_t listaImoveis[MAX_TAMANHO];
 
@@ -143,8 +145,7 @@ void leImoveis(){
 }
 
 void ExibeMenu(){
-    //printf("\e[H\e[2J"); //(Comando ta dando aguia na função buscar por titulo)
-    puts("\t\tSistema de gerenciamento de imoveis");
+    cabecalho();
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
             "\t 3- Remover imovel\n"
@@ -152,8 +153,7 @@ void ExibeMenu(){
             "\t 5- Sair\n");
 }
 void ExibeSubmenu(){
-    //printf("\e[H\e[2J");
-    puts("\t\tSistema de gerenciamento de imoveis");
+    cabecalho();
     printf( "\t 1- Exibir todos imoveis\n"
             "\t 2- Exibir imoveis disponiveis para venda\n"
             "\t 3- Exibir imoveis disponiveis para aluguel\n"
@@ -162,12 +162,20 @@ void ExibeSubmenu(){
             "\t 6- Buscar imovel por valor minimo\n"
             "\t 7- Voltar\n");
 }
-void ExibeSubsubmenu(){
-    //printf("\e[H\e[2J");
-    puts("\t\tSistema de gerenciamento de imoveis");
-    printf( "\t 1- Casas\n"
-            "\t 2- Apartamentos\n"
-            "\t 3- Terrenos\n"
+void ExibeSubSubMenu2(){
+    cabecalho();
+    printf( "Voce deseja adicionar uma: \n"
+            "\t 1- Casa\n"
+            "\t 2- Apartamento\n"
+            "\t 3- Terreno\n"
+            "\t 4- Voltar\n");
+}
+void ExibeSubSubMenu1(){
+    cabecalho();
+    printf( "Voce deseja adicionar uma: \n"
+            "\t 1- Casa\n"
+            "\t 2- Apartamento\n"
+            "\t 3- Terreno\n"
             "\t 4- Voltar\n");
 }
 
@@ -281,7 +289,7 @@ void buscaDisponibTipo(int disp, int tipo){
 }
 
 void Menu(){
-    int opcao, subopcao, subsubopcao;
+    int opcao, subopcao, subsubopcao, verificacao;
     int imovelEscolhido;
     while (1){
         limpaTela();
@@ -307,6 +315,7 @@ void Menu(){
                 cadastraImoveis();
                 break;
             case 2:
+                limpaTela();
                 ExibeSubmenu();
                 printf("Digite a opcao desejada: ");
                 scanf("%d%*c", &subopcao);
@@ -316,7 +325,12 @@ void Menu(){
 
                 switch (subopcao){
                     case 1:
+                        limpaTela();
+                        cabecalho();
                         exibeTudo();
+                        printf("Para voltar digite 1\n");
+                        scanf("%d%*c", &verificacao);
+                        if (verificacao == 1)
                         break;
                     case 2: //Venda
                     case 3: //Aluguel
@@ -372,7 +386,7 @@ void cadastraImoveis(){
     editaCadastro(i);
 
     puts("Cadastro concluido!");
-
+    esperar(3);
     listaImoveis[i].ultimo = 0;
     listaImoveis[i+1].ultimo = 1;
 }
@@ -402,7 +416,7 @@ void editaCadastro(int i){
     TiraBarraN(listaImoveis[i].titulo);
     printf("Digite o preco: ");
     scanf("%lf", &listaImoveis[i].preco);
-    
+    limpaTela();
     while (opcaoTipo == 0) {
         ExibeSubsubmenu();
         printf("Digite o tipo de imovel: ");
@@ -490,4 +504,9 @@ void limpaTela(){
 }
 void cabecalho(){
     puts("\t\tSistema de gerenciamento de imoveis");
+}
+void esperar(int segundos){
+    clock_t fim;
+	fim = clock () + segundos * CLOCKS_PER_SEC;
+	while (clock() < fim) {}
 }
