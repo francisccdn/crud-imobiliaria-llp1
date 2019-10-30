@@ -78,7 +78,7 @@ int countC=0,countD=0,countE=0;
 int main(void){
     leImoveis(listaImoveis);
 
-    /*listaImoveis[0].tipo = TERRENO;
+    listaImoveis[0].tipo = TERRENO;
     strcpy(listaImoveis[0].titulo, "Terreno pra vender");
     listaImoveis[0].preco = 10.31;
     listaImoveis[0].imovel.terreno.area = 312;
@@ -110,7 +110,7 @@ int main(void){
     listaImoveis[3].disponibilidade = ALUGUEL;
     listaImoveis[3].ultimo = 0;
 
-    listaImoveis[4].ultimo = 1;*/
+    listaImoveis[4].ultimo = 1;
     Menu();
 
     //salvaImoveis();
@@ -368,8 +368,8 @@ void Menu(){
                 break;
             case 4:
                 countE++;
-                imovelEscolhido = buscaPorTitulo();
-                editaCadastro(imovelEscolhido);
+                if( (buscaPorTitulo())>0)
+                    editaCadastro(imovelEscolhido);
                 break;
             default:
                 puts("Opcao invalida");
