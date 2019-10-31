@@ -3,6 +3,7 @@
 #include <time.h>
 #include "registro.h"
 #include "funcoes.h"
+#include "usuario.h"
 
 #define MAX_TAMANHO 100
 
