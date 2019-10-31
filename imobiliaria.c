@@ -228,7 +228,7 @@ void buscaPorBairro(){
     puts("Bairro não encontrado.");
 }
 void buscaPorValor(){
-    int i;
+    int i, j=0;
     float valor;
 
     printf("Digite o Valor: ");
@@ -239,9 +239,10 @@ void buscaPorValor(){
             printf("==========================================================================\n");
             exibeImovel(&listaImoveis[i]);
             printf("==========================================================================\n");
+            j++;
         }
     }   
-
+    if(j==0)
     puts("Não existem imoveis acima desse valor.");
 }
 
