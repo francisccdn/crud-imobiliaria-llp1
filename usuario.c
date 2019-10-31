@@ -21,11 +21,11 @@ int main(void)
 
 	lerArquivoUsuarios();
 
-	//cadastraUsuario();
+	cadastraUsuario();
 
 	exibeUsuario(0);
 
-	//salvaAquivoUsuarios();
+	salvaAquivoUsuarios();
 
 	return(0);
 
