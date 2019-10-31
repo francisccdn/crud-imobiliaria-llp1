@@ -7,8 +7,8 @@ void salvaImoveis();
 void leImoveis();
 void ExibeMenu();
 void ExibeSubmenu();
-void ExibeSubsubmenu1();
-void ExibeSubsubmenu2();
+void ExibeSubSubMenu1();
+void ExibeSubSubMenu2();
 void exibeImovel(imovel_t*);
 void buscaPorBairro();
 void buscaPorValor();
@@ -22,7 +22,7 @@ int buscaPorTitulo();
 
 imovel_t listaImoveis[MAX_TAMANHO];
 
-int countC=0,countD=0,countE=0;
+int countC = 0, countD = 0, countE = 0;
 
 void TiraBarraN(char*str){
     int i;

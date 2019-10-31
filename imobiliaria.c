@@ -6,8 +6,6 @@
 
 #define MAX_TAMANHO 100
 
-//teste
-
 enum {ALUGUEL = 1, VENDA = 2};
 enum {CASA = 1, APTO = 2, TERRENO = 3};
 
