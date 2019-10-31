@@ -46,3 +46,11 @@ typedef struct{
     int tipo;
     int ultimo;
 } imovel_t;
+typedef struct 
+{
+    char login[MAX_TAMANHO];
+    char senha[MAX_TAMANHO];
+    char nome[MAX_TAMANHO];
+    char tipo[MAX_TAMANHO];
+    int ultimo;
+}usuario_t;
