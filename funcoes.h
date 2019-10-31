@@ -18,7 +18,9 @@ void Menu();
 void escolha();
 void limpaTela();
 void cabecalho();
+void esperar();
 int buscaPorTitulo();
+
 
 imovel_t listaImoveis[MAX_TAMANHO];
 
@@ -443,17 +445,23 @@ void removeImovel(){
     i = buscaPorTitulo();
     if(i != -1){
         printf("Deseja realmente excluir o imovel?\n");
-        escolha();
-        scanf("%d",&c);
-        if(c)
-        {
-            for(j = i; j < MAX_TAMANHO; j++){
-                listaImoveis[j] = listaImoveis[j+1];
+        while(1){
+            escolha();
+            scanf("%d",&c);
+            if(c==0){
+                ExibeMenu();
+                break;
             }
-            puts("Imovel excluido com sucesso!");
+            if(c==1)
+            {
+                for(j = i; j < MAX_TAMANHO; j++){
+                    listaImoveis[j] = listaImoveis[j+1];
+                }
+                puts("Imovel excluido com sucesso!");
+                break;
+            }
+
         }
-        else
-            ExibeMenu();
     }
 }
 void limpaTela(){
