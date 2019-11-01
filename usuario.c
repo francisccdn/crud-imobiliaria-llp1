@@ -17,7 +17,7 @@ int main(void)
 {
 	puts("entrei");
 
-	usuarios[0].ultimo=1;
+	//usuarios[0].ultimo=1;
 
 	lerArquivoUsuarios();
 
@@ -25,8 +25,13 @@ int main(void)
 
 	exibeUsuario(0);
 
-	salvaAquivoUsuarios();
+	exibeUsuario(1);
+	exibeUsuario(2);
+	//salvaAquivoUsuarios();
 
+	salvaAquivoUsuarios();
 	return(0);
+
+}
 
 }
