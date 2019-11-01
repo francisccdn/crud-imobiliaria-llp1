@@ -1,8 +1,5 @@
 #define MAX_TAMANHO 100
 
-enum {ALUGUEL = 1, VENDA = 2};
-enum {CASA = 1, APTO = 2, TERRENO = 3};
-
 typedef struct{
     char logradouro[MAX_TAMANHO];
     int numero;
@@ -46,6 +43,7 @@ typedef struct{
     int tipo;
     int ultimo;
 } imovel_t;
+
 typedef struct 
 {
     char login[MAX_TAMANHO];

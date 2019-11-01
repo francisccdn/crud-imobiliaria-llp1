@@ -1,7 +1,7 @@
 #define MAX_TAMANHO 100
 
 void cadastraImoveis();
-void editaCadastro(int);
+int editaCadastro(int);
 void TiraBarraN(char*);
 void salvaImoveis();
 void leImoveis();
@@ -18,9 +18,12 @@ void Menu();
 void escolha();
 void limpaTela();
 void cabecalho();
-void esperar();
+void esperar(int);
 int buscaPorTitulo();
+int tituloExiste(char[]);
 
+enum {ALUGUEL = 1, VENDA = 2};
+enum {CASA = 1, APTO = 2, TERRENO = 3};
 
 imovel_t listaImoveis[MAX_TAMANHO];
 
@@ -127,6 +130,16 @@ void exibeImovel(imovel_t *exibido){
 
 }
 
+int tituloExiste(char titulo[]){
+    int i;
+    for (i = 0; !listaImoveis[i].ultimo; i++){
+        if(!(strcmp(titulo, listaImoveis[i].titulo))){
+            return 1;
+        }
+    }
+    return 0;
+}
+
 int buscaPorTitulo(){
     int i;
     char titulo[MAX_TAMANHO];
@@ -221,7 +234,7 @@ void Menu(){
         printf("Digite a opcao desejada: ");
         scanf("%d%*c", &opcao);
         if (opcao == 5){
-            if((countC+countD+countE)>0){
+            if((countC + countD + countE) > 0){
                 puts("Deseja salvar suas alterações?");
                 escolha();
                 scanf("%d",&opcao);
@@ -316,7 +329,8 @@ void Menu(){
                 countE++;
                 limpaTela();
                 cabecalho();
-                if( (imovelEscolhido=buscaPorTitulo())>0){
+                imovelEscolhido = buscaPorTitulo();
+                if( imovelEscolhido > 0){
                     printf("Deseja realmente editar o imovel?\n");
                     escolha();
                     scanf("%d",&verificacao);
@@ -339,15 +353,17 @@ void cadastraImoveis(){
     while(!listaImoveis[i].ultimo){
         i++;
     }
-    editaCadastro(i);
-
-    puts("Cadastro concluido!\nVoltando ao menu principal.");
-    esperar(2);
-    listaImoveis[i].ultimo = 0;
-    listaImoveis[i+1].ultimo = 1;
+    if(editaCadastro(i) == 0) {
+        puts("Cadastro concluido!\nVoltando ao menu principal.");
+        esperar(2);
+        listaImoveis[i].ultimo = 0;
+        listaImoveis[i + 1].ultimo = 1;
+    }else{
+        puts("Voltando ao menu principal.");
+    }
 }
 
-void editaCadastro(int i){
+int editaCadastro(int i){
     int  opcaoTipo = 0, opcaoDisp = 0;
 
     //aluguel ou venda?
@@ -370,6 +386,13 @@ void editaCadastro(int i){
     printf("Digite o titulo: ");
     fgets(listaImoveis[i].titulo, MAX_TAMANHO, stdin);
     TiraBarraN(listaImoveis[i].titulo);
+
+    while(tituloExiste(listaImoveis[i].titulo)){
+        puts("Esse titulo já está em uso, por favor digite outro titulo: ");
+        fgets(listaImoveis[i].titulo, MAX_TAMANHO, stdin);
+        TiraBarraN(listaImoveis[i].titulo);
+    }
+
     printf("Digite o preco: ");
     scanf("%lf", &listaImoveis[i].preco);
     esperar(1);
@@ -413,7 +436,7 @@ void editaCadastro(int i){
                 break;
             case 4://Voltar
                 puts("Operacao cancelada.");
-                return;
+                return -1;
             default:
                 puts("Opção invalida.");
                 opcaoTipo = 0;
@@ -435,6 +458,7 @@ void editaCadastro(int i){
     printf("Digite o CEP: ");
     scanf("%d", &listaImoveis[i].endereco.cep);
 
+    return 0;
 }
 void escolha(){
     puts("0- Nao");
