@@ -1,4 +1,4 @@
-#include <stdio.h>
+s#include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include "registro.h"
@@ -15,23 +15,21 @@ usuario_t usuarios[MAX_TAMANHO];
 
 int main(void)
 {
-	puts("entrei");
 
 	//usuarios[0].ultimo=1;
 
 	lerArquivoUsuarios();
 
-	cadastraUsuario();
+	//cadastraUsuario();
 
 	exibeUsuario(0);
 
 	exibeUsuario(1);
 	exibeUsuario(2);
-	//salvaAquivoUsuarios();
-
+	
 	salvaAquivoUsuarios();
 	return(0);
 
 }
 
-}
+
