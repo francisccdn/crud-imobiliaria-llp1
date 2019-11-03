@@ -41,18 +41,28 @@ void salvaImoveis(){
     FILE *fp;
     fp = fopen("imoveis.bin", "wb");
 
-    fwrite(listaImoveis, sizeof(imovel_t), MAX_TAMANHO, fp);
-
-    fclose(fp);
+    if( fp == NULL){
+        puts("Erro ao abrir o arquivo");
+        return;
+    }
+    else{
+        fwrite(listaImoveis, sizeof(imovel_t), MAX_TAMANHO, fp);
+        fclose(fp);
+    }
+    
 }
 
 void leImoveis(){
     FILE *fp;
     fp = fopen("imoveis.bin", "rb");
-
-    fread(listaImoveis, sizeof(imovel_t), MAX_TAMANHO, fp);
-
-    fclose(fp);
+     if( fp == NULL){
+        puts("Erro ao abrir o arquivo ou ainda não possui imoveis cadastrados");
+        return;
+    }
+    else{
+        fread(listaImoveis, sizeof(imovel_t), MAX_TAMANHO, fp);
+        fclose(fp);
+    }
 }
 
 void ExibeMenu(){
