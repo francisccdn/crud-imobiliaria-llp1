@@ -5,22 +5,35 @@ usuario_t usuarios[MAX_TAMANHO];
 
 void lerArquivoUsuarios()
 {
-	FILE *f;
-	f = fopen("usuarios.bin","rb");
+	FILE *fp;
+	fp = fopen("usuarios.bin","rb");
 
-	fread(usuarios,sizeof(usuario_t),MAX_TAMANHO,f);
+	if( fp == NULL){
+        puts("Erro ao abrir o arquivo");
+        return;
+    }
+    else{
+	fread(usuarios,sizeof(usuario_t),MAX_TAMANHO,fp);
 
-	fclose(f);
+	fclose(fp);
+	}
+	
 
 }
 void salvaAquivoUsuarios()
 {
-	FILE *f;
-	f = fopen("usuarios.bin","wb");
+	FILE *fp;
+	fp = fopen("usuarios.bin","wb");
 
-	fwrite(usuarios,sizeof(usuario_t),MAX_TAMANHO,f);
+	 if( fp == NULL){
+        puts("Erro ao abrir o arquivo");
+        return;
+    }
+    else{
+	fwrite(usuarios,sizeof(usuario_t),MAX_TAMANHO,fp);
 
-	fclose(f);
+	fclose(fp);
+	}
 }
 void tipo()
 {
