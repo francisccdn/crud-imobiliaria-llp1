@@ -33,6 +33,7 @@ void exibeUsuario(int);
 void cadastraUsuario();
 int buscaUsario();
 void removeUsuario();
+int buscaCep();
 
 
 enum {ALUGUEL = 1, VENDA = 2};
@@ -501,22 +502,80 @@ int editaCadastro(int i){
         }
     }
 
-    printf("Digite a cidade: ");
-    verificaStr(listaImoveis[i].endereco.cidade);
-
-    printf("Digite o bairro: ");
-    verificaStr(listaImoveis[i].endereco.bairro);
-
-    printf("Digite a rua: ");
-    verificaStr(listaImoveis[i].endereco.logradouro);
-
-    printf("Digite o numero: ");
-    listaImoveis[i].endereco.numero = inputInteiro();
-
-    printf("Digite o CEP: ");
+    printf("Digite o CEP(Sem o digito): ");
     cep(i);
+    if(!(buscaCep(listaImoveis[i].endereco.cep,i))){
+        printf("Digite o numero: ");
+        listaImoveis[i].endereco.numero = inputInteiro();
+    }
+    else{
+        puts("Não encontramos o cep em nosso banco de dados!");
+        printf("Digite a cidade: ");
+        verificaStr(listaImoveis[i].endereco.cidade);
+
+        printf("Digite o bairro: ");
+        verificaStr(listaImoveis[i].endereco.bairro);
+
+        printf("Digite a rua: ");
+        verificaStr(listaImoveis[i].endereco.logradouro);
+
+        printf("Digite o numero: ");
+        listaImoveis[i].endereco.numero = inputInteiro();
+    }
+    
 
     return 0;
+}
+int buscaCep(char *str,int i)
+{
+    FILE *fp;
+
+    char cep1[MAX_TAMANHO], linha[2000];
+    char *tok,*estado,*cidade,*rua,*cep,*bairro;
+
+    int c, t=0;
+
+    char *id;
+
+    fp = fopen("ceps.csv","r");
+
+    if(!fp){
+        puts("Erro ao abrir");
+        return 1;
+    }
+    while(1){
+        fgets(linha,2000,fp);
+        if(feof(fp))
+            break;
+        c=0;
+        tok=strtok(linha,";");
+        cep=tok;
+
+        if(strcmp(tok,str)==0){
+            estado=strtok(NULL,";");
+            c++;
+            cidade=strtok(NULL,";");
+            strcpy(listaImoveis[i].endereco.cidade,cidade);
+            c++;
+            bairro=strtok(NULL,";");
+            strcpy(listaImoveis[i].endereco.bairro,bairro);
+            c++;
+            rua=strtok(NULL,";");
+            strcpy(listaImoveis[i].endereco.logradouro,rua);
+            c++;
+        }
+
+        if(c==4)
+            break;
+        
+    }
+    fclose(fp);
+    printf("%s\n",listaImoveis[i].endereco.cidade);
+    printf("%s\n",listaImoveis[i].endereco.bairro);
+    printf("%s\n",listaImoveis[i].endereco.logradouro);
+
+    return 0;
+
 }
 void verificaStr(char *str){
 
