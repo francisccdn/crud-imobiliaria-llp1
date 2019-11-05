@@ -104,7 +104,7 @@ int buscaUsario()
 	printf("Nome:");
 	fgets(nome,MAX_TAMANHO,stdin);
 	TiraBarraN(nome);
-	for (i = 0; !listaImoveis[i].ultimo; i++){
+	for (i = 0; !usuarios[i].ultimo; i++){
         if(!(strcmp(nome, usuarios[i].nome))){
             printf("==========================================================================\n");
             exibeUsuario(i);

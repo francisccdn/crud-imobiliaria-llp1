@@ -511,3 +511,10 @@ void esperar(int segundos){
     fim = clock () + segundos * CLOCKS_PER_SEC;
     while (clock() < fim) {}
 }
+void logon(){
+    cabecalho;
+    printf("\t\t\tUsuario: ");
+    fgets(login[0].login, MAX_TAMANHO, stdin);
+    TiraBarraN(login[0].login);
+
+}

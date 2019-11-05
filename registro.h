@@ -52,3 +52,10 @@ typedef struct
     char tipo[MAX_TAMANHO];
     int ultimo;
 }usuario_t;
+
+typedef struct 
+{
+    char login[MAX_TAMANHO];
+    char senha[MAX_TAMANHO];
+
+}login_t;
