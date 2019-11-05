@@ -5,7 +5,7 @@ typedef struct{
     int numero;
     char bairro[MAX_TAMANHO];
     char cidade[MAX_TAMANHO];
-    int cep;
+    char cep[MAX_TAMANHO];
 } endereco_t;
 
 typedef struct{
