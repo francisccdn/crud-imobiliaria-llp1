@@ -526,8 +526,7 @@ int editaCadastro(int i){
 
     return 0;
 }
-int buscaCep(char *str,int i)
-{
+int buscaCep(char *str,int i){
     FILE *fp;
 
     char cep1[MAX_TAMANHO], linha[2000];
