@@ -18,6 +18,5 @@ int main(void){
     contarUsuarios();
     printf("%d", contarUsuarios());
     logon(contarUsuarios());
-    //Menu();
     return 0;
 }
