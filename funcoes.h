@@ -687,7 +687,7 @@ int editaCadastroUsuario(int i){
                 printf("Digite o numero de quartos: ");
                 listaImoveis[i].imovel.apto.numQuartos = inputInteiro() ;
 
-                printf("Digite a qauntidade de vagas na garagem: ");
+                printf("Digite a quantidade de vagas na garagem: ");
                 listaImoveis[i].imovel.apto.vagasGaragem = inputInteiro();
 
                 printf("Digite o preco do condominio: ");
@@ -795,7 +795,7 @@ int editaCadastroAdm(int i){
                 printf("Digite o numero de quartos: ");
                 listaImoveis[i].imovel.apto.numQuartos = inputInteiro() ;
 
-                printf("Digite a qauntidade de vagas na garagem: ");
+                printf("Digite a quantidade de vagas na garagem: ");
                 listaImoveis[i].imovel.apto.vagasGaragem = inputInteiro();
 
                 printf("Digite o preco do condominio: ");
