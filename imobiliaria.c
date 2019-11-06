@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include <curses.h>
 #include "registro.h"
 #include "funcoes.h"
 
