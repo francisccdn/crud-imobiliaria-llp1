@@ -88,9 +88,8 @@ void ExibeMenuUsuario(){
     cabecalhoUsuario();
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
-            "\t 3- Remover imovel\n"
-            "\t 4- Editar imovel\n"
-            "\t 5- Sair\n");
+            "\t 3- Editar imovel\n"
+            "\t 4- Sair\n");
 }
 void ExibeMenuAdm(){
     cabecalhoAdm();
@@ -321,7 +320,7 @@ void buscaDisponibTipo(int disp, int tipo){
 }
 
 int MenuAdm(int param){
-    int opcao, subopcao, subsubopcao, verificacao;
+    int opcao, subopcao, subsubopcao, verificacao, aux;
     int imovelEscolhido;
     while (1){
         limpaTela();
@@ -443,19 +442,41 @@ int MenuAdm(int param){
                 cabecalhoAdm();
                 cadastraUsuario();
                 salvaAquivoUsuarios();
-                break;
+                printf("Para voltar digite 1\n");
+                    verificacao=inputInteiro();
+                    if (verificacao == 1){
+                        break;
+                    }
             case 6:
-            limpaTela();
+                limpaTela();
+                cabecalhoAdm();
                 for (int i=0; i<param; i++){
                     exibeUsuario(i);
                 }
-                break;
+                printf("Para voltar digite 1\n");
+                        verificacao=inputInteiro();
+                        if (verificacao == 1)
+                            break;
             case 7: 
-                editaCadastroU(buscaUsario);
-                break;
+                limpaTela();
+                cabecalhoAdm();
+                aux = buscaUsario();
+                printf("Insira os novos dados\n");
+                editaCadastroU(aux);
+                salvaAquivoUsuarios();
+                printf("Para voltar digite 1\n");
+                verificacao=inputInteiro();
+                if (verificacao == 1)
+                    break;
             case 8:
-                //remover user
-                break;
+                limpaTela();
+                cabecalhoAdm();
+                removeUsuario();
+                salvaAquivoUsuarios();
+                printf("Para voltar digite 1\n");
+                verificacao=inputInteiro();
+                if (verificacao == 1)
+                    break;
             default:
                 puts("Opcao invalida");
                 break;
@@ -470,7 +491,7 @@ int MenuUsuario(){
         ExibeMenuUsuario();
         printf("Digite a opcao desejada: ");
         opcao=inputInteiro();
-        if (opcao == 5){
+        if (opcao == 4){
             if((countC + countD + countE) > 0){
                 puts("Deseja salvar suas alterações?");
                 escolha();
@@ -559,12 +580,6 @@ int MenuUsuario(){
                 }
                 break;
             case 3:
-                countD++;
-                limpaTela();
-                cabecalhoUsuario();
-                removeImovel();
-                break;
-            case 4:
                 countE++;
                 limpaTela();
                 cabecalhoUsuario();
@@ -848,7 +863,7 @@ void cabecalhoUsuario(){
     printf("==========================================================================\n"
            "||\t\t   Sistema de gerenciamento de imoveis       \t\t||"
            "==========================================================================\n"
-           "Usuario\n");
+           "\t\t\t\t\t\t            Usuario\n");
 }
 void esperar(int segundos){ //retirar essa função depois
     clock_t fim;
@@ -859,7 +874,7 @@ void esperar(int segundos){ //retirar essa função depois
     }
 }
 void logon(int i){
-    int j, k;
+    int j, k=0;
     while(1){
         limpaTela();
         cabecalho();
@@ -882,7 +897,7 @@ void logon(int i){
                     }
             }
         }
-        
+        //printf ("%d %d %d\n", j, i, k);
         if (k==5){
             break;
         }
@@ -924,13 +939,11 @@ void salvaAquivoUsuarios(){
 }
 void tipo(){
 	puts("Deseja cadastrar o usuario como:");
-	puts("1-Administrador");
-	puts("2-Comum");
+	puts("1- Administrador");
+	puts("2- Comum");
 }
 void editaCadastroU(int i){
-	int opcao;
-
-	cabecalhoAdm();
+	int opcao=0;
 
 	printf("Nome:");
 	fgets(usuarios[i].nome,MAX_TAMANHO,stdin);
@@ -944,10 +957,16 @@ void editaCadastroU(int i){
 	fgets(usuarios[i].senha,MAX_TAMANHO,stdin);
 	TiraBarraN(usuarios[i].senha);
 
-	while(1){
-		tipo();
-		scanf("%d",&opcao);
-		if(opcao==0){
+    while (opcao == 0) {
+        limpaTela();
+        cabecalhoAdm();
+        puts("Deseja cadastrar como Administrador ou Usuario?");
+        puts("\t1 - Administrador");
+        puts("\t2 - Usuario");
+        printf("Digite a opcao desejada: ");
+        opcao=inputInteiro();
+        
+        if(opcao==2){
 			strcpy(usuarios[i].tipo,"Usuario");
 			break;
 		}
@@ -955,8 +974,12 @@ void editaCadastroU(int i){
 			strcpy(usuarios[i].tipo,"Administrador");
 			break;
 		}
-	}
-
+        if(opcao != 1 && opcao != 2){
+            puts("Opcao invalida");
+            opcao = 0;
+            limpaTela();
+        }
+    }
 }
 void exibeUsuario(int i){
 	printf("==========================================================================\n");
@@ -968,8 +991,8 @@ void exibeUsuario(int i){
 }
 void cadastraUsuario(){
 	int i;
-	for(i=0;!(usuarios[i].ultimo);i++)
-		puts("cheguei"); //Enquanto usuario não é 1, faça i++;
+	for(i=0;!(usuarios[i].ultimo);i++){}
+		//puts("cheguei"); //Enquanto usuario não é 1, faça i++;
 			
 	editaCadastroU(i);
 
