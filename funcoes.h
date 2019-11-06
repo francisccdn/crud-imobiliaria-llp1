@@ -439,6 +439,7 @@ int MenuAdm(int param){
                 }
                 break;
             case 5:
+                verificacao = 0;
                 limpaTela();
                 cabecalhoAdm();
                 cadastraUsuario();
@@ -449,6 +450,7 @@ int MenuAdm(int param){
                         break;
                     }
             case 6:
+                verificacao = 0;
                 limpaTela();
                 cabecalhoAdm();
                 for (int i=0; i<param; i++){
@@ -459,6 +461,7 @@ int MenuAdm(int param){
                         if (verificacao == 1)
                             break;
             case 7: 
+                verificacao = 0;
                 limpaTela();
                 cabecalhoAdm();
                 aux = buscaUsario();
@@ -470,6 +473,7 @@ int MenuAdm(int param){
                 if (verificacao == 1)
                     break;
             case 8:
+                verificacao = 0;
                 limpaTela();
                 cabecalhoAdm();
                 removeUsuario();
