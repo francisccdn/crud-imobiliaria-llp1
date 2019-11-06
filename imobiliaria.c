@@ -12,6 +12,7 @@
 
 imovel_t listaImoveis[MAX_TAMANHO];
 usuario_t usuarios[MAX_TAMANHO];
+login_t entrada[0];
 
 int main(void){
     leImoveis(listaImoveis);

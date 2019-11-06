@@ -47,7 +47,6 @@ enum {CASA = 1, APTO = 2, TERRENO = 3};
 
 imovel_t listaImoveis[MAX_TAMANHO];
 usuario_t usuarios[MAX_TAMANHO];
-login_t entrada[0];
 
 int countC = 0, countD = 0, countE = 0;
 
@@ -996,19 +995,20 @@ void esperar(int segundos){ //retirar essa função depois
     }
 }
 void logon(int i){
+    login_t entrada;
     int j, k=0;
     while(1){
         limpaTela();
         cabecalho();
         printf("\n\n\n\t\t\tUsuario: ");
-        fgets(entrada[0].login, MAX_TAMANHO, stdin);
-        TiraBarraN(entrada[0].login);
+        fgets(entrada.login, MAX_TAMANHO, stdin);
+        TiraBarraN(entrada.login);
         for(j=0; j<i; j++){
-            if(strcmp(entrada[0].login, usuarios[j].login) == 0){
+            if(strcmp(entrada.login, usuarios[j].login) == 0){
                 printf("\t\t\tSenha: ");
-                fgets(entrada[0].senha, MAX_TAMANHO, stdin);
-                TiraBarraN(entrada[0].senha);
-                    if(strcmp(entrada[0].senha, usuarios[j].senha) == 0){
+                fgets(entrada.senha, MAX_TAMANHO, stdin);
+                TiraBarraN(entrada.senha);
+                    if(strcmp(entrada.senha, usuarios[j].senha) == 0){
                         printf("%d", j);
                         if(strcmp(usuarios[j].tipo, "Administrador")==0){
                             k = MenuAdm(i);
