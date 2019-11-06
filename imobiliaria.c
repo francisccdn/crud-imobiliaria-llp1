@@ -16,18 +16,9 @@ usuario_t usuarios[MAX_TAMANHO];
 int main(void){
     leImoveis(listaImoveis);
     lerArquivoUsuarios();
-    for (int i=0; i<10; i++){
-        if(strcmp(usuarios[i].login, "" )){
-            exibeUsuario(i);
-        }else{
-            break;
-        }
-        
-    }
-    /*while(1){
-        logon();
-        break;
-    }*/
+    contarUsuarios();
+    printf("%d", contarUsuarios());
+    logon(contarUsuarios());
     //Menu();
     return 0;
 }

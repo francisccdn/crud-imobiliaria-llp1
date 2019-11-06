@@ -14,10 +14,13 @@ void buscaPorBairro();
 void buscaPorValor();
 void exibeTudo();
 void removeImovel();
-void Menu();
+int MenuAdm(int);
+int MenuUsuario();
 void escolha();
 void limpaTela();
 void cabecalho();
+void cabecalhoAdm();
+void cabecalhoUsuario();
 void esperar(int);
 void cep();
 void verificaStr();
@@ -34,6 +37,7 @@ void cadastraUsuario();
 int buscaUsario();
 void removeUsuario();
 int buscaCep();
+int contarUsuarios();
 
 
 enum {ALUGUEL = 1, VENDA = 2};
@@ -41,7 +45,7 @@ enum {CASA = 1, APTO = 2, TERRENO = 3};
 
 imovel_t listaImoveis[MAX_TAMANHO];
 usuario_t usuarios[MAX_TAMANHO];
-login_t entrada[MAX_TAMANHO];
+login_t entrada[0];
 
 int countC = 0, countD = 0, countE = 0;
 
@@ -80,17 +84,28 @@ void leImoveis(){
         fclose(fp);
     }
 }
-
-void ExibeMenu(){
-    cabecalho();
+void ExibeMenuUsuario(){
+    cabecalhoUsuario();
     printf( "\t 1- Cadastrar imovel\n"
             "\t 2- Consultar imovel\n"
             "\t 3- Remover imovel\n"
             "\t 4- Editar imovel\n"
             "\t 5- Sair\n");
 }
-void ExibeSubmenu(){
-    cabecalho();
+void ExibeMenuAdm(){
+    cabecalhoAdm();
+    printf( "\t 1- Cadastrar imovel\n"
+            "\t 2- Consultar imovel\n"
+            "\t 3- Remover imovel\n"
+            "\t 4- Editar imovel\n"
+            "\t 5- Cadastrar usuario\n"
+            "\t 6- Consultar usuario\n"
+            "\t 7- Editar usuario\n"
+            "\t 8- Remover usuario\n"
+            "\t 9- Sair\n");
+}
+void ExibeSubmenuUsuario(){
+    cabecalhoUsuario();
     printf( "\t 1- Exibir todos imoveis\n"
             "\t 2- Exibir imoveis disponiveis para venda\n"
             "\t 3- Exibir imoveis disponiveis para aluguel\n"
@@ -99,23 +114,48 @@ void ExibeSubmenu(){
             "\t 6- Buscar imovel por valor minimo\n"
             "\t 7- Voltar\n");
 }
-void ExibeSubSubMenu2(){
-    cabecalho();
+void ExibeSubmenuAdm(){
+    cabecalhoAdm();
+    printf( "\t 1- Exibir todos imoveis\n"
+            "\t 2- Exibir imoveis disponiveis para venda\n"
+            "\t 3- Exibir imoveis disponiveis para aluguel\n"
+            "\t 4- Buscar imovel por titulo\n"
+            "\t 5- Buscar imovel por bairro\n"
+            "\t 6- Buscar imovel por valor minimo\n"
+            "\t 7- Voltar\n");
+}
+void ExibeSubSubMenu2Usuario(){
+    cabecalhoUsuario();
     printf( "Voce deseja buscar um(a): \n"
             "\t 1- Casa\n"
             "\t 2- Apartamento\n"
             "\t 3- Terreno\n"
             "\t 4- Voltar\n");
 }
-void ExibeSubSubMenu1(){
-    cabecalho();
+void ExibeSubSubMenu2Adm(){
+    cabecalhoAdm();
+    printf( "Voce deseja buscar um(a): \n"
+            "\t 1- Casa\n"
+            "\t 2- Apartamento\n"
+            "\t 3- Terreno\n"
+            "\t 4- Voltar\n");
+}
+void ExibeSubSubMenu1Usuario(){
+    cabecalhoUsuario();
     printf( "Voce deseja adicionar uma: \n"
             "\t 1- Casa\n"
             "\t 2- Apartamento\n"
             "\t 3- Terreno\n"
             "\t 4- Voltar\n");
 }
-
+void ExibeSubSubMenu1Adm(){
+    cabecalhoAdm();
+    printf( "Voce deseja adicionar uma: \n"
+            "\t 1- Casa\n"
+            "\t 2- Apartamento\n"
+            "\t 3- Terreno\n"
+            "\t 4- Voltar\n");
+}
 void exibeImovel(imovel_t *exibido){
     printf("Titulo: %s \n", exibido->titulo);
     printf("Valor: R$ %.2lf \n", exibido->preco);
@@ -280,15 +320,15 @@ void buscaDisponibTipo(int disp, int tipo){
     }
 }
 
-void Menu(){
+int MenuAdm(int param){
     int opcao, subopcao, subsubopcao, verificacao;
     int imovelEscolhido;
     while (1){
         limpaTela();
-        ExibeMenu();
+        ExibeMenuAdm();
         printf("Digite a opcao desejada: ");
         opcao=inputInteiro();
-        if (opcao == 5){
+        if (opcao == 9){
             if((countC + countD + countE) > 0){
                 puts("Deseja salvar suas alterações?");
                 escolha();
@@ -298,7 +338,9 @@ void Menu(){
                     puts("Alterações salvas com sucesso!");
                 }
             }
+            return 5;
             break;
+            
         }
         switch (opcao){
             case 1:
@@ -308,7 +350,7 @@ void Menu(){
                 break;
             case 2:
                 limpaTela();
-                ExibeSubmenu();
+                ExibeSubmenuAdm();
                 printf("Digite a opcao desejada: ");
                 subopcao=inputInteiro();
                 if (subopcao == 7){
@@ -318,7 +360,7 @@ void Menu(){
                 switch (subopcao){
                     case 1:
                         limpaTela();
-                        cabecalho();
+                        cabecalhoAdm();
                         exibeTudo();
                         printf("Para voltar digite 1\n");
                         verificacao=inputInteiro();
@@ -327,9 +369,9 @@ void Menu(){
                     case 2: //Venda
                     case 3: //Aluguel
                         limpaTela();
-                        ExibeSubSubMenu2();
+                        ExibeSubSubMenu2Adm();
                         printf("Digite a opcao desejada: ");
-                       subsubopcao=inputInteiro();
+                        subsubopcao=inputInteiro();
 
                         if (subsubopcao == 4){
                             break;
@@ -339,7 +381,7 @@ void Menu(){
                             break;
                         }
                         limpaTela();
-                        cabecalho();
+                        cabecalhoAdm();
                         buscaDisponibTipo(subopcao, subsubopcao);
                         printf("Para voltar digite 1\n");
                         verificacao=inputInteiro();
@@ -347,7 +389,7 @@ void Menu(){
                             break;
                     case 4:
                         limpaTela();
-                        cabecalho();
+                        cabecalhoAdm();
                         buscaPorTitulo();
                         printf("Para voltar digite 1\n");
                         verificacao=inputInteiro();
@@ -355,7 +397,7 @@ void Menu(){
                             break;
                     case 5:
                         limpaTela();
-                        cabecalho();
+                        cabecalhoAdm();
                         buscaPorBairro();
                         printf("Para voltar digite 1\n");
                         verificacao=inputInteiro();
@@ -363,7 +405,7 @@ void Menu(){
                             break;
                     case 6:
                         limpaTela();
-                        cabecalho();
+                        cabecalhoAdm();
                         buscaPorValor();
                         printf("Para voltar digite 1\n");
                         verificacao=inputInteiro();
@@ -377,13 +419,155 @@ void Menu(){
             case 3:
                 countD++;
                 limpaTela();
-                cabecalho();
+                cabecalhoAdm();
                 removeImovel();
                 break;
             case 4:
                 countE++;
                 limpaTela();
-                cabecalho();
+                cabecalhoAdm();
+                imovelEscolhido = buscaPorTitulo();
+                if( imovelEscolhido > 0){
+                    printf("Deseja realmente editar o imovel?\n");
+                    escolha();
+                    verificacao=inputInteiro();
+                    limpaTela();
+                    if(verificacao==1)
+                        editaCadastro(imovelEscolhido);
+                    printf("Edicao concluida!\nVoltando ao menu principal\n");
+                    esperar(2);
+                }
+                break;
+            case 5:
+                limpaTela();
+                cabecalhoAdm();
+                cadastraUsuario();
+                salvaAquivoUsuarios();
+                break;
+            case 6:
+            limpaTela();
+                for (int i=0; i<param; i++){
+                    exibeUsuario(i);
+                }
+                break;
+            case 7: 
+                editaCadastroU(buscaUsario);
+                break;
+            case 8:
+                //remover user
+                break;
+            default:
+                puts("Opcao invalida");
+                break;
+        }
+    }
+}
+int MenuUsuario(){
+    int opcao, subopcao, subsubopcao, verificacao;
+    int imovelEscolhido;
+    while (1){
+        limpaTela();
+        ExibeMenuUsuario();
+        printf("Digite a opcao desejada: ");
+        opcao=inputInteiro();
+        if (opcao == 5){
+            if((countC + countD + countE) > 0){
+                puts("Deseja salvar suas alterações?");
+                escolha();
+                scanf("%d",&opcao);
+                if(opcao){
+                    salvaImoveis();
+                    puts("Alterações salvas com sucesso!");
+                }
+            }
+            return 5;
+            break;
+            
+        }
+        switch (opcao){
+            case 1:
+                limpaTela();
+                countC++;
+                cadastraImoveis();
+                break;
+            case 2:
+                limpaTela();
+                ExibeSubmenuUsuario();
+                printf("Digite a opcao desejada: ");
+                subopcao=inputInteiro();
+                if (subopcao == 7){
+                    break;
+                }
+
+                switch (subopcao){
+                    case 1:
+                        limpaTela();
+                        cabecalhoUsuario();
+                        exibeTudo();
+                        printf("Para voltar digite 1\n");
+                        verificacao=inputInteiro();
+                        if (verificacao == 1)
+                            break;
+                    case 2: //Venda
+                    case 3: //Aluguel
+                        limpaTela();
+                        ExibeSubSubMenu2Usuario();
+                        printf("Digite a opcao desejada: ");
+                        subsubopcao=inputInteiro();
+
+                        if (subsubopcao == 4){
+                            break;
+                        }
+                        else if(subsubopcao > 4 || subsubopcao < 1){
+                            puts("Opcao invalida");
+                            break;
+                        }
+                        limpaTela();
+                        cabecalhoUsuario();
+                        buscaDisponibTipo(subopcao, subsubopcao);
+                        printf("Para voltar digite 1\n");
+                        verificacao=inputInteiro();
+                        if (verificacao == 1)
+                            break;
+                    case 4:
+                        limpaTela();
+                        cabecalhoUsuario();
+                        buscaPorTitulo();
+                        printf("Para voltar digite 1\n");
+                        verificacao=inputInteiro();
+                        if (verificacao == 1)
+                            break;
+                    case 5:
+                        limpaTela();
+                        cabecalhoUsuario();
+                        buscaPorBairro();
+                        printf("Para voltar digite 1\n");
+                        verificacao=inputInteiro();
+                        if (verificacao == 1)
+                            break;
+                    case 6:
+                        limpaTela();
+                        cabecalhoUsuario();
+                        buscaPorValor();
+                        printf("Para voltar digite 1\n");
+                        verificacao=inputInteiro();
+                        if (verificacao == 1)
+                            break;
+                    default:
+                        puts("Opcao invalida");
+                        break;
+                }
+                break;
+            case 3:
+                countD++;
+                limpaTela();
+                cabecalhoUsuario();
+                removeImovel();
+                break;
+            case 4:
+                countE++;
+                limpaTela();
+                cabecalhoUsuario();
                 imovelEscolhido = buscaPorTitulo();
                 if( imovelEscolhido > 0){
                     printf("Deseja realmente editar o imovel?\n");
@@ -424,7 +608,7 @@ int editaCadastro(int i){
     float valor;
     //aluguel ou venda?
     while (opcaoDisp == 0) {
-        cabecalho();
+        cabecalhoAdm();
         puts("O imovel esta disponivel para aluguel ou venda?");
         puts("\t1 - Aluguel");
         puts("\t2 - Venda");
@@ -452,12 +636,12 @@ int editaCadastro(int i){
     esperar(1);
     limpaTela();
     while (opcaoTipo == 0) {
-        ExibeSubSubMenu1();
+        ExibeSubSubMenu1Adm();
         printf("Digite o tipo de imovel: ");
         opcaoTipo=inputInteiro();
         listaImoveis[i].tipo = opcaoTipo;
         limpaTela();
-        cabecalho();
+        cabecalhoAdm();
         switch (opcaoTipo) {
             case CASA:
                 printf("Digite o numero de quartos: ");
@@ -631,7 +815,7 @@ void removeImovel(){
             escolha();
             c=inputInteiro();
             if(c==0){
-                ExibeMenu();
+                ExibeMenuAdm();
                 break;
             }
             if(c==1)
@@ -654,6 +838,18 @@ void cabecalho(){
            "||\t\t   Sistema de gerenciamento de imoveis       \t\t||"
            "==========================================================================\n");
 }
+void cabecalhoAdm(){
+    printf("==========================================================================\n"
+           "||\t\t   Sistema de gerenciamento de imoveis       \t\t||"
+           "==========================================================================\n"
+           "\t\t\t\t\t\t            Administrador\n");
+}
+void cabecalhoUsuario(){
+    printf("==========================================================================\n"
+           "||\t\t   Sistema de gerenciamento de imoveis       \t\t||"
+           "==========================================================================\n"
+           "Usuario\n");
+}
 void esperar(int segundos){ //retirar essa função depois
     clock_t fim;
     fim = clock () + segundos * CLOCKS_PER_SEC;
@@ -662,12 +858,41 @@ void esperar(int segundos){ //retirar essa função depois
         x++;
     }
 }
-void logon(){
-    cabecalho;
-    printf("\t\t\tUsuario: ");
-    fgets(entrada[0].login, MAX_TAMANHO, stdin);
-    TiraBarraN(entrada[0].login);
-
+void logon(int i){
+    int j, k;
+    while(1){
+        limpaTela();
+        cabecalho();
+        printf("\n\n\n\t\t\tUsuario: ");
+        fgets(entrada[0].login, MAX_TAMANHO, stdin);
+        TiraBarraN(entrada[0].login);
+        for(j=0; j<i; j++){
+            if(strcmp(entrada[0].login, usuarios[j].login) == 0){
+                printf("\t\t\tSenha: ");
+                fgets(entrada[0].senha, MAX_TAMANHO, stdin);
+                TiraBarraN(entrada[0].senha);
+                    if(strcmp(entrada[0].senha, usuarios[j].senha) == 0){
+                        printf("%d", j);
+                        if(strcmp(usuarios[j].tipo, "Administrador")==0){
+                            k = MenuAdm(i);
+                        }
+                        if(strcmp(usuarios[j].tipo, "Usuario")== 0){
+                            k = MenuUsuario();
+                        }
+                    }
+            }
+        }
+        
+        if (k==5){
+            break;
+        }
+        if(j>=i){
+            printf("\t\t\tCredenciais invalidas\n");
+            esperar(2);
+        }
+        
+    }
+    
 }
 void lerArquivoUsuarios(){
 	FILE *fp;
@@ -682,8 +907,6 @@ void lerArquivoUsuarios(){
 
 	fclose(fp);
 	}
-	
-
 }
 void salvaAquivoUsuarios(){
 	FILE *fp;
@@ -707,7 +930,7 @@ void tipo(){
 void editaCadastroU(int i){
 	int opcao;
 
-	cabecalho();
+	cabecalhoAdm();
 
 	printf("Nome:");
 	fgets(usuarios[i].nome,MAX_TAMANHO,stdin);
@@ -725,7 +948,7 @@ void editaCadastroU(int i){
 		tipo();
 		scanf("%d",&opcao);
 		if(opcao==0){
-			strcpy(usuarios[i].tipo,"Comum");
+			strcpy(usuarios[i].tipo,"Usuario");
 			break;
 		}
 		if(opcao==1){
@@ -798,4 +1021,15 @@ void removeUsuario(){
 
 	}
 
+}
+int contarUsuarios(){
+    int i=0;
+        for (i=0; i<MAX_TAMANHO; i++){
+        if(strcmp(usuarios[i].login, "" )){
+            //exibeUsuario(i);
+        }else{
+            break;
+        }
+    }
+    return i;
 }
