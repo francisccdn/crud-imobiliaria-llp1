@@ -1,7 +1,9 @@
 #define MAX_TAMANHO 100
 
-void cadastraImoveis();
-int editaCadastro(int);
+void cadastraImoveisAdm();
+void cadastraImoveisUsuario();
+int editaCadastroAdm(int);
+int editaCadastroUsuario(int);
 void TiraBarraN(char*);
 void salvaImoveis();
 void leImoveis();
@@ -345,7 +347,7 @@ int MenuAdm(int param){
             case 1:
                 limpaTela();
                 countC++;
-                cadastraImoveis();
+                cadastraImoveisAdm();
                 break;
             case 2:
                 limpaTela();
@@ -432,7 +434,7 @@ int MenuAdm(int param){
                     verificacao=inputInteiro();
                     limpaTela();
                     if(verificacao==1)
-                        editaCadastro(imovelEscolhido);
+                        editaCadastroAdm(imovelEscolhido);
                     printf("Edicao concluida!\nVoltando ao menu principal\n");
                     esperar(2);
                 }
@@ -509,7 +511,7 @@ int MenuUsuario(){
             case 1:
                 limpaTela();
                 countC++;
-                cadastraImoveis();
+                cadastraImoveisUsuario();
                 break;
             case 2:
                 limpaTela();
@@ -590,7 +592,7 @@ int MenuUsuario(){
                     verificacao=inputInteiro();
                     limpaTela();
                     if(verificacao==1)
-                        editaCadastro(imovelEscolhido);
+                        editaCadastroUsuario(imovelEscolhido);
                     printf("Edicao concluida!\nVoltando ao menu principal\n");
                     esperar(2);
                 }
@@ -602,12 +604,26 @@ int MenuUsuario(){
     }
 }
 
-void cadastraImoveis(){
+void cadastraImoveisAdm(){
     int i = 0;
     while(!listaImoveis[i].ultimo){
         i++;
     }
-    if(editaCadastro(i) == 0) {
+    if(editaCadastroAdm(i) == 0) {
+        puts("Cadastro concluido!\nVoltando ao menu principal.");
+        esperar(2);
+        listaImoveis[i].ultimo = 0;
+        listaImoveis[i + 1].ultimo = 1;
+    }else{
+        puts("Voltando ao menu principal.");
+    }
+}
+void cadastraImoveisUsuario(){
+    int i = 0;
+    while(!listaImoveis[i].ultimo){
+        i++;
+    }
+    if(editaCadastroUsuario(i) == 0) {
         puts("Cadastro concluido!\nVoltando ao menu principal.");
         esperar(2);
         listaImoveis[i].ultimo = 0;
@@ -617,7 +633,115 @@ void cadastraImoveis(){
     }
 }
 
-int editaCadastro(int i){
+int editaCadastroUsuario(int i){
+    int  opcaoTipo = 0, opcaoDisp = 0;
+    char tempValor[MAX_TAMANHO];
+    float valor;
+    //aluguel ou venda?
+    while (opcaoDisp == 0) {
+        cabecalhoUsuario();
+        puts("O imovel esta disponivel para aluguel ou venda?");
+        puts("\t1 - Aluguel");
+        puts("\t2 - Venda");
+        printf("Digite a opcao desejada: ");
+        opcaoDisp=inputInteiro();
+        listaImoveis[i].disponibilidade = opcaoDisp;
+
+        if(opcaoDisp != 1 && opcaoDisp != 2){
+            puts("Opcao invalida");
+            opcaoDisp = 0;
+            limpaTela();
+        }
+    }
+
+    printf("Digite o titulo: ");
+    verificaStr(listaImoveis[i].titulo);
+    while(tituloExiste(listaImoveis[i].titulo)){
+        puts("Esse titulo já está em uso, por favor digite outro titulo: ");
+        fgets(listaImoveis[i].titulo, MAX_TAMANHO, stdin);
+        TiraBarraN(listaImoveis[i].titulo);
+    }
+
+    printf("Digite o Valor: ");
+    listaImoveis[i].preco=inputValor();
+    esperar(1);
+    limpaTela();
+    while (opcaoTipo == 0) {
+        ExibeSubSubMenu1Usuario();
+        printf("Digite o tipo de imovel: ");
+        opcaoTipo=inputInteiro();
+        listaImoveis[i].tipo = opcaoTipo;
+        limpaTela();
+        cabecalhoAdm();
+        switch (opcaoTipo) {
+            case CASA:
+                printf("Digite o numero de quartos: ");
+                listaImoveis[i].imovel.casa.numQuartos = inputInteiro();
+                printf("Digite o numero de pavimentos: ");
+                listaImoveis[i].imovel.casa.numPavimentos = inputInteiro();
+                printf("Digite a area do terreno: ");
+                listaImoveis[i].imovel.casa.areaTerreno = inputValor();
+                printf("Digite a area construida: ");
+                listaImoveis[i].imovel.casa.areaConstruida =  inputValor();
+                break;
+            case APTO:
+                printf("Digite o numero de quartos: ");
+                listaImoveis[i].imovel.apto.numQuartos = inputInteiro() ;
+
+                printf("Digite a qauntidade de vagas na garagem: ");
+                listaImoveis[i].imovel.apto.vagasGaragem = inputInteiro();
+
+                printf("Digite o preco do condominio: ");
+                listaImoveis[i].imovel.apto.precoCondominio = inputValor();
+
+                printf("Digite a posicao do apartamento: ");
+                verificaStr(listaImoveis[i].imovel.apto.posicao);
+
+                printf("Digite a area do apartamento: ");
+                listaImoveis[i].imovel.apto.area = inputValor();
+
+                printf("Digite o andar: ");
+                listaImoveis[i].imovel.apto.andar = inputInteiro();
+                break;
+            case TERRENO:
+                printf("Digite a area do terreno: ");
+                listaImoveis[i].imovel.terreno.area = inputValor();
+                break;
+            case 4://Voltar
+                puts("Operacao cancelada.");
+                return -1;
+            default:
+                puts("Opção invalida.");
+                opcaoTipo = 0;
+                break;
+        }
+    }
+
+    printf("Digite o CEP(Sem o digito): ");
+    cep(i);
+    if(!(buscaCep(listaImoveis[i].endereco.cep,i))){
+        printf("Digite o numero: ");
+        listaImoveis[i].endereco.numero = inputInteiro();
+    }
+    else{
+        puts("Não encontramos o cep em nosso banco de dados!");
+        printf("Digite a cidade: ");
+        verificaStr(listaImoveis[i].endereco.cidade);
+
+        printf("Digite o bairro: ");
+        verificaStr(listaImoveis[i].endereco.bairro);
+
+        printf("Digite a rua: ");
+        verificaStr(listaImoveis[i].endereco.logradouro);
+
+        printf("Digite o numero: ");
+        listaImoveis[i].endereco.numero = inputInteiro();
+    }
+    
+
+    return 0;
+}
+int editaCadastroAdm(int i){
     int  opcaoTipo = 0, opcaoDisp = 0;
     char tempValor[MAX_TAMANHO];
     float valor;
@@ -647,7 +771,7 @@ int editaCadastro(int i){
     }
 
     printf("Digite o Valor: ");
-    valor=inputValor();
+    listaImoveis[i].preco=inputValor();
     esperar(1);
     limpaTela();
     while (opcaoTipo == 0) {
@@ -760,12 +884,13 @@ int buscaCep(char *str,int i){
             c++;
             rua=strtok(NULL,";");
             strcpy(listaImoveis[i].endereco.logradouro,rua);
+            TiraBarraN(listaImoveis[i].endereco.logradouro);
             c++;
         }
         if(c==4){
-        	printf("%s\n",listaImoveis[i].endereco.cidade);
-    		printf("%s\n",listaImoveis[i].endereco.bairro);
-    		printf("%s\n",listaImoveis[i].endereco.logradouro);
+        	printf("Cidade: %s\n",listaImoveis[i].endereco.cidade);
+    		printf("Bairro: %s\n",listaImoveis[i].endereco.bairro);
+    		printf("Logradouro: %s\n",listaImoveis[i].endereco.logradouro);
             return 0;
         }
         
