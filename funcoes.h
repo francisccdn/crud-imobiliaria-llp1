@@ -762,18 +762,17 @@ int buscaCep(char *str,int i){
             strcpy(listaImoveis[i].endereco.logradouro,rua);
             c++;
         }
-
-        if(c==4)
-            break;
+        if(c==4){
+        	printf("%s\n",listaImoveis[i].endereco.cidade);
+    		printf("%s\n",listaImoveis[i].endereco.bairro);
+    		printf("%s\n",listaImoveis[i].endereco.logradouro);
+            return 0;
+        }
         
     }
     fclose(fp);
-    printf("%s\n",listaImoveis[i].endereco.cidade);
-    printf("%s\n",listaImoveis[i].endereco.bairro);
-    printf("%s\n",listaImoveis[i].endereco.logradouro);
-
-    return 0;
-
+   
+    return 1;
 }
 void verificaStr(char *str){
 
@@ -801,17 +800,15 @@ void cep(int i){
     fgets(listaImoveis[i].endereco.cep,MAX_TAMANHO,stdin);
     TiraBarraN(listaImoveis[i].endereco.cep);
 
-    if(strlen(listaImoveis[i].endereco.cep)==9){
+    if(strlen(listaImoveis[i].endereco.cep)==8){
 
         for(j = 0;j <= (strlen(listaImoveis[i].endereco.cep));j++){
 
             if(isdigit(listaImoveis[i].endereco.cep[j]))
                 count++;
         }
-        if(listaImoveis[i].endereco.cep[5]=='-')
-                count++;
     }
-    if(count==9)
+    if(count==8)
         break;
     else
         printf("Digite um  cep válido:");
