@@ -70,7 +70,7 @@ void salvaImoveis(){
         fwrite(listaImoveis, sizeof(imovel_t), MAX_TAMANHO, fp);
         fclose(fp);
     }
-
+    
 }
 
 void leImoveis(){
@@ -281,7 +281,7 @@ void buscaPorValor(){
     char tempValor[MAX_TAMANHO];
     char *ptNull;
     printf("Digite o Valor: ");
-    valor = inputValor();
+    valor = inputValor();   
     for ( i = 0; !listaImoveis[i].ultimo; i++){
         if(listaImoveis[i].preco >= valor){
             printf("==========================================================================\n");
@@ -294,7 +294,7 @@ void buscaPorValor(){
 }
 
 void separador(){
-    printf("====================================================================================================================================================\n");
+    printf("==========================================================================\n");
 }
 
 void exibeTudo(){
@@ -340,7 +340,7 @@ int MenuAdm(int param){
             }
             return 5;
             break;
-
+            
         }
         switch (opcao){
             case 1:
@@ -439,6 +439,7 @@ int MenuAdm(int param){
                 }
                 break;
             case 5:
+                verificacao = 0;
                 limpaTela();
                 cabecalhoAdm();
                 cadastraUsuario();
@@ -449,6 +450,7 @@ int MenuAdm(int param){
                         break;
                     }
             case 6:
+                verificacao = 0;
                 limpaTela();
                 cabecalhoAdm();
                 for (int i=0; i<param; i++){
@@ -458,7 +460,8 @@ int MenuAdm(int param){
                         verificacao=inputInteiro();
                         if (verificacao == 1)
                             break;
-            case 7:
+            case 7: 
+                verificacao = 0;
                 limpaTela();
                 cabecalhoAdm();
                 aux = buscaUsario();
@@ -470,6 +473,7 @@ int MenuAdm(int param){
                 if (verificacao == 1)
                     break;
             case 8:
+                verificacao = 0;
                 limpaTela();
                 cabecalhoAdm();
                 removeUsuario();
@@ -504,7 +508,7 @@ int MenuUsuario(){
             }
             return 5;
             break;
-
+            
         }
         switch (opcao){
             case 1:
@@ -736,7 +740,7 @@ int editaCadastroUsuario(int i){
         printf("Digite o numero: ");
         listaImoveis[i].endereco.numero = inputInteiro();
     }
-
+    
 
     return 0;
 }
@@ -844,7 +848,7 @@ int editaCadastroAdm(int i){
         printf("Digite o numero: ");
         listaImoveis[i].endereco.numero = inputInteiro();
     }
-
+    
 
     return 0;
 }
@@ -892,10 +896,10 @@ int buscaCep(char *str,int i){
     		printf("Logradouro: %s\n",listaImoveis[i].endereco.logradouro);
             return 0;
         }
-
+        
     }
     fclose(fp);
-
+   
     return 1;
 }
 void verificaStr(char *str){
@@ -970,17 +974,21 @@ void limpaTela(){
     printf("\e[H\e[2J");
 }
 void cabecalho(){
-    printf("====================================================================================================================================================\n"
-           "||                                               Sistema de gerenciamento de imoveis                                                              ||\n"
-           "====================================================================================================================================================\n");
+    printf("==========================================================================\n"
+           "||\t\t   Sistema de gerenciamento de imoveis       \t\t||"
+           "==========================================================================\n");
 }
 void cabecalhoAdm(){
-    cabecalho();
-    printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t           Administrador\n");
+    printf("==========================================================================\n"
+           "||\t\t   Sistema de gerenciamento de imoveis       \t\t||"
+           "==========================================================================\n"
+           "\t\t\t\t\t\t            Administrador\n");
 }
 void cabecalhoUsuario(){
-    cabecalho();
-    printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t            Usuario\n");
+    printf("==========================================================================\n"
+           "||\t\t   Sistema de gerenciamento de imoveis       \t\t||"
+           "==========================================================================\n"
+           "\t\t\t\t\t\t            Usuario\n");
 }
 void esperar(int segundos){ //retirar essa função depois
     clock_t fim;
@@ -1001,46 +1009,31 @@ void logon(int i){
         TiraBarraN(entrada.login);
         for(j=0; j<i; j++){
             if(strcmp(entrada.login, usuarios[j].login) == 0){
-                printf("\t\t\tSenha (espaço para encerrar): ");
-
-                system ("/bin/stty raw");
-                char inSenha = ' ';
-                int indexSenha = 0;
-                while(1){
-                    inSenha = getc(stdin);
-
-                    if(inSenha == ' '){
-                        break;
+                printf("\t\t\tSenha: ");
+                fgets(entrada.senha, MAX_TAMANHO, stdin);
+                TiraBarraN(entrada.senha);
+                    if(strcmp(entrada.senha, usuarios[j].senha) == 0){
+                        printf("%d", j);
+                        if(strcmp(usuarios[j].tipo, "Administrador")==0){
+                            k = MenuAdm(i);
+                        }
+                        if(strcmp(usuarios[j].tipo, "Usuario")== 0){
+                            k = MenuUsuario();
+                        }
                     }
-
-                    printf("\b*");
-                    entrada.senha[indexSenha] = inSenha;
-                    indexSenha++;
-                }
-                entrada.senha[indexSenha] = '\0';
-                system ("/bin/stty cooked");
-
-                if(strcmp(entrada.senha, usuarios[j].senha) == 0){
-                    printf("%d", j);
-                    if(strcmp(usuarios[j].tipo, "Administrador")==0){
-                        k = MenuAdm(i);
-                    }
-                    if(strcmp(usuarios[j].tipo, "Usuario")== 0){
-                        k = MenuUsuario();
-                    }
-                }
             }
         }
+        //printf ("%d %d %d\n", j, i, k);
         if (k==5){
             break;
         }
         if(j>=i){
-            printf("\n\t\t\tCredenciais invalidas\n");
+            printf("\t\t\tCredenciais invalidas\n");
             esperar(2);
         }
-
+        
     }
-
+    
 }
 void lerArquivoUsuarios(){
 	FILE *fp;
@@ -1098,7 +1091,7 @@ void editaCadastroU(int i){
         puts("\t2 - Usuario");
         printf("Digite a opcao desejada: ");
         opcao=inputInteiro();
-
+        
         if(opcao==2){
 			strcpy(usuarios[i].tipo,"Usuario");
 			break;
@@ -1115,18 +1108,18 @@ void editaCadastroU(int i){
     }
 }
 void exibeUsuario(int i){
-  separador();
+	printf("==========================================================================\n");
 	printf("Nome: %s\n",usuarios[i].nome);
 	printf("Login: %s\n",usuarios[i].login);
 	printf("Senha: %s\n",usuarios[i].senha);
 	printf("Tipo: %s\n",usuarios[i].tipo);
-	separador();
+	printf("==========================================================================\n");
 }
 void cadastraUsuario(){
 	int i;
 	for(i=0;!(usuarios[i].ultimo);i++){}
 		//puts("cheguei"); //Enquanto usuario não é 1, faça i++;
-
+			
 	editaCadastroU(i);
 
 	usuarios[i].ultimo = 0;
@@ -1152,7 +1145,7 @@ int buscaUsario(){
 
 }
 void removeUsuario(){
-
+	
 	int i,j,opcao;
 	i= buscaUsario();
 
@@ -1170,9 +1163,9 @@ void removeUsuario(){
 					 usuarios[j] = usuarios[j+1];
 				}
 				puts("Usuario removido com sucesso");
-				break;
+				break;	
 			}
-
+			
 		}
 
 	}
