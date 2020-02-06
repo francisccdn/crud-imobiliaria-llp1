@@ -1,25 +1,11 @@
 #include "Imovel.h"
 
-Endereco::Endereco(std::string logradouro, int numero, std::string bairro, std::string cep, std::string cidade){
-    this -> logradouro = logradouro;
-    this -> numero = numero;
-    this -> bairro = bairro;
-    this -> cep = cep;
-    this -> cidade = cidade;
-};
+char getTipo();
+bool getDisponiblidade();
+double getValor();
+std::string getTitulo;
 
-    std::string Endereco::getLogradouro(){
-        return logradouro;
-    }
-    int Endereco::getNumero(){
-        return numero;
-    }
-    std::string Endereco::getBairro(){
-        return bairro;
-    }
-    std::string Endereco::getCep(){
-        return cep;
-    }
-    std::string Endereco::getCidade(){
-        return cidade;
-    };
+void setTipo(char tipo);
+void setDisponibilidade(bool disp);
+void setValor(double valor);
+void setTitulo(std::string titulo);
