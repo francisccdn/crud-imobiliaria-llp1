@@ -6,13 +6,15 @@
 class Imovel
 {
 private:
-    Endereco endereco; 
     char tipo;
     bool disponibilidade;
     double valor;
     std::string titulo;
 
 public:
+    Endereco endereco; 
+    //Coloquei o endereco como publico para poder acessar seus metodos na classe Imobiliaria
+    //(para a busca por bairro e por cidade)
 
     Imovel();
     Imovel(Endereco endereco, char tipo, bool disponibilidade, double valor, std::string titulo);
@@ -20,7 +22,7 @@ public:
     char getTipo();
     bool getDisponiblidade();
     double getValor();
-    std::string getTitulo;
+    std::string getTitulo();
 
     void setTipo(char tipo);
     void setDisponibilidade(bool disp);

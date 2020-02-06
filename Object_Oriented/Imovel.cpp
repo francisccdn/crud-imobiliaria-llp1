@@ -3,7 +3,7 @@
 char getTipo();
 bool getDisponiblidade();
 double getValor();
-std::string getTitulo;
+std::string getTitulo();
 
 void setTipo(char tipo);
 void setDisponibilidade(bool disp);
