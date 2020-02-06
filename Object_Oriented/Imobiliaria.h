@@ -7,15 +7,15 @@
 class Imobiliaria
 {
 private:
-    std::vector<Imovel> listaImoveis;
+    std::vector<Imovel*> listaImoveis;
 
 public:
     void cadastraImovel(Imovel imovel);
     void removerImoveis(std::vector<int>);
     void editarImovel(Imovel, int);
 
-    std::vector<Imovel> getImoveis();
-    std::vector<Imovel> getImoveis(std::vector<int>);
+    std::vector<Imovel*> getImoveis();
+    std::vector<Imovel*> getImoveis(std::vector<int>);
     
     std::vector<int> indexPorTipo(char);
     std::vector<int> indexPorDisponibilidade(bool);
