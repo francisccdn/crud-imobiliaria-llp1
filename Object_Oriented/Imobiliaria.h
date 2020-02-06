@@ -10,9 +10,9 @@ private:
     std::vector<Imovel> listaImoveis;
 
 public:
-    bool cadastraImovel(Imovel imovel);
-    bool removerImoveis(std::vector<int>);
-    bool editarImovel(Imovel, int);
+    void cadastraImovel(Imovel imovel);
+    void removerImoveis(std::vector<int>);
+    void editarImovel(Imovel, int);
 
     std::vector<Imovel> getImoveis();
     std::vector<Imovel> getImoveis(std::vector<int>);
