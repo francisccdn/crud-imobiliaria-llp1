@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 class Endereco
 {    
-private:
+protected:
     std::string logradouro;
     int numero;
     std::string bairro;
@@ -20,6 +21,6 @@ public:
     std::string getCep();
     std::string getCidade();
 
-    void setEndereco(std::string logradouro, int numero, std::string bairro, std::string cep, std::string cidade);
+    void setEndereco(std::string, int, std::string, std::string, std::string);
 
 };

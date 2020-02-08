@@ -4,10 +4,12 @@
 
 class Terreno : public Imovel
 {
-private:
+protected:
     double area;
 
 public:
+    Terreno();
+    Terreno(Endereco endereco, char tipo, bool disponibilidade, double valor, std::string titulo, double area);
     double getArea();
     void setArea(double area);
 };

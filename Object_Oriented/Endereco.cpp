@@ -1,5 +1,13 @@
 #include "Endereco.h"
 
+Endereco::Endereco(){
+    logradouro = "Rua sem nome";
+    numero = 0;
+    bairro = "Bairro inexistente";
+    cep = "58000-000";
+    cidade = "Desconhecida";
+}
+
 Endereco::Endereco(std::string logradouro, int numero, std::string bairro, std::string cep, std::string cidade){
     this -> logradouro = logradouro;
     this -> numero = numero;
@@ -23,3 +31,11 @@ Endereco::Endereco(std::string logradouro, int numero, std::string bairro, std::
     std::string Endereco::getCidade(){
         return cidade;
     };
+    void Endereco::setEndereco(std::string l, int n, std::string b, std::string cp, std::string cd){
+        logradouro = l;
+        numero = n;
+        bairro = b;
+        cep = cp;
+        cidade = cd;
+    };
+    
