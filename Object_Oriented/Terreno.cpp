@@ -15,7 +15,7 @@ double Terreno::getArea(){
     return area;
 };
 
-void Terreno::setArea(double a){
-    area = a;
+void Terreno::setArea(double area){
+    this-> area = area;
 };
 

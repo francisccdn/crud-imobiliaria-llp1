@@ -14,6 +14,9 @@ private:
     std::string posicao;
     int numVagas;
 public:
+
+    Apartamento();
+    Apartamento(Endereco endereco, char tipo, bool disponibilidade, double valor, std::string titulo, int andar, double valorCondominio, double area, int numQuartos, std::string posicao, int numVagas);
     int getAndar();
     double getValorCondominio();
     double getArea();
@@ -22,7 +25,7 @@ public:
     int getNumVagas();
 
     void setAndar(int andar);
-    void setValorCondominio(double valorCondomino);
+    void setValorCondominio(double valorCondominio);
     void setArea(double area);
     void setNumQuartos(int numQuartos);
     void setPosicao(std::string posicao);

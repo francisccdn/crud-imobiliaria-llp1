@@ -6,12 +6,14 @@
 
 class Casa : public Imovel
 {
-private:
+protected:
     int numPavimentos;
     int numQuartos;
     double areaTerreno;
     double areaConstruida;
 public:
+    Casa();
+    Casa(Endereco endereco, char tipo, bool disponibilidade, double valor, std::string titulo, int numPavimentos, int numQuartos, double areaTerreno, double areaConstruida);
     int getNumPavimentos();
     int getNumQuartos();
     double getAreaTerreno();

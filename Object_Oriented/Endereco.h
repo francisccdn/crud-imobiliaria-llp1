@@ -21,6 +21,6 @@ public:
     std::string getCep();
     std::string getCidade();
 
-    void setEndereco(std::string, int, std::string, std::string, std::string);
+    void setEndereco(std::string logradouro, int numero, std::string bairro, std::string cep, std::string cidade);
 
 };
