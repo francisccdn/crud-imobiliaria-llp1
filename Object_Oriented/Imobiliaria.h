@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Imovel.h"
+#include "GerenciadorDeTexto.h"
 #include <vector>
 #include <string>
 
@@ -8,9 +9,10 @@ class Imobiliaria
 {
 private:
     std::vector<Imovel*> listaImoveis;
+    GerenciadorDeTexto formatador;
 
 public:
-    void cadastraImovel(Imovel imovel);
+    void cadastraImovel(Imovel);
     void removerImoveis(std::vector<int>);
     void editarImovel(Imovel, int);
 
