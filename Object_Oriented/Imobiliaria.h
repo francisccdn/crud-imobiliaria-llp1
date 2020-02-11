@@ -12,9 +12,9 @@ private:
     GerenciadorDeTexto formatador;
 
 public:
-    void cadastraImovel(Imovel);
+    void cadastraImovel(Imovel*);
     void removerImoveis(std::vector<int>);
-    void editarImovel(Imovel, int);
+    void editarImovel(Imovel*, int);
 
     std::vector<Imovel*> getImoveis();
     std::vector<Imovel*> getImoveis(std::vector<int>);

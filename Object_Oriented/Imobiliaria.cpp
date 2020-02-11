@@ -1,23 +1,24 @@
 #include "Imobiliaria.h"
 
-void Imobiliaria::cadastraImovel(Imovel imovelParaCadastro)
+void Imobiliaria::cadastraImovel(Imovel *imovelParaCadastro)
 {
-    listaImoveis.push_back(&imovelParaCadastro);
-
+    listaImoveis.push_back(imovelParaCadastro);
 }
 
 void Imobiliaria::removerImoveis(std::vector<int> indexes) 
 {
     for(int i : indexes)
     {
+        delete listaImoveis[i];
         listaImoveis.erase(listaImoveis.begin() + i);
     }
 }
 
-void Imobiliaria::editarImovel(Imovel novoImovel, int index) 
+void Imobiliaria::editarImovel(Imovel *novoImovel, int index) 
 {
+    delete listaImoveis[index];
     listaImoveis.erase(listaImoveis.begin() + index);
-    listaImoveis.insert(listaImoveis.begin() + index, &novoImovel);
+    listaImoveis.insert(listaImoveis.begin() + index, novoImovel);
 }
 
 std::vector<Imovel*> Imobiliaria::getImoveis()
