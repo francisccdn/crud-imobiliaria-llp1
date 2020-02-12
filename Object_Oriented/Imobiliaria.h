@@ -25,4 +25,6 @@ public:
     std::vector<int> indexPorCidade(std::string);
     std::vector<int> indexPorTitulo(std::string);
     std::vector<int> indexPorValor(double);
+
+    std::vector<int> combinarFiltros(std::vector<int>, std::vector<int>);
 };
