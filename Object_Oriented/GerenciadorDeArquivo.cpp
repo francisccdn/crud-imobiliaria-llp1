@@ -69,30 +69,39 @@ bool GerenciadorDeArquivo::SalvaArquivo(vector<Imovel *> lista)
 vector<Imovel *> GerenciadorDeArquivo::leArquivo()
 {
     vector<Imovel *> lista;
+    char tipo;
     Imovel i;
+    Apartamento ap;
+    Terreno t1;
+    Casa c1;
     ifstream inFile("imoveis.dat", ios::in);
     if (!inFile)
     {
         cerr << "Erro ao tentar abrir o arquivo" << endl;
         exit(1);
     }
-    inFile.read(reinterpret_cast<char *>(&i), sizeof(Apartamento));
+    
     while (inFile && !inFile.eof())
     {
-        if (i.getTipo() == '0')
+        inFile.read(reinterpret_cast<char *>(&tipo), sizeof(char));
+        inFile.seekg(-1, inFile.cur);
+
+        if (tipo == '0')
         {
-            //Apartamento *ap=&i;
+            inFile.read(reinterpret_cast<char *>(&ap), sizeof(Apartamento));
             outputLine(cout,i);
-            //lista.push_back (new Apartamento);
-            //inFile.read(reinterpret_cast<char *>(&i), sizeof(Apartamento));
+            Apartamento *tempAp = new Apartamento();
+            *tempAp = ap;
+            lista.push_back (tempAp);
+            inFile.read(reinterpret_cast<char *>(&i), sizeof(Apartamento));
         }
-        if(i.getTipo()=='1')
+        if(tipo=='1')
         {
             //outputLine(cout,i);
             //lista.push_back (new Casa);
             //inFile.read(reinterpret_cast<char *>(&i), sizeof(Casa));
         }
-        if (i.getTipo()=='2')
+        if (tipo=='2')
         {
             //outputLine(cout,i);
             //lista.push_back (new Terreno);
