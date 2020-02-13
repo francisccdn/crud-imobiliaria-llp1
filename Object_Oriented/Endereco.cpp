@@ -1,19 +1,13 @@
 #include "Endereco.h"
 
-Endereco::Endereco(){
-    logradouro = "Rua sem nome";
-    numero = 0;
-    bairro = "Bairro inexistente";
-    cep = "58000-000";
-    cidade = "Desconhecida";
-}
+//Endereco::Endereco(){};
 
 Endereco::Endereco(std::string logradouro, int numero, std::string bairro, std::string cep, std::string cidade){
-    this -> logradouro = logradouro;
-    this -> numero = numero;
-    this -> bairro = bairro;
-    this -> cep = cep;
-    this -> cidade = cidade;
+    setLogradouro(logradouro);
+    setNumero(numero);
+    setBairro(bairro);
+    setCep(cep);
+    setCidade(cidade);
 };
 
     std::string Endereco::getLogradouro(){
@@ -32,11 +26,11 @@ Endereco::Endereco(std::string logradouro, int numero, std::string bairro, std::
         return cidade;
     };
     void Endereco::setEndereco(std::string logradouro, int numero, std::string bairro, std::string cep, std::string cidade){
-        this -> logradouro = logradouro;
-        this -> numero = numero;
-        this -> bairro = bairro;
-        this -> cep = cep;
-        this -> cidade = cidade;
+        setLogradouro(logradouro);
+        setNumero(numero);
+        setBairro(bairro);
+        setCep(cep);
+        setCidade(cidade);
     };
 
     std::string Endereco::getAsString(){
@@ -54,3 +48,39 @@ Endereco::Endereco(std::string logradouro, int numero, std::string bairro, std::
         return saida2;  
     };
     
+    void Endereco::setLogradouro(std::string logradouro){
+        const char *nameValue = logradouro.data();
+        int length = logradouro.size();
+        length = (length < MAX ? length : MAX - 1);
+        strncpy(this -> logradouro, nameValue, length);
+        this -> logradouro[length] = '\0';
+        
+    };
+    void Endereco::setNumero(int numero){
+        this -> numero = numero;
+    };
+    void Endereco::setBairro(std::string bairro){
+        const char *nameValue = bairro.data();
+        int length = bairro.size();
+        length = (length < MAX ? length : MAX - 1);
+        strncpy(this -> bairro, nameValue, length);
+        this -> bairro[length] = '\0';
+    };
+    void Endereco::setCidade(std::string cidade){
+        const char *nameValue = cidade.data();
+        int length = cidade.size();
+        length = (length < MAX ? length : MAX - 1);
+        strncpy(this -> cidade, nameValue, length);
+        this -> cidade[length] = '\0';
+    };
+
+    /*char toString(string name){
+        char str[MAX];
+        const char *nameValue = name.data();
+        int length = name.size();
+        length = (length < MAX ? length : MAX - 1);
+        strncpy(str, nameValue, length);
+        str[length] = '\0';
+        
+        return str[length];
+    }*/
