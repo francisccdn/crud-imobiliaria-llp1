@@ -36,3 +36,15 @@ std::string GerenciadorDeTexto::removeAcento(std::string str)
     }
     return str;
 }
+
+bool GerenciadorDeTexto::verificaStr(std::string str)
+{
+    if(str[0] == '\n')
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
