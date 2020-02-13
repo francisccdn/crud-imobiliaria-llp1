@@ -14,8 +14,8 @@ int main(){
     Casa umacasa = Casa(Endereco("Rua dos bobos", 0, "Inexistente", "0000-0000-0000", "Cidade imaginaria"), '1', false, 0.50, "Casa muito engracada", 0, 0, 0, 0);
 
     listaImoveis[0]= &foda;
-    listaImoveis[1]=&flamengo;
-    listaImoveis[2]=&umacasa;
+    listaImoveis[1]= &flamengo;
+    listaImoveis[2]= &umacasa;
     //cout<<listaImoveis[0]->getTitulo()<<endl;
     GerenciadorDeArquivo f1;
     if(f1.SalvaArquivo(listaImoveis))

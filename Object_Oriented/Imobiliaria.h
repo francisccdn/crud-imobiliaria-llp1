@@ -9,7 +9,7 @@ class Imobiliaria
 {
 private:
     std::vector<Imovel*> listaImoveis;
-    GerenciadorDeTexto formatador;
+    GerenciadorDeTexto format;
 
 public:
     void cadastraImovel(Imovel*);

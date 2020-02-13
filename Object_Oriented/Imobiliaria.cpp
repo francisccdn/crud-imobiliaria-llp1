@@ -67,15 +67,15 @@ std::vector<int> Imobiliaria::indexPorBairro(std::string bairroBuscado)
     std::vector<int> indexes;
     std::string bairroExistente;
 
-    bairroBuscado = formatador.removeAcento(bairroBuscado);
-    bairroBuscado = formatador.strToLower(bairroBuscado);
-
+    bairroBuscado = format.strToLower(bairroBuscado);
+    bairroBuscado = format.removeAcento(bairroBuscado);
+    
     for (int i = 0; i < listaImoveis.size(); i++)
     {
         bairroExistente = listaImoveis[i]->endereco.getBairro();
 
-        bairroExistente = formatador.removeAcento(bairroExistente);
-        bairroExistente = formatador.strToLower(bairroExistente);
+        bairroExistente = format.strToLower(bairroExistente);
+        bairroExistente = format.removeAcento(bairroExistente);
 
         if (bairroExistente.find(bairroBuscado) < bairroExistente.length())
         {
@@ -90,15 +90,15 @@ std::vector<int> Imobiliaria::indexPorCidade(std::string cidadeBuscada)
     std::vector<int> indexes;
     std::string cidadeExistente;
 
-    cidadeBuscada = formatador.removeAcento(cidadeBuscada);
-    cidadeBuscada = formatador.strToLower(cidadeBuscada);
+    cidadeBuscada = format.strToLower(cidadeBuscada);
+    cidadeBuscada = format.removeAcento(cidadeBuscada);
 
     for (int i = 0; i < listaImoveis.size(); i++)
     {
         cidadeExistente = listaImoveis[i]->endereco.getBairro();
 
-        cidadeExistente = formatador.removeAcento(cidadeExistente);
-        cidadeExistente = formatador.strToLower(cidadeExistente);
+        cidadeExistente = format.strToLower(cidadeExistente);
+        cidadeExistente = format.removeAcento(cidadeExistente);
 
         if (cidadeExistente.find(cidadeBuscada) < cidadeExistente.length())
         {
@@ -113,15 +113,15 @@ std::vector<int> Imobiliaria::indexPorTitulo(std::string tituloBuscado)
     std::vector<int> indexes;
     std::string tituloExistente;
 
-    tituloBuscado = formatador.removeAcento(tituloBuscado);
-    tituloBuscado = formatador.strToLower(tituloBuscado);
+    tituloBuscado = format.strToLower(tituloBuscado);
+    tituloBuscado = format.removeAcento(tituloBuscado);
 
     for (int i = 0; i < listaImoveis.size(); i++)
     {
         tituloExistente = listaImoveis[i]->endereco.getBairro();
 
-        tituloExistente = formatador.removeAcento(tituloExistente);
-        tituloExistente = formatador.strToLower(tituloExistente);
+        tituloExistente = format.strToLower(tituloExistente);
+        tituloExistente = format.removeAcento(tituloExistente);
 
         if (tituloExistente.find(tituloBuscado) < tituloExistente.length())
         {
@@ -161,6 +161,5 @@ std::vector<int> Imobiliaria::combinarFiltros(std::vector<int> indexes1, std::ve
             }
         }
     }
-
     return indexesEmAmbos;
 }
