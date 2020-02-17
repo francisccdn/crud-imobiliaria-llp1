@@ -13,7 +13,7 @@ protected:
     double areaConstruida;
 public:
     Casa();
-    Casa(Endereco endereco, char tipo, bool disponibilidade, double valor, std::string titulo, int numPavimentos, int numQuartos, double areaTerreno, double areaConstruida);
+    Casa(Endereco endereco,char tipo, bool disponibilidade, double valor, std::string titulo, int numPavimentos, int numQuartos, double areaTerreno, double areaConstruida);
     int getNumPavimentos();
     int getNumQuartos();
     double getAreaTerreno();
@@ -21,7 +21,7 @@ public:
 
     void setNumPavimentos(int numPavimentos);
     void setNumQuartos(int numQuartos);
-    void setAreaTerreno(double areaTerreno);
+    void setArea(double areaTerreno);//Terreno
     void setAreaConstruida(double areaConstruida);
 
 };

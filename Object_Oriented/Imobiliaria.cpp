@@ -20,7 +20,6 @@ void Imobiliaria::editarImovel(Imovel *novoImovel, int index)
     listaImoveis.erase(listaImoveis.begin() + index);
     listaImoveis.insert(listaImoveis.begin() + index, novoImovel);
 }
-
 std::vector<Imovel *> Imobiliaria::getImoveis()
 {
     return listaImoveis;

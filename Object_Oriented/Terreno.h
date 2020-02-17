@@ -9,7 +9,7 @@ protected:
 
 public:
     Terreno();
-    Terreno(Endereco endereco, char tipo, bool disponibilidade, double valor, std::string titulo, double area);
+    Terreno( Endereco endereco,char tipo, bool disponibilidade, double valor, std::string titulo, double area);
     double getArea();
     void setArea(double area);
 };

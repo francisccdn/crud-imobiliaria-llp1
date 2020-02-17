@@ -42,7 +42,7 @@ Endereco::Endereco(std::string logradouro, int numero, std::string bairro, std::
         parte5 = getCidade();
         
         saida1 = parte1 + ", " + parte2 + ", " + parte3 + ", " + parte4 + ", " + parte5 + ".";
-        saida2 = "Rua: " + parte1 + ", " + parte2 + "\n" + "Bairro: " + parte3 + "\n" + "Cep: " + parte4 + "\n" + "Cidade: " + parte5;
+        saida2 = "Rua: " + parte1 + ", " + parte2 + "\n" + "Bairro: " + parte3 + "\n" + "Cep: " + parte4 + "\n" + "Cidade: " + parte5+"\n";
 
 
         return saida2;  
@@ -73,6 +73,14 @@ Endereco::Endereco(std::string logradouro, int numero, std::string bairro, std::
         strncpy(this -> cidade, nameValue, length);
         this -> cidade[length] = '\0';
     };
+    void Endereco::setCep(std::string cep)
+    {
+        const char *nameValue = cep.data();
+        int length = cep.size();
+        length = (length < MAX ? length : MAX - 1);
+        strncpy(this -> cep, nameValue, length);
+        this -> cep[length] = '\0';
+    }
 
     /*char toString(string name){
         char str[MAX];
