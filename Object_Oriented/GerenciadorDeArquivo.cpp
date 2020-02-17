@@ -5,82 +5,117 @@ string toStringCasa(Imovel &);
 string toStringTerreno(Imovel &);
 void outputLine(std::ostream &output, Imovel &record);
 
-bool GerenciadorDeArquivo::SalvaArquivo(vector<Imovel*> lista)
+void GerenciadorDeArquivo::teste()
 {
-    ofstream outputFile("imoveis.dat", ios::binary);
-
-    if (!outputFile)
+    for(int i = 0; i < lista.size(); i++)
     {
-        cerr << "Erro ao tentar abrir o arquivo" << endl;
-        exit(1);
+        cout << "DENTRO DO GERENCIADOR: " << lista[i]->getTitulo() << endl;
     }
+}
 
+bool GerenciadorDeArquivo::SalvaArquivo()
+{
+    bool disponibilidade;
+    double valor;
+    string titulo;
+    double area1;
+    Endereco endereco;
+    int andar;
+    double valorCondominio;
+    double area2;
+    string posicao;
+    int numVagas;
+    int numPavimentos;
+    int numQuartos;
+    
     Apartamento ap;
     Terreno t1;
     Casa c1;
 
+    fstream outputFile;
+    outputFile.open("imoveis.dat", ios::ate | ios::in | ios::out | ios::app);
+
+    if (!outputFile.is_open())
+    {
+        cerr << "Erro ao tentar abrir o arquivo" << endl;
+        outputFile.close();
+        exit(1);
+    }
+
+
+
     cout << "Salvando " << lista.size() << " imoveis." << endl;
     
-    for (size_t i = 0; i < lista.size(); i++)
+    for(int i = 0; i < lista.size(); i++)
     {
         cout << "DENTRO DO SALVAR ARQUIVOS: " << lista[i]->getTitulo() << endl;
+    }
+
+    for (int i = 0; i < lista.size(); i++)
+    {
+        cout << "DENTRO DO SALVAR ARQUIVOS2: " << lista[i]->getTitulo() << endl;
         if (lista[i]->getTipo() == '0')
         {
-            ap.setTitulo(lista[i]->getTitulo());
-            ap.setValor(lista[i]->getValor());
-            ap.setDisponibilidade(lista[i]->getDisponiblidade());
-            ap.setTipo(lista[i]->getTipo());
-            ap.setArea(((Apartamento *)lista[i])->getArea());
-            ap.setAndar(((Apartamento *)lista[i])->getAndar());
-            ap.setNumVagas(((Apartamento *)lista[i])->getNumVagas());
-            ap.setValorCondominio(((Apartamento *)lista[i])->getValorCondominio());
-            ap.setPosicao(((Apartamento *)lista[i])->getPosicao());
-            ap.endereco.setCidade(((Apartamento *)lista[i])->endereco.getCidade());
-            ap.endereco.setBairro(((Apartamento *)lista[i])->endereco.getBairro());
-            ap.endereco.setLogradouro(((Apartamento *)lista[i])->endereco.getLogradouro());
-            ap.endereco.setNumero(((Apartamento *)lista[i])->endereco.getNumero());
-            ap.endereco.setCep(((Apartamento *)lista[i])->endereco.getCep());
+            titulo = lista[i]->getTitulo();
+            valor = lista[i]->getValor();
+            disponibilidade = lista[i]->getDisponiblidade();
+            area1 = ((Apartamento *)lista[i])->getArea();
+            andar = ((Apartamento *)lista[i])->getAndar();
+            numVagas = ((Apartamento *)lista[i])->getNumVagas();
+            valorCondominio = ((Apartamento *)lista[i])->getValorCondominio();
+            posicao = ((Apartamento *)lista[i])->getPosicao();
+            endereco.setCidade(((Apartamento *)lista[i])->endereco.getCidade());
+            endereco.setBairro(((Apartamento *)lista[i])->endereco.getBairro());
+            endereco.setLogradouro(((Apartamento *)lista[i])->endereco.getLogradouro());
+            endereco.setNumero(((Apartamento *)lista[i])->endereco.getNumero());
+            endereco.setCep(((Apartamento *)lista[i])->endereco.getCep());
+
+            ap = Apartamento(endereco, disponibilidade, valor, titulo, andar, valor, area1, numQuartos, posicao, numVagas);
             outputFile.write(reinterpret_cast<const char *>(&ap),
                                 sizeof(Apartamento));
         }
 
         if (lista[i]->getTipo() == '1')
         {
-            c1.setTitulo(lista[i]->getTitulo());
-            c1.setValor(lista[i]->getValor());
-            c1.setDisponibilidade(lista[i]->getDisponiblidade());
-            c1.setTipo(lista[i]->getTipo());
-            c1.setArea(((Casa *)lista[i])->getAreaTerreno());
-            c1.setAreaConstruida(((Casa *)lista[i])->getAreaConstruida());
-            c1.setNumPavimentos(((Casa *)lista[i])->getNumPavimentos());
-            c1.setNumQuartos(((Casa *)lista[i])->getNumQuartos());
-            c1.endereco.setCidade(((Casa *)lista[i])->endereco.getCidade());
-            c1.endereco.setBairro(((Casa *)lista[i])->endereco.getBairro());
-            c1.endereco.setLogradouro(((Casa *)lista[i])->endereco.getLogradouro());
-            c1.endereco.setNumero(((Casa *)lista[i])->endereco.getNumero());
-            c1.endereco.setCep(((Casa *)lista[i])->endereco.getCep());
+            titulo = lista[i]->getTitulo();
+            valor = lista[i]->getValor();
+            disponibilidade = lista[i]->getDisponiblidade();
+            area1 = ((Casa *)lista[i])->getAreaTerreno();
+            area2 = ((Casa *)lista[i])->getAreaConstruida();
+            numPavimentos = ((Casa *)lista[i])->getNumPavimentos();
+            numQuartos = ((Casa *)lista[i])->getNumQuartos();
+            endereco.setCidade(((Casa *)lista[i])->endereco.getCidade());
+            endereco.setBairro(((Casa *)lista[i])->endereco.getBairro());
+            endereco.setLogradouro(((Casa *)lista[i])->endereco.getLogradouro());
+            endereco.setNumero(((Casa *)lista[i])->endereco.getNumero());
+            endereco.setCep(((Casa *)lista[i])->endereco.getCep());
+
+            c1 = Casa(endereco, disponibilidade, valor, titulo, numPavimentos, numQuartos, area1, area2);
             outputFile.write(reinterpret_cast<const char *>(&c1),
                                 sizeof(Casa));
         }
         if (lista[i]->getTipo() == '2')
         {
-            t1.setTitulo(lista[i]->getTitulo());
-            t1.setValor(lista[i]->getValor());
-            t1.setDisponibilidade(lista[i]->getDisponiblidade());
-            t1.setTipo(lista[i]->getTipo());
-            t1.setArea(((Terreno *)lista[i])->getArea());
-            t1.endereco.setCidade(((Terreno *)lista[i])->endereco.getCidade());
-            t1.endereco.setBairro(((Terreno *)lista[i])->endereco.getBairro());
-            t1.endereco.setLogradouro(((Terreno *)lista[i])->endereco.getLogradouro());
-            t1.endereco.setNumero(((Terreno *)lista[i])->endereco.getNumero());
-            t1.endereco.setCep(((Terreno *)lista[i])->endereco.getCep());
+            titulo = lista[i]->getTitulo();
+            valor = lista[i]->getValor();
+            disponibilidade = lista[i]->getDisponiblidade();
+            area1 = ((Terreno *)lista[i])->getArea();
+            endereco.setCidade(((Terreno *)lista[i])->endereco.getCidade());
+            endereco.setBairro(((Terreno *)lista[i])->endereco.getBairro());
+            endereco.setLogradouro(((Terreno *)lista[i])->endereco.getLogradouro());
+            endereco.setNumero(((Terreno *)lista[i])->endereco.getNumero());
+            endereco.setCep(((Terreno *)lista[i])->endereco.getCep());
+
+            t1 = Terreno(endereco, disponibilidade, valor, titulo, area1);
             outputFile.write(reinterpret_cast<const char *>(&t1),
                                 sizeof(Terreno));
         }
     }
-    outputFile.close();
 
+    outputFile.close();
+    return true;
 }
+
 bool GerenciadorDeArquivo::leArquivo(Imobiliaria *imob)
 {
     vector<Imovel *> lista;

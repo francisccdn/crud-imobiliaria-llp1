@@ -8,8 +8,7 @@ Imovel::Imovel(){
     setTitulo("Sem titulo");
 };
 
-Imovel::Imovel(Endereco endereco,char tipo, bool disponibilidade, double valor, std::string titulo){
-    this -> tipo = tipo;
+Imovel::Imovel(Endereco endereco, bool disponibilidade, double valor, std::string titulo){
     this -> endereco = endereco;
     this -> disponibilidade = disponibilidade;
     this -> valor = valor;

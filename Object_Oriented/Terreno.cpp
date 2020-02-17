@@ -7,8 +7,8 @@ Terreno::Terreno():Imovel(){
     area = 0.0;
 };
 
-Terreno::Terreno( Endereco endereco, bool disponibilidade, double valor, std::string titulo, double area)
-    :Imovel( endereco,tipo, disponibilidade, valor, titulo){
+Terreno::Terreno(Endereco endereco, bool disponibilidade, double valor, std::string titulo, double area)
+    :Imovel(endereco, disponibilidade, valor, titulo){
     tipo = '2';
     this -> area = area;
 }
