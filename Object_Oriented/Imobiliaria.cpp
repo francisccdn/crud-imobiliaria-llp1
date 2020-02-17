@@ -7,10 +7,12 @@ void Imobiliaria::cadastraImovel(Imovel *imovelParaCadastro)
 
 void Imobiliaria::removerImoveis(std::vector<int> indexes)
 {
+    int j = 0;
     for (int i : indexes)
     {
-        delete listaImoveis[i];
-        listaImoveis.erase(listaImoveis.begin() + i);
+        delete listaImoveis[i-j];
+        listaImoveis.erase(listaImoveis.begin() + i-j);
+        j++;
     }
 }
 

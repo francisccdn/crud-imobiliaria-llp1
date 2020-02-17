@@ -1,2 +1,2 @@
 all:
-	g++ *.cpp -o teste
+	g++ *.cpp -o imob
