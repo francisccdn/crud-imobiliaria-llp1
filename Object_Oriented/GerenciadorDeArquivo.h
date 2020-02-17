@@ -18,8 +18,6 @@ public:
     void outputImovel(std::ostream &,Imovel &);
     void outputImoveis(vector<Imovel*>);
 
-    void teste();
-
     void setLista(std::vector<Imovel*> lista)
     {
         this->lista = lista;

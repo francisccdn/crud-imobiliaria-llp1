@@ -59,11 +59,7 @@ void Front::menu(Imobiliaria *imob)
                        "\t 3- Terreno\n"
                        "\t 4- Voltar\n");
                 tip = inputInteiro();
-<<<<<<< HEAD
-                if (tip < 0 || tip < 5){
-=======
                 if (tip > 0 || tip < 5){
->>>>>>> 72a3873273cb762ff9211ee38ce499c8c80b8f64
                     break;
                     puts("Opcao invalida");
 
@@ -283,30 +279,229 @@ void Front::menu(Imobiliaria *imob)
         case 3: //Buscar imoveis
             limpaTela();
             //cabecalho();
-            buscar(imob);/*
+            buscar(imob, 0);
+            printf("Para voltar digite 1\n");
+            verificacao = inputInteiro();
+            if (verificacao == 1){
+                break;
+            }
+            break;
         case 4: //Remover Imovel
-            //limpaTela();
-            cabecalho();
-            buscar(listaImoveis, imob);
+            limpaTela();
+            //cabecalho();
+            buscar(imob, 1);
             printf("Para voltar digite 1\n");
             verificacao = inputInteiro();
             if (verificacao == 1)
                 break;
         case 5: //Editar Imovel
-            //limpaTela();
-            cabecalho();
-            buscar(listaImoveis, imob);
+            limpaTela();
+            //cabecalho();
+            buscar(imob, 2);
             printf("Para voltar digite 1\n");
             verificacao = inputInteiro();
             if (verificacao == 1)
                 break;
-        */default:
+        case 6: //"Salvar"
+            return;
+        default:
             puts("Opcao invalida");
             break;
         }
     }
 }
-void Front::buscar(Imobiliaria *imob)
+
+void Front::editarRemover(vector<int> index, int flag, Imobiliaria *imob)
+{
+    int verificacao = 0;
+    int indexEditar;
+    Imovel *ptrIm;
+
+    std::string titulo;
+    double valor;
+    double area1;
+    Endereco endereco;
+    int andar;
+    double valorCondominio;
+    int numQuartos;
+    int numVagas;
+    string posicao;
+    bool disponibilidade;
+    double area2;
+    int numPavimentos;
+    int num;
+    int tip;
+    int disp;
+
+    outputImoveis(imob->getImoveis(index), 2);
+
+    switch (flag)
+    {
+    case 1:
+        cout << endl << "Confirma a remoção de todos estes imoveis?" << endl
+                << " 1 - Sim" << endl
+                << " 2 - Não" << endl;
+        verificacao = inputInteiro();
+        if(verificacao == 1){
+            imob->removerImoveis(index);
+            cout << "Remoção concluida." << endl;
+        }else{
+            cout << "Remoção cancelada." << endl;
+        }
+        break;
+
+    case 2:
+        cout << endl << "Qual destes imoveis você deseja editar?" << endl;
+        indexEditar = inputInteiro();
+        indexEditar = index[indexEditar-1];
+        cout << endl << "Insira as informações do novo imovel:" << endl;
+
+        //Cadastro do novo imovel
+        while (1)
+        {
+            limpaTela();
+            cabecalho();
+            printf("Voce deseja adicionar um(a): \n"
+                    "\t 1- Apartamento\n"
+                    "\t 2- Casa\n"
+                    "\t 3- Terreno\n"
+                    "\t 4- Voltar\n");
+            tip = inputInteiro();
+            if (tip > 0 || tip < 5){
+                break;
+                puts("Opcao invalida");
+
+            }
+            puts("Opcao invalida");
+        }
+        switch (tip)
+        {
+        case APTO:
+
+            
+            titulo=inputStr("Digite o titulo: ");
+            while (1)
+            {
+                limpaTela();
+                cabecalho();
+                puts("O imovel esta disponivel para?");
+                puts("\t1 - Aluguel");
+                puts("\t2 - Venda");
+
+                printf("Digite um valor válido: ");
+                disp = inputInteiro();
+                //cin.ignore();
+                if (disp == 1 || disp == 2)
+                    break;
+                puts("Opcao invalida");
+            }
+            disp=(disp == 1 ? false : true);
+            cout << "Digite o valor: " << endl;
+            valor=inputValor();
+            printf("Digite o numero de quartos: ");
+            numQuartos=inputInteiro();
+            printf("Digite a quantidade de vagas na garagem: ");
+            numVagas=inputInteiro();
+            printf("Digite o preco do condominio: ");
+            valorCondominio=inputValor();
+            posicao=inputStr("Digite a posicao do apartamento: ");
+            printf("Digite a area do apartamento: ");
+            area1=(inputValor());
+            printf("Digite o andar: ");
+            andar=inputInteiro();
+            printf("Digite o CEP(Sem o digito): ");
+            endereco.setCep(inputStr("Digite o cep: "));
+            endereco.setCidade(inputStr("Digite a cidade: "));
+            endereco.setBairro(inputStr("Digite o bairro: "));
+            endereco.setLogradouro(inputStr("Digite a rua: "));
+            printf("Digite o numero: ");
+            num = inputInteiro();
+            endereco.setNumero(num);
+
+            ptrIm = new Apartamento(endereco,disp,valor,titulo,andar,valorCondominio,area1,numQuartos,posicao,numVagas);
+            break;
+        case CASA:
+            titulo=inputStr("Digite o titulo: ");
+            while (1)
+            {
+                limpaTela();
+                cabecalho();
+                puts("O imovel esta disponivel para?");
+                puts("\t1 - Aluguel");
+                puts("\t2 - Venda");
+                printf("Digite um valor válido: ");
+                cin >> disp;
+                cin.ignore();
+                if (disp == 1 || disp == 2)
+                    break;
+                puts("Opcao invalida");
+            }
+            disp=(disp == 1 ? false : true);
+            cout << "Digite o valor: " << endl;
+            valor=inputValor();
+            printf("Digite o numero de quartos: ");
+            numQuartos=inputInteiro();
+            printf("Digite o numero de pavimentos: ");
+            numPavimentos=inputInteiro();
+            printf("Digite a area do terreno: ");
+            area1=inputValor();
+            printf("Digite a area construida: ");
+            area2=inputValor();
+
+            endereco.setCep(inputStr("Digite o cep: "));
+            endereco.setCidade(inputStr("Digite a cidade: "));
+            endereco.setBairro(inputStr("Digite o bairro: "));
+            endereco.setLogradouro(inputStr("Digite a rua: "));
+            printf("Digite o numero: ");
+            num = inputInteiro();
+            endereco.setNumero(num);
+            
+            ptrIm = new Casa(endereco,disp,valor,titulo,numPavimentos,numQuartos,area1,area2);
+            break;
+        case TERRENO:
+            titulo = inputStr("Digite o titulo: ");
+            while (1)
+            {
+                limpaTela();
+                cabecalho();
+                puts("O imovel esta disponivel para?");
+                puts("\t1 - Aluguel");
+                puts("\t2 - Venda");
+                printf("Digite um valor válido: ");
+                cin >> disp;
+                cin.ignore();
+                if (disp == 1 || disp == 2)
+                    break;
+                puts("Opcao invalida");
+            }
+            disp = (disp == 1 ? false : true);
+            cout << "Digite o valor: " << endl;
+            valor = inputValor();
+            cout << "Digite a area do terreno: ";
+            area1 = inputValor();
+            //printf("Digite o CEP(Sem o digito): ");
+            //cep(ap);
+            endereco.setCidade(inputStr("Digite a cidade: "));
+            endereco.setBairro(inputStr("Digite o bairro: "));
+            endereco.setLogradouro(inputStr("Digite a rua: "));
+            printf("Digite o numero: ");
+            endereco.setNumero(inputInteiro());
+
+            ptrIm = new Terreno(endereco, disp, valor, titulo, area1);
+            break;
+        }
+
+        imob->editarImovel(ptrIm, indexEditar);
+        cout << "Edição concluida." << endl;
+
+        break;
+    
+    default:
+        break;
+    }
+}
+
+void Front::buscar(Imobiliaria *imob, int flag)
 {
     int opcao;
     int imovelEscolhido;
@@ -316,7 +511,6 @@ void Front::buscar(Imobiliaria *imob)
     string name2;
     GerenciadorDeTexto str;
     vector<int> index;
-    //listaImoveis = imob->getImoveis();
     
     exibeMenuBuscar();
 
@@ -332,7 +526,7 @@ void Front::buscar(Imobiliaria *imob)
         if (index.empty())
             cout << "Titulo nao encontrado!" << endl;
         else
-            outputImoveis(imob->getImoveis(index), 2);
+            editarRemover(index, flag, imob);
         break;
     case 2:
         name1 = inputStr("Digite o Bairro: ");

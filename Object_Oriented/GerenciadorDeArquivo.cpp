@@ -5,14 +5,6 @@ string toStringCasa(Imovel &);
 string toStringTerreno(Imovel &);
 void outputLine(std::ostream &output, Imovel &record);
 
-void GerenciadorDeArquivo::teste()
-{
-    for(int i = 0; i < lista.size(); i++)
-    {
-        cout << "DENTRO DO GERENCIADOR: " << lista[i]->getTitulo() << endl;
-    }
-}
-
 bool GerenciadorDeArquivo::SalvaArquivo()
 {
     bool disponibilidade;
@@ -45,15 +37,9 @@ bool GerenciadorDeArquivo::SalvaArquivo()
 
 
     cout << "Salvando " << lista.size() << " imoveis." << endl;
-    
-    for(int i = 0; i < lista.size(); i++)
-    {
-        cout << "DENTRO DO SALVAR ARQUIVOS: " << lista[i]->getTitulo() << endl;
-    }
 
     for (int i = 0; i < lista.size(); i++)
     {
-        cout << "DENTRO DO SALVAR ARQUIVOS2: " << lista[i]->getTitulo() << endl;
         if (lista[i]->getTipo() == '0')
         {
             titulo = lista[i]->getTitulo();

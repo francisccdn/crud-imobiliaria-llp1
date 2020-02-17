@@ -94,7 +94,7 @@ std::vector<int> Imobiliaria::indexPorCidade(std::string cidadeBuscada)
 
     for (int i = 0; i < listaImoveis.size(); i++)
     {
-        cidadeExistente = listaImoveis[i]->endereco.getBairro();
+        cidadeExistente = listaImoveis[i]->endereco.getCidade();
 
         cidadeExistente = format.strToLower(cidadeExistente);
         cidadeExistente = format.removeAcento(cidadeExistente);
@@ -117,7 +117,7 @@ std::vector<int> Imobiliaria::indexPorTitulo(std::string tituloBuscado)
 
     for (int i = 0; i < listaImoveis.size(); i++)
     {
-        tituloExistente = listaImoveis[i]->endereco.getBairro();
+        tituloExistente = listaImoveis[i]->getTitulo();
 
         tituloExistente = format.strToLower(tituloExistente);
         tituloExistente = format.removeAcento(tituloExistente);
