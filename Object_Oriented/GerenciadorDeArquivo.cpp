@@ -32,8 +32,8 @@ bool GerenciadorDeArquivo::SalvaArquivo()
     Terreno t1;
     Casa c1;
 
-    fstream outputFile;
-    outputFile.open("imoveis.dat", ios::ate | ios::in | ios::out | ios::app);
+    ofstream outputFile;
+    outputFile.open("imoveis.dat", ios::binary);
 
     if (!outputFile.is_open())
     {

@@ -303,7 +303,9 @@ void Front::buscar(Imobiliaria *imob)
     GerenciadorDeTexto str;
     vector<int> index;
     //listaImoveis = imob->getImoveis();
+    
     exibeMenuBuscar();
+
     opcao = inputInteiro();
     if (opcao == 9)
         return;
@@ -384,6 +386,7 @@ void Front::buscar(Imobiliaria *imob)
         cout << "Escolha outra opcao" << endl;
     }
 }
+
 void Front::outputImovel(std::ostream &output, Imovel &imovel, int tipo)
 {
     Imovel *ptr = &imovel;
