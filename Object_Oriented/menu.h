@@ -134,7 +134,7 @@ int inputInteiro()
         }
         else
         {
-            printf("Digite um Valor válido: ");
+            printf("Digite um valor válido: ");
         }
     }
     return valor;
