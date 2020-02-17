@@ -9,7 +9,8 @@ Casa::Casa():Imovel(){
     areaConstruida = 0;
 };
 
-Casa::Casa(Endereco endereco, char tipo, bool disponibilidade, double valor, std::string titulo, int numPavimentos, int numQuartos, double areaTerreno, double areaConstruida):Imovel(endereco, tipo, disponibilidade, valor, titulo){
+Casa::Casa( Endereco endereco,char tipo,  bool disponibilidade, double valor, std::string titulo, int numPavimentos, int numQuartos, double areaTerreno, double areaConstruida)
+        :Imovel( endereco,tipo, disponibilidade, valor, titulo){
     this -> numPavimentos = numPavimentos;
     this -> numQuartos = numQuartos;
     this -> areaTerreno = areaTerreno;
@@ -35,7 +36,7 @@ void Casa::setNumPavimentos(int numPavimentos){
 void Casa::setNumQuartos(int numQuartos){
     this -> numQuartos = numQuartos;
 };
-void Casa::setAreaTerreno(double areaTerreno){
+void Casa::setArea(double areaTerreno){
     this -> areaTerreno = areaTerreno;
 };
 void Casa::setAreaConstruida(double areaConstruida){

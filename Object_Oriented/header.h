@@ -34,11 +34,4 @@ using std::vector;
 
 #include <typeinfo>
 
-#include "Imobiliaria.h"
-#include "Imovel.h"
-#include "Endereco.h"
-#include "Terreno.h"
-#include "Casa.h"
-#include "Apartamento.h"
-#include "GerenciadorDeArquivo.h"
 #define MAX 100

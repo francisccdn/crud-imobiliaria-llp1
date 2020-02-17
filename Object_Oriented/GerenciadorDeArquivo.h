@@ -1,16 +1,21 @@
 #pragma once
-#include "header.h"
+#include "Imobiliaria.h"
+#include "Imovel.h"
+#include "Apartamento.h"
+#include "Casa.h"
+#include "Terreno.h"
 
 class GerenciadorDeArquivo
 {
 private:
     
 public:
-    GerenciadorDeArquivo();
-    bool SalvaArquivo(vector<Imovel *>);
+    
+    bool SalvaArquivo(vector<Imovel*>);
     //vector<Imovel*> leArquivo();
-    Imovel convert(Imovel);
-    vector<Imovel*> leArquivo();
+    bool leArquivo(Imobiliaria*);
+    void outputImovel(std::ostream &,Imovel &);
+    void outputImoveis(vector<Imovel*>);
     
 };
 
