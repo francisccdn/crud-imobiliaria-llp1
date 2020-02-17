@@ -2,15 +2,17 @@
 #include "Imovel.h"
 
 Casa::Casa():Imovel(){
-    tipo = 1;
+    tipo = '1';
     numPavimentos = 0;
     numQuartos = 0;
     areaTerreno = 0;
     areaConstruida = 0;
 };
 
-Casa::Casa( Endereco endereco,char tipo,  bool disponibilidade, double valor, std::string titulo, int numPavimentos, int numQuartos, double areaTerreno, double areaConstruida)
+Casa::Casa( Endereco endereco
+,  bool disponibilidade, double valor, std::string titulo, int numPavimentos, int numQuartos, double areaTerreno, double areaConstruida)
         :Imovel( endereco,tipo, disponibilidade, valor, titulo){
+    tipo = '1';
     this -> numPavimentos = numPavimentos;
     this -> numQuartos = numQuartos;
     this -> areaTerreno = areaTerreno;

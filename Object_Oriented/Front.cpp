@@ -21,6 +21,7 @@ void Front::menu(Imobiliaria &imob )
     //listaImoveis = imob.getImoveis();
     while (1)
     {
+        limpaTela();
         ExibeMenu();
         printf("Digite a opcao desejada: ");
         cin >> opcao;
@@ -28,21 +29,27 @@ void Front::menu(Imobiliaria &imob )
         {
             break;
         }
+        if(opcao>7 || opcao<0){
+            puts("Opcao invalida");
+            break;
+        }
         switch (opcao)
         {
         case 1: //Cadastra imoveis
-            //limpaTela();
+            limpaTela();
             while (1)
             {
+                cabecalho();
                 printf("Voce deseja adicionar um(a): \n"
                        "\t 1- Apartamento\n"
                        "\t 2- Casa\n"
                        "\t 3- Terreno\n"
                        "\t 4- Voltar\n");
                 tip = inputInteiro();
-                if (tip > 0 && tip < 5)
+                if (tip > 0 || tip < 5){
+                    puts("Opcao invalida");
                     break;
-                puts("Opcao invalida");
+                }
             }
             switch (tip)
             {
@@ -52,6 +59,8 @@ void Front::menu(Imobiliaria &imob )
                 ap.setTitulo(inputStr("Digite o titulo: "));
                 while (1)
                 {
+                    limpaTela();
+                    cabecalho();
                     puts("O imovel esta disponivel para?");
                     puts("\t1 - Aluguel");
                     puts("\t2 - Venda");
