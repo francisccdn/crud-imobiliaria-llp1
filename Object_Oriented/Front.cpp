@@ -535,7 +535,7 @@ void Front::buscar(Imobiliaria *imob, int flag)
         if (index.empty())
             cout << "Bairro nao encontrado!" << endl;
         else
-            outputImoveis(imob->getImoveis(index), 2);
+            editarRemover(index, flag, imob);
         break;
     case 3:
         name1 = inputStr("Digite a cidade: ");
@@ -543,14 +543,14 @@ void Front::buscar(Imobiliaria *imob, int flag)
         if (index.empty())
             cout << "Cidade nao encontrada!" << endl;
         else
-            outputImoveis(imob->getImoveis(index), 2);
+            editarRemover(index, flag, imob);
         break;
     case 4:
         cout << "Digite o valor: ";
         if (index.empty())
             cout << "Nao existem imoveis abaixo desse valor!" << endl;
         else
-            outputImoveis(imob->getImoveis(index), 2);
+            editarRemover(index, flag, imob);
         break;
     case 5:
         name1 = inputStr("Digite o bairro:");
