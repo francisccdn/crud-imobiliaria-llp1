@@ -46,5 +46,4 @@ bool GerenciadorDeTexto::verificaStr(std::string str)
     else
     {
         return true;
-    }
 }
