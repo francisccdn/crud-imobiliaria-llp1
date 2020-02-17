@@ -511,7 +511,9 @@ void Front::buscar(Imobiliaria *imob, int flag)
     string name2;
     GerenciadorDeTexto str;
     vector<int> index;
-    
+    vector<int>index1;
+    vector<int>index2;
+    //listaImoveis = imob->getImoveis();
     exibeMenuBuscar();
 
     opcao = inputInteiro();
@@ -521,7 +523,6 @@ void Front::buscar(Imobiliaria *imob, int flag)
     {
     case 1:
         name1 = inputStr("Digite o titulo: ");
-        cout << name1 << endl;
         index = imob->indexPorTitulo(name1);
         if (index.empty())
             cout << "Titulo nao encontrado!" << endl;
@@ -530,29 +531,53 @@ void Front::buscar(Imobiliaria *imob, int flag)
         break;
     case 2:
         name1 = inputStr("Digite o Bairro: ");
-        outputImoveis(imob->getImoveis(imob->indexPorBairro(name1)), 2);
+        index=imob->indexPorBairro(name1);
+        if (index.empty())
+            cout << "Bairro nao encontrado!" << endl;
+        else
+            outputImoveis(imob->getImoveis(index), 2);
         break;
     case 3:
         name1 = inputStr("Digite a cidade: ");
-        outputImoveis(imob->getImoveis(imob->indexPorCidade(name1)), 2);
+        index=imob->indexPorCidade(name1);
+        if (index.empty())
+            cout << "Cidade nao encontrada!" << endl;
+        else
+            outputImoveis(imob->getImoveis(index), 2);
         break;
     case 4:
         cout << "Digite o valor: ";
-        valor = inputValor();
-        outputImoveis(imob->getImoveis(imob->indexPorValor(valor)), 2);
+        if (index.empty())
+            cout << "Nao existem imoveis abaixo desse valor!" << endl;
+        else
+            outputImoveis(imob->getImoveis(index), 2);
         break;
     case 5:
         name1 = inputStr("Digite o bairro:");
+        index = imob->indexPorBairro(name1);
         cout << "Digite o valor: ";
         valor = inputValor();
-        outputImoveis(imob->getImoveis(imob->combinarFiltros(imob->indexPorValor(valor), imob->indexPorBairro(name1))), 2);
+        index1 = imob->indexPorValor(valor);
+        index2 = imob->combinarFiltros(index,index1);
+
+        if (index2.empty())
+            cout << "Nao foi encontrado imoveis com esses parametros!" << endl;
+        else
+             outputImoveis(imob->getImoveis(index2), 2);
         break;
+       
     case 6:
         name1 = inputStr("Digite a cidade");
+        index =imob->indexPorCidade(name1);
         cout << "Digite o valor: ";
         valor = inputValor();
+        index1=imob->indexPorValor(valor);
+        index2=imob->combinarFiltros(index,index1);
 
-        outputImoveis(imob->getImoveis(imob->combinarFiltros(imob->indexPorValor(valor), imob->indexPorCidade(name1))), 2);
+        if (index2.empty())
+            cout << "Nao foi encontrado imoveis com esses parametros!" << endl;
+        else
+             outputImoveis(imob->getImoveis(index2), 2);
         break;
     case 7:
         while (1)
@@ -570,7 +595,13 @@ void Front::buscar(Imobiliaria *imob, int flag)
                     break;
             }
         }
-        outputImoveis(imob->getImoveis(imob->combinarFiltros(imob->indexPorDisponibilidade(disp), imob->indexPorBairro(name1))), 2);
+        index=imob->indexPorDisponibilidade(disp);
+        index1=imob->indexPorBairro(name1);
+        index2=imob->combinarFiltros(index,index1);
+        if (index2.empty())
+            cout << "Nao foi encontrado imoveis com esses parametros!" << endl;
+        else
+             outputImoveis(imob->getImoveis(index2), 2);
         break;
     case 8:
         while (1)
@@ -588,7 +619,13 @@ void Front::buscar(Imobiliaria *imob, int flag)
                     break;
             }
         }
-        outputImoveis(imob->getImoveis(imob->combinarFiltros(imob->indexPorDisponibilidade(disp), imob->indexPorCidade(name1))), 2);
+        index=imob->indexPorDisponibilidade(disp);
+        index1=imob->indexPorCidade(name1);
+        index2=imob->combinarFiltros(index,index1);
+        if (index2.empty())
+            cout << "Nao foi encontrado imoveis com esses parametros!" << endl;
+        else
+             outputImoveis(imob->getImoveis(index2), 2);
         break;
     default:
         cout << "Escolha outra opcao" << endl;
