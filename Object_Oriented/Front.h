@@ -11,10 +11,9 @@ private:
     vector<int> indices;
     GerenciadorDeArquivo arquivo;*/
 public:
-    Front(Imobiliaria *imob);
     
-    void menu();
-    void buscar();
+    void menu(Imobiliaria &);
+    void buscar(Imobiliaria &);
     void outputImovel(std::ostream &output, Imovel &imovel, int);
     void outputImoveis(vector<Imovel *> lista, int);
     //vector<Imovel *> getLista();

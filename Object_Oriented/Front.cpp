@@ -1,10 +1,7 @@
 #include "Front.h"
 #include "menu.h"
-Front::Front(Imobiliaria *imob)
-{
-    this->imob=imob;
-}
-void Front::menu( )
+
+void Front::menu(Imobiliaria &imob )
 {
     int opcao, subopcao, subsubopcao, verificacao, aux;
     int imovelEscolhido;
@@ -21,7 +18,7 @@ void Front::menu( )
     char tipo;
     int tip;
     int num;
-    //listaImoveis = imob->getImoveis();
+    //listaImoveis = imob.getImoveis();
     while (1)
     {
         ExibeMenu();
@@ -87,7 +84,7 @@ void Front::menu( )
                 printf("Digite o numero: ");
                 num = inputInteiro();
                 ap.endereco.setNumero(num);
-                imob->cadastraImovel(ptrAp);
+                imob.cadastraImovel(ptrAp);
                 break;
             case CASA:
                 c1.setTipo('1');
@@ -125,7 +122,7 @@ void Front::menu( )
                 num = inputInteiro();
                 c1.endereco.setNumero(num);
                 *ptrC1 = c1;
-                imob->cadastraImovel(ptrC1);
+                imob.cadastraImovel(ptrC1);
                 break;
             case TERRENO:
                 t1.setTipo('2');
@@ -155,7 +152,7 @@ void Front::menu( )
                 num = inputInteiro();
                 t1.endereco.setNumero(num);
                 *ptrT1=t1;
-                imob->cadastraImovel(ptrT1);
+                imob.cadastraImovel(ptrT1);
                 break;
             }
             break;
@@ -175,7 +172,7 @@ void Front::menu( )
             case 1:
                 //limpaTela();
                 cabecalho();
-                outputImoveis(imob->getImoveis(), 1);
+                outputImoveis(imob.getImoveis(), 1);
                 printf("Para voltar digite 1\n");
                 verificacao = inputInteiro();
                 if (verificacao == 1)
@@ -195,17 +192,17 @@ void Front::menu( )
                 case 1: //Apartamento
                     //limpaTela();
                     cabecalho();
-                    outputImoveis(imob->getImoveis(imob->indexPorTipo('0')), 2);
+                    outputImoveis(imob.getImoveis(imob.indexPorTipo('0')), 2);
                     break;
                 case 2: //Casa
                     //limpaTela();
                     cabecalho();
-                    outputImoveis(imob->getImoveis(imob->indexPorTipo('1')), 2);
+                    outputImoveis(imob.getImoveis(imob.indexPorTipo('1')), 2);
                     break;
                 case 3: //Terreno
                     //limpaTela();
                     cabecalho();
-                    outputImoveis(imob->getImoveis(imob->indexPorTipo('2')), 2);
+                    outputImoveis(imob.getImoveis(imob.indexPorTipo('2')), 2);
                     break;
                 default:
                     puts("Opcao invalida");
@@ -237,12 +234,12 @@ void Front::menu( )
                 case 1:
                     //limpaTela();
                     cabecalho();
-                    outputImoveis(imob->getImoveis(imob->indexPorDisponibilidade(true)), 2);
+                    outputImoveis(imob.getImoveis(imob.indexPorDisponibilidade(true)), 2);
                     break;
                 case 2:
                     //limpaTela();
                     cabecalho();
-                    outputImoveis(imob->getImoveis(imob->indexPorDisponibilidade(false)), 2);
+                    outputImoveis(imob.getImoveis(imob.indexPorDisponibilidade(false)), 2);
                     break;
                 default:
                     break;
@@ -255,7 +252,7 @@ void Front::menu( )
         case 3: //Buscar imoveis
             //limpaTela();
             cabecalho();
-            buscar();/*
+            buscar(imob);/*
         case 4: //Remover Imovel
             //limpaTela();
             cabecalho();
@@ -278,7 +275,7 @@ void Front::menu( )
         }
     }
 }
-void Front::buscar()
+void Front::buscar(Imobiliaria &imob)
 {
     int opcao;
     int imovelEscolhido;
@@ -288,7 +285,7 @@ void Front::buscar()
     string name2;
     GerenciadorDeTexto str;
     vector<int> index;
-    //listaImoveis = imob->getImoveis();
+    //listaImoveis = imob.getImoveis();
     exibeMenuBuscar();
     opcao = inputInteiro();
     if (opcao == 9)
@@ -298,37 +295,37 @@ void Front::buscar()
     case 1:
         name1 = inputStr("Digite o titulo: ");
         cout << name1 << endl;
-        index = imob->indexPorTitulo(name1);
+        index = imob.indexPorTitulo(name1);
         if (index.empty())
             cout << "Titulo nao encontrado!" << endl;
         else
-            outputImoveis(imob->getImoveis(index), 2);
+            outputImoveis(imob.getImoveis(index), 2);
         break;
     case 2:
         name1 = inputStr("Digite o Bairro: ");
-        outputImoveis(imob->getImoveis(imob->indexPorBairro(name1)), 2);
+        outputImoveis(imob.getImoveis(imob.indexPorBairro(name1)), 2);
         break;
     case 3:
         name1 = inputStr("Digite a cidade: ");
-        outputImoveis(imob->getImoveis(imob->indexPorCidade(name1)), 2);
+        outputImoveis(imob.getImoveis(imob.indexPorCidade(name1)), 2);
         break;
     case 4:
         cout << "Digite o valor: ";
         valor = inputValor();
-        outputImoveis(imob->getImoveis(imob->indexPorValor(valor)), 2);
+        outputImoveis(imob.getImoveis(imob.indexPorValor(valor)), 2);
         break;
     case 5:
         name1 = inputStr("Digite o bairro:");
         cout << "Digite o valor: ";
         valor = inputValor();
-        outputImoveis(imob->getImoveis(imob->combinarFiltros(imob->indexPorValor(valor), imob->indexPorBairro(name1))), 2);
+        outputImoveis(imob.getImoveis(imob.combinarFiltros(imob.indexPorValor(valor), imob.indexPorBairro(name1))), 2);
         break;
     case 6:
         name1 = inputStr("Digite a cidade");
         cout << "Digite o valor: ";
         valor = inputValor();
 
-        outputImoveis(imob->getImoveis(imob->combinarFiltros(imob->indexPorValor(valor), imob->indexPorCidade(name1))), 2);
+        outputImoveis(imob.getImoveis(imob.combinarFiltros(imob.indexPorValor(valor), imob.indexPorCidade(name1))), 2);
         break;
     case 7:
         while (1)
@@ -346,7 +343,7 @@ void Front::buscar()
                     break;
             }
         }
-        outputImoveis(imob->getImoveis(imob->combinarFiltros(imob->indexPorDisponibilidade(disp), imob->indexPorBairro(name1))), 2);
+        outputImoveis(imob.getImoveis(imob.combinarFiltros(imob.indexPorDisponibilidade(disp), imob.indexPorBairro(name1))), 2);
         break;
     case 8:
         while (1)
@@ -364,7 +361,7 @@ void Front::buscar()
                     break;
             }
         }
-        outputImoveis(imob->getImoveis(imob->combinarFiltros(imob->indexPorDisponibilidade(disp), imob->indexPorCidade(name1))), 2);
+        outputImoveis(imob.getImoveis(imob.combinarFiltros(imob.indexPorDisponibilidade(disp), imob.indexPorCidade(name1))), 2);
         break;
     default:
         cout << "Escolha outra opcao" << endl;
