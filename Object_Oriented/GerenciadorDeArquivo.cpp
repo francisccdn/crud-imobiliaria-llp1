@@ -38,8 +38,9 @@ bool GerenciadorDeArquivo::SalvaArquivo()
 
     outputFile.close();
 
-  /*  for (int i = 0; i < lista.size(); i++)
+    for (int i = 0; i < lista.size(); i++)
     {
+        cout << "DENTRO DO SALVAR ARQUIVOS2: " << lista[i]->getTitulo() << endl;
         if (lista[i]->getTipo() == '0')
         {
             ap.setTitulo(lista[i]->getTitulo());
@@ -93,7 +94,7 @@ bool GerenciadorDeArquivo::SalvaArquivo()
             outputFile.write(reinterpret_cast<const char *>(&t1),
                                 sizeof(Terreno));
         }
-    }*/
+    }
 }
 
 bool GerenciadorDeArquivo::leArquivo(Imobiliaria *imob)

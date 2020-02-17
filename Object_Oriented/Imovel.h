@@ -15,7 +15,7 @@ public:
     Endereco endereco; 
 
     Imovel();
-    Imovel(Endereco endereco,char tipo,  bool disponibilidade, double valor, std::string titulo);
+    Imovel(Endereco endereco, bool disponibilidade, double valor, std::string titulo);
 
     //virtual void setArea()=0;
     char getTipo();

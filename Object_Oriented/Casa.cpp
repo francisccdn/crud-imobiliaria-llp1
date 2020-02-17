@@ -11,7 +11,7 @@ Casa::Casa():Imovel(){
 
 Casa::Casa( Endereco endereco
 ,  bool disponibilidade, double valor, std::string titulo, int numPavimentos, int numQuartos, double areaTerreno, double areaConstruida)
-        :Imovel( endereco,tipo, disponibilidade, valor, titulo){
+        :Imovel( endereco, disponibilidade, valor, titulo){
     tipo = '1';
     this -> numPavimentos = numPavimentos;
     this -> numQuartos = numQuartos;
