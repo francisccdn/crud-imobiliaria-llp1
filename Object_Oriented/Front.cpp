@@ -22,7 +22,14 @@ void Front::menu(Imobiliaria *imob)
     double valor;
     double area1;
     Endereco endereco;
-
+    int andar;
+    double valorCondominio;
+    int numQuartos;
+    int numVagas;
+    string posicao;
+    bool disponibilidade;
+    double area2;
+    int numPavimentos;
     //listaImoveis = imob->getImoveis();
     while (1)
     {
@@ -60,8 +67,8 @@ void Front::menu(Imobiliaria *imob)
             {
             case APTO:
 
-                ap.setTipo('0');
-                ap.setTitulo(inputStr("Digite o titulo: "));
+                
+                titulo=inputStr("Digite o titulo: ");
                 while (1)
                 {
                     limpaTela();
@@ -76,34 +83,33 @@ void Front::menu(Imobiliaria *imob)
                         break;
                     puts("Opcao invalida");
                 }
-                ap.setDisponibilidade(disp == 1 ? false : true);
+                disp=(disp == 1 ? false : true);
                 cout << "Digite o valor: " << endl;
-                ap.setValor(inputValor());
+                valor=inputValor();
                 printf("Digite o numero de quartos: ");
-                ap.setNumQuartos(inputInteiro());
+                numQuartos=inputInteiro();
                 printf("Digite a quantidade de vagas na garagem: ");
-                ap.setNumVagas(inputInteiro());
+                numVagas=inputInteiro();
                 printf("Digite o preco do condominio: ");
-                ap.setValorCondominio(inputValor());
-                ap.setPosicao(inputStr("Digite a posicao do apartamento: "));
+                valorCondominio=inputValor();
+                posicao=inputStr("Digite a posicao do apartamento: ");
                 printf("Digite a area do apartamento: ");
-                ap.setArea(inputValor());
+                area1=(inputValor());
                 printf("Digite o andar: ");
-                ap.setAndar(inputInteiro());
-                //printf("Digite o CEP(Sem o digito): ");
-                //cep(ap);
-                ap.endereco.setCidade(inputStr("Digite a cidade: "));
-                ap.endereco.setBairro(inputStr("Digite o bairro: "));
-                ap.endereco.setLogradouro(inputStr("Digite a rua: "));
+                andar=inputInteiro();
+                printf("Digite o CEP(Sem o digito): ");
+                endereco.setCep(inputStr("Digite o cep: "));
+                endereco.setCidade(inputStr("Digite a cidade: "));
+                endereco.setBairro(inputStr("Digite o bairro: "));
+                endereco.setLogradouro(inputStr("Digite a rua: "));
                 printf("Digite o numero: ");
                 num = inputInteiro();
-                ap.endereco.setNumero(num);
+                endereco.setNumero(num);
 
-                imob->cadastraImovel(ptrAp);
+                imob->cadastraImovel(new Apartamento(endereco,disp,valor,titulo,andar,valorCondominio,area1,numQuartos,posicao,numVagas));
                 break;
             case CASA:
-                c1.setTipo('1');
-                c1.setTitulo(inputStr("Digite o titulo: "));
+                titulo=inputStr("Digite o titulo: ");
                 while (1)
                 {
                     puts("O imovel esta disponivel para?");
@@ -115,29 +121,27 @@ void Front::menu(Imobiliaria *imob)
                         break;
                     puts("Opcao invalida");
                 }
-                c1.setDisponibilidade(disp == 1 ? false : true);
+                disp=(disp == 1 ? false : true);
                 cout << "Digite o valor: " << endl;
-                c1.setValor(inputValor());
+                valor=inputValor();
                 printf("Digite o numero de quartos: ");
-                c1.setNumQuartos(inputInteiro());
+                numQuartos=inputInteiro();
                 printf("Digite o numero de pavimentos: ");
-                c1.setNumPavimentos(inputInteiro());
+                numPavimentos=inputInteiro();
                 printf("Digite a area do terreno: ");
-                c1.setArea(inputValor());
+                area1=inputValor();
                 printf("Digite a area construida: ");
-                c1.setAreaConstruida(inputValor());
+                area2=inputValor();
 
-                //printf("Digite o CEP(Sem o digito): ");
-                //cep(ap);
-
-                c1.endereco.setCidade(inputStr("Digite a cidade: "));
-                c1.endereco.setBairro(inputStr("Digite o bairro: "));
-                c1.endereco.setLogradouro(inputStr("Digite a rua: "));
+                endereco.setCep(inputStr("Digite o cep: "));
+                endereco.setCidade(inputStr("Digite a cidade: "));
+                endereco.setBairro(inputStr("Digite o bairro: "));
+                endereco.setLogradouro(inputStr("Digite a rua: "));
                 printf("Digite o numero: ");
                 num = inputInteiro();
-                c1.endereco.setNumero(num);
-                *ptrC1 = c1;
-                imob->cadastraImovel(ptrC1);
+                endereco.setNumero(num);
+                
+                imob->cadastraImovel(new Casa(endereco,disp,valor,titulo,numPavimentos,numQuartos,area1,area2));
                 break;
             case TERRENO:
                 titulo = inputStr("Digite o titulo: ");
