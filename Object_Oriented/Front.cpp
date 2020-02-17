@@ -1,7 +1,7 @@
 #include "Front.h"
 #include "menu.h"
 
-void Front::menu(Imobiliaria &imob )
+void Front::menu(Imobiliaria *imob)
 {
     int opcao, subopcao, subsubopcao, verificacao, aux;
     int imovelEscolhido;
@@ -18,6 +18,12 @@ void Front::menu(Imobiliaria &imob )
     char tipo;
     int tip;
     int num;
+
+    std::string titulo;
+    double valor;
+    double area1;
+    Endereco endereco;
+
     //listaImoveis = imob.getImoveis();
     while (1)
     {
@@ -84,7 +90,8 @@ void Front::menu(Imobiliaria &imob )
                 printf("Digite o numero: ");
                 num = inputInteiro();
                 ap.endereco.setNumero(num);
-                imob.cadastraImovel(ptrAp);
+
+                imob->cadastraImovel(ptrAp);
                 break;
             case CASA:
                 c1.setTipo('1');
@@ -122,11 +129,10 @@ void Front::menu(Imobiliaria &imob )
                 num = inputInteiro();
                 c1.endereco.setNumero(num);
                 *ptrC1 = c1;
-                imob.cadastraImovel(ptrC1);
+                imob->cadastraImovel(ptrC1);
                 break;
             case TERRENO:
-                t1.setTipo('2');
-                t1.setTitulo(inputStr("Digite o titulo: "));
+                titulo = inputStr("Digite o titulo: ");
                 while (1)
                 {
                     puts("O imovel esta disponivel para?");
@@ -138,21 +144,20 @@ void Front::menu(Imobiliaria &imob )
                         break;
                     puts("Opcao invalida");
                 }
-                t1.setDisponibilidade(disp == 1 ? false : true);
+                disp = (disp == 1 ? false : true);
                 cout << "Digite o valor: " << endl;
-                t1.setValor(inputValor());
-                printf("Digite a area do terreno: ");
-                t1.setArea(inputValor());
+                valor = inputValor();
+                cout << "Digite a area do terreno: ";
+                area1 = inputValor();
                 //printf("Digite o CEP(Sem o digito): ");
                 //cep(ap);
-                t1.endereco.setCidade(inputStr("Digite a cidade: "));
-                t1.endereco.setBairro(inputStr("Digite o bairro: "));
-                t1.endereco.setLogradouro(inputStr("Digite a rua: "));
+                endereco.setCidade(inputStr("Digite a cidade: "));
+                endereco.setBairro(inputStr("Digite o bairro: "));
+                endereco.setLogradouro(inputStr("Digite a rua: "));
                 printf("Digite o numero: ");
-                num = inputInteiro();
-                t1.endereco.setNumero(num);
-                *ptrT1=t1;
-                imob.cadastraImovel(ptrT1);
+                endereco.setNumero(inputInteiro());
+
+                imob->cadastraImovel(new Terreno());
                 break;
             }
             break;

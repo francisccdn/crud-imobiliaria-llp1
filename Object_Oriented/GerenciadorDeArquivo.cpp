@@ -5,13 +5,23 @@ string toStringCasa(Imovel &);
 string toStringTerreno(Imovel &);
 void outputLine(std::ostream &output, Imovel &record);
 
-bool GerenciadorDeArquivo::SalvaArquivo(vector<Imovel*> lista)
+void GerenciadorDeArquivo::teste()
 {
-    ofstream outputFile("imoveis.dat", ios::binary);
+    for(int i = 0; i < lista.size(); i++)
+    {
+        cout << "DENTRO DO GERENCIADOR: " << lista[i]->getTitulo() << endl;
+    }
+}
 
-    if (!outputFile)
+bool GerenciadorDeArquivo::SalvaArquivo()
+{
+    fstream outputFile;
+    outputFile.open("imoveis.dat", ios::ate | ios::in | ios::out | ios::app);
+
+    if (!outputFile.is_open())
     {
         cerr << "Erro ao tentar abrir o arquivo" << endl;
+        outputFile.close();
         exit(1);
     }
 
@@ -21,9 +31,15 @@ bool GerenciadorDeArquivo::SalvaArquivo(vector<Imovel*> lista)
 
     cout << "Salvando " << lista.size() << " imoveis." << endl;
     
-    for (size_t i = 0; i < lista.size(); i++)
+    for(int i = 0; i < lista.size(); i++)
     {
         cout << "DENTRO DO SALVAR ARQUIVOS: " << lista[i]->getTitulo() << endl;
+    }
+
+    outputFile.close();
+
+  /*  for (int i = 0; i < lista.size(); i++)
+    {
         if (lista[i]->getTipo() == '0')
         {
             ap.setTitulo(lista[i]->getTitulo());
@@ -77,10 +93,9 @@ bool GerenciadorDeArquivo::SalvaArquivo(vector<Imovel*> lista)
             outputFile.write(reinterpret_cast<const char *>(&t1),
                                 sizeof(Terreno));
         }
-    }
-    outputFile.close();
-
+    }*/
 }
+
 bool GerenciadorDeArquivo::leArquivo(Imobiliaria *imob)
 {
     vector<Imovel *> lista;
