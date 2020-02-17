@@ -39,6 +39,7 @@ void Front::menu(Imobiliaria &imob )
             limpaTela();
             while (1)
             {
+                limpaTela();
                 cabecalho();
                 printf("Voce deseja adicionar um(a): \n"
                        "\t 1- Apartamento\n"
@@ -46,9 +47,10 @@ void Front::menu(Imobiliaria &imob )
                        "\t 3- Terreno\n"
                        "\t 4- Voltar\n");
                 tip = inputInteiro();
-                if (tip > 0 || tip < 5){
-                    puts("Opcao invalida");
+                if (tip < 0 || tip < 5){
                     break;
+                    puts("Opcao invalida");
+
                 }
             }
             switch (tip)
@@ -65,8 +67,9 @@ void Front::menu(Imobiliaria &imob )
                     puts("\t1 - Aluguel");
                     puts("\t2 - Venda");
 
-                    cin >> disp;
-                    cin.ignore();
+                    printf("Digite um valor válido: ");
+                    disp = inputInteiro();
+                    //cin.ignore();
                     if (disp == 1 || disp == 2)
                         break;
                     puts("Opcao invalida");
@@ -100,9 +103,12 @@ void Front::menu(Imobiliaria &imob )
                 c1.setTitulo(inputStr("Digite o titulo: "));
                 while (1)
                 {
+                    limpaTela();
+                    cabecalho();
                     puts("O imovel esta disponivel para?");
                     puts("\t1 - Aluguel");
                     puts("\t2 - Venda");
+                    printf("Digite um valor válido: ");
                     cin >> disp;
                     cin.ignore();
                     if (disp == 1 || disp == 2)
@@ -138,9 +144,12 @@ void Front::menu(Imobiliaria &imob )
                 t1.setTitulo(inputStr("Digite o titulo: "));
                 while (1)
                 {
+                    limpaTela();
+                    cabecalho();
                     puts("O imovel esta disponivel para?");
                     puts("\t1 - Aluguel");
                     puts("\t2 - Venda");
+                    printf("Digite um valor válido: ");
                     cin >> disp;
                     cin.ignore();
                     if (disp == 1 || disp == 2)
@@ -167,19 +176,17 @@ void Front::menu(Imobiliaria &imob )
             break;
 
         case 2: //Listar imoveis
-            //limpaTela();
+            limpaTela();
             exibeMenuListar();
-            printf("Digite a opcao desejada: ");
+            //printf("Digite a opcao desejada: ");
             subopcao = inputInteiro();
-            if (subopcao == 7)
-            {
+            if (subopcao == 7){
                 break;
             }
-
             switch (subopcao)
             {
             case 1:
-                //limpaTela();
+                limpaTela();
                 cabecalho();
                 outputImoveis(imob.getImoveis(), 1);
                 printf("Para voltar digite 1\n");
@@ -187,7 +194,7 @@ void Front::menu(Imobiliaria &imob )
                 if (verificacao == 1)
                     break;
             case 2: //Exibe imoveis por  tipo
-                //limpaTela();
+                limpaTela();
                 ExibeSubSubMenu();
                 printf("Digite a opcao desejada: ");
                 subsubopcao = inputInteiro();
@@ -199,17 +206,17 @@ void Front::menu(Imobiliaria &imob )
                 {
 
                 case 1: //Apartamento
-                    //limpaTela();
+                    limpaTela();
                     cabecalho();
                     outputImoveis(imob.getImoveis(imob.indexPorTipo('0')), 2);
                     break;
                 case 2: //Casa
-                    //limpaTela();
+                    limpaTela();
                     cabecalho();
                     outputImoveis(imob.getImoveis(imob.indexPorTipo('1')), 2);
                     break;
                 case 3: //Terreno
-                    //limpaTela();
+                    limpaTela();
                     cabecalho();
                     outputImoveis(imob.getImoveis(imob.indexPorTipo('2')), 2);
                     break;
@@ -224,7 +231,7 @@ void Front::menu(Imobiliaria &imob )
                     break;
 
             case 3: //Imoveis por Disponibilidade
-                //limpaTela();
+                limpaTela();
                 exibeMenuDisp();
                 printf("Digite a opcao desejada: ");
                 subsubopcao = inputInteiro();
@@ -241,12 +248,12 @@ void Front::menu(Imobiliaria &imob )
                 switch (subsubopcao)
                 {
                 case 1:
-                    //limpaTela();
+                    limpaTela();
                     cabecalho();
                     outputImoveis(imob.getImoveis(imob.indexPorDisponibilidade(true)), 2);
                     break;
                 case 2:
-                    //limpaTela();
+                    limpaTela();
                     cabecalho();
                     outputImoveis(imob.getImoveis(imob.indexPorDisponibilidade(false)), 2);
                     break;
@@ -255,12 +262,14 @@ void Front::menu(Imobiliaria &imob )
                 }
                 printf("Para voltar digite 1\n");
                 verificacao = inputInteiro();
-                if (verificacao == 1)
+                if (verificacao == 1){
                     break;
-            } 
+                }
+            }
+            break; 
         case 3: //Buscar imoveis
-            //limpaTela();
-            cabecalho();
+            limpaTela();
+            //cabecalho();
             buscar(imob);/*
         case 4: //Remover Imovel
             //limpaTela();
@@ -278,9 +287,9 @@ void Front::menu(Imobiliaria &imob )
             verificacao = inputInteiro();
             if (verificacao == 1)
                 break;
-        default:
+        */default:
             puts("Opcao invalida");
-            break;*/
+            break;
         }
     }
 }
