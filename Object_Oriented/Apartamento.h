@@ -16,7 +16,7 @@ private:
 
 public:
     Apartamento();
-    Apartamento(Endereco endereco,char tipo, bool disponibilidade, double valor, std::string titulo, int andar, double valorCondominio, double area, int numQuartos, std::string posicao, int numVagas);
+    Apartamento(Endereco endereco, bool disponibilidade, double valor, std::string titulo, int andar, double valorCondominio, double area, int numQuartos, std::string posicao, int numVagas);
     int getAndar();
     double getValorCondominio();
     double getArea();

@@ -12,9 +12,10 @@ Apartamento::Apartamento() : Imovel()
     numVagas = 0;
 };
 
-Apartamento::Apartamento( Endereco endereco,char tipo, bool disponibilidade, double valor, std::string titulo, int andar, double valorCondominio, double area, int numQuartos, std::string posicao, int numVagas) 
+Apartamento::Apartamento( Endereco endereco, bool disponibilidade, double valor, std::string titulo, int andar, double valorCondominio, double area, int numQuartos, std::string posicao, int numVagas) 
         : Imovel( endereco,tipo, disponibilidade, valor, titulo)
 {
+    tipo = '0';
     this->andar = andar;
     this->valorCondominio = valorCondominio;
     this->area = area;

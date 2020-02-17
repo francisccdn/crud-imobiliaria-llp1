@@ -36,7 +36,7 @@ enum
 int countC = 0, countD = 0, countE = 0;
 void ExibeMenu()
 {
-
+    cabecalho();
     printf("\t 1- Cadastrar imovel\n"
            "\t 2- Listar Imoveis\n"
            "\t 3- Buscar imovel\n"
