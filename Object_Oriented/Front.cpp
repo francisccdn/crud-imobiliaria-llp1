@@ -30,7 +30,7 @@ void Front::menu(Imobiliaria *imob)
     bool disponibilidade;
     double area2;
     int numPavimentos;
-    //listaImoveis = imob->getImoveis();
+
     while (1)
     {
         limpaTela();
@@ -82,7 +82,6 @@ void Front::menu(Imobiliaria *imob)
 
                     printf("Digite um valor válido: ");
                     disp = inputInteiro();
-                    //cin.ignore();
                     if (disp == 1 || disp == 2)
                         break;
                     puts("Opcao invalida");
@@ -101,7 +100,6 @@ void Front::menu(Imobiliaria *imob)
                 area1=(inputValor());
                 printf("Digite o andar: ");
                 andar=inputInteiro();
-                printf("Digite o CEP(Sem o digito): ");
                 endereco.setCep(inputStr("Digite o cep: "));
                 endereco.setCidade(inputStr("Digite a cidade: "));
                 endereco.setBairro(inputStr("Digite o bairro: "));
@@ -171,8 +169,6 @@ void Front::menu(Imobiliaria *imob)
                 valor = inputValor();
                 cout << "Digite a area do terreno: ";
                 area1 = inputValor();
-                //printf("Digite o CEP(Sem o digito): ");
-                //cep(ap);
                 endereco.setCidade(inputStr("Digite a cidade: "));
                 endereco.setBairro(inputStr("Digite o bairro: "));
                 endereco.setLogradouro(inputStr("Digite a rua: "));
@@ -187,7 +183,6 @@ void Front::menu(Imobiliaria *imob)
         case 2: //Listar imoveis
             limpaTela();
             exibeMenuListar();
-            //printf("Digite a opcao desejada: ");
             subopcao = inputInteiro();
             if (subopcao == 7){
                 break;
@@ -278,7 +273,6 @@ void Front::menu(Imobiliaria *imob)
             break; 
         case 3: //Buscar imoveis
             limpaTela();
-            //cabecalho();
             buscar(imob, 0);
             printf("Para voltar digite 1\n");
             verificacao = inputInteiro();
@@ -288,7 +282,6 @@ void Front::menu(Imobiliaria *imob)
             break;
         case 4: //Remover Imovel
             limpaTela();
-            //cabecalho();
             buscar(imob, 1);
             printf("Para voltar digite 1\n");
             verificacao = inputInteiro();
@@ -296,7 +289,6 @@ void Front::menu(Imobiliaria *imob)
                 break;
         case 5: //Editar Imovel
             limpaTela();
-            //cabecalho();
             buscar(imob, 2);
             printf("Para voltar digite 1\n");
             verificacao = inputInteiro();
@@ -390,7 +382,6 @@ void Front::editarRemover(vector<int> index, int flag, Imobiliaria *imob)
 
                 printf("Digite um valor válido: ");
                 disp = inputInteiro();
-                //cin.ignore();
                 if (disp == 1 || disp == 2)
                     break;
                 puts("Opcao invalida");
@@ -409,7 +400,6 @@ void Front::editarRemover(vector<int> index, int flag, Imobiliaria *imob)
             area1=(inputValor());
             printf("Digite o andar: ");
             andar=inputInteiro();
-            printf("Digite o CEP(Sem o digito): ");
             endereco.setCep(inputStr("Digite o cep: "));
             endereco.setCidade(inputStr("Digite a cidade: "));
             endereco.setBairro(inputStr("Digite o bairro: "));
@@ -479,8 +469,6 @@ void Front::editarRemover(vector<int> index, int flag, Imobiliaria *imob)
             valor = inputValor();
             cout << "Digite a area do terreno: ";
             area1 = inputValor();
-            //printf("Digite o CEP(Sem o digito): ");
-            //cep(ap);
             endereco.setCidade(inputStr("Digite a cidade: "));
             endereco.setBairro(inputStr("Digite o bairro: "));
             endereco.setLogradouro(inputStr("Digite a rua: "));
@@ -513,7 +501,7 @@ void Front::buscar(Imobiliaria *imob, int flag)
     vector<int> index;
     vector<int>index1;
     vector<int>index2;
-    //listaImoveis = imob->getImoveis();
+
     exibeMenuBuscar();
 
     opcao = inputInteiro();
@@ -681,85 +669,3 @@ void Front::outputImoveis(vector<Imovel *> lista, int tipo)
         outputImovel(cout, *lista[i], tipo);
     }
 }
-/*vector<Imovel *> Front::getLista()
-{
-    return listaImoveis;
-}
-
-void cep(Apartamento &ap)
-{
-    Endereco endereco;
-    int j, count = 0;
-    char cep[MAX];
-    while (1)
-    {
-        cin >> cep;
-        if (strlen(cep) == 8)
-        {
-
-            for (j = 0; j <= (strlen(cep)); j++)
-            {
-
-                if (isdigit(cep[j]))
-                    count++;
-            }
-        }
-        if (count == 8)
-        {
-            buscaCep(cep, ap);
-        }
-        else
-            printf("Digite um  cep válido:");
-    }
-}
-
-
-
-void buscaCep(char *str, Apartamento &ap)
-{
-    FILE *fp;
-    Endereco endereco;
-    char cep1[MAX], linha[2000];
-    char *tok, *estado, *cidade, *rua, *cep, *bairro;
-
-    int c, t = 0;
-
-    char *id;
-
-    fp = fopen("ceps.csv", "r");
-
-    if (!fp)
-    {
-        puts("Erro ao abrir");
-        return;
-    }
-    while (1)
-    {
-        fgets(linha, 2000, fp);
-        if (feof(fp))
-            break;
-        c = 0;
-        tok = strtok(linha, ";");
-        cep = tok;
-
-        if (strcmp(tok, str) == 0)
-        {
-            estado = strtok(NULL, ";");
-            c++;
-            cidade = strtok(NULL, ";");
-            ap.endereco.setCidade(cidade);
-            c++;
-            bairro = strtok(NULL, ";");
-            ap.endereco.setBairro(bairro);
-            c++;
-            rua = strtok(NULL, ";");
-            int tamanho = strlen(rua);
-            rua[tamanho] = '\0';
-            ap.endereco.setLogradouro(rua);
-            c++;
-        }
-    }
-    fclose(fp);
-
-    return;
-}*/
